@@ -15,6 +15,7 @@
   <link rel="apple-touch-icon" href="icon.png"> 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link href="css/app.css"/>
+  <link href="css/styles.css"/>
   <meta name="theme-color" content="#fafafa">
 </head>
 
@@ -53,8 +54,7 @@
           <li class="nav-item col-6 col-md-auto">
             <a class="nav-link p-2" href="https://blog.getbootstrap.com/" onclick="ga('send', 'event', 'Navbar', 'Community links', 'Blog');" target="_blank" rel="noopener">Blog</a>
           </li>
-        </ul>
-  
+        </ul>  
         <hr class="d-md-none text-white-50">           
       </div>
     </nav>
