@@ -49,7 +49,6 @@ $(document).ready(function () {
         let limit = parseInt(data.limit);
         limit += 8;
         data.limit = limit;
-        console.log(that.CATEGORY)
         getProducts(that.PAGE, limit, that.CATEGORY);
     });
 
@@ -96,6 +95,8 @@ $(document).ready(function () {
                         );
                         element.addEventListener("click", function (e) {
                             that.CATEGORY = d.id;
+                            this.PAGE = 1;
+                            this.LIMIT =  0;
                             getProducts(that.PAGE, that.LIMIT, d.id);
                         });
                     }
