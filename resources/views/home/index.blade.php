@@ -52,7 +52,7 @@
 
   <!-- START: INFINITE SCROLL -->
   <div class="text-center">
-    <button class="btn btn-outline-primary" id="button-load-more" data-page="1">Load more</button>
+    <button class="btn btn-outline-primary" id="button-load-more" data-page="1" data-limit=8>Load more</button>
   </div>
   <!-- END: INFINITE SCROLL -->
 

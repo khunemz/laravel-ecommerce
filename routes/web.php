@@ -21,5 +21,5 @@ use App\Http\Controllers\HomeController;
 // });
 
 Route::get('/', [HomeController::class, 'index']);
-Route::get('/getProducts', [ProductController::class, 'getProducts']);
+Route::get('/getProducts/{page}/{limit}/{category}', [ProductController::class, 'getProducts']);
 Route::get('/getCategory', [ProductController::class, 'getCategory']);

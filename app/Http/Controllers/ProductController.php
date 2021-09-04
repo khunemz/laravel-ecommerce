@@ -12,9 +12,9 @@ class ProductController extends Controller
     return view('products.index');
   }
 
-  public function getProducts() {
+  public function getProducts($page , $limit, $category) {
     $pRepo = new ProductRepository();
-    $result = $pRepo->getProducts();
+    $result = $pRepo->getProducts($page, $limit, $category);
     return $result;
   }
   public function getCategory() {

@@ -42,15 +42,16 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
   return (ds ? num.replace(".", ds) : num).replace(new RegExp(re, "g"), "$&" + ts);
 });
 $(document).ready(function () {
-  var page = 1;
   getCategory();
-  getProducts();
+  getProducts(1, 8, 0);
   finalizeLoading();
-  document.getElementById('button-load-more').addEventListener('click', function () {
+  $('#button-load-more').on('click', function () {
     var data = this.dataset;
-    this.page = data.page;
-    this.page++;
-    var limit = 30;
+    var page = 1;
+    var limit = parseInt(data.limit);
+    limit += 8;
+    data.limit = limit;
+    getProducts(page, limit, 0);
   });
 
   function finalizeLoading() {
@@ -61,9 +62,11 @@ $(document).ready(function () {
     }
   }
 
-  function getProducts(page, limit) {
+  function getProducts(page, limit, category) {
+    var search = '';
+    category ? category : 0;
     $.ajax({
-      url: "/getProducts?page=".concat(page, "&limit=").concat(limit),
+      url: "/getProducts/".concat(page, "/").concat(limit, "/").concat(category),
       success: function success(data, xhrStatus, jqXHR) {
         if (xhrStatus == "success") {
           RENDER_HBS("product_card_template", "product_card_target", {

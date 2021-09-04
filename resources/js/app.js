@@ -35,18 +35,17 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
 });
 
 $(document).ready(function () {
-    let page = 1;
     getCategory();
-    getProducts();
+    getProducts(1,8, 0);
     finalizeLoading();
 
-    document.getElementById('button-load-more').addEventListener('click',function(){
+    $('#button-load-more').on('click',function(){
       const data = this.dataset;
-      this.page = data.page;
-      this.page++;
-      const limit = 30;
-      
-      
+      const page = 1;
+      let limit = parseInt(data.limit);
+      limit += 8;
+      data.limit = limit;
+      getProducts(page, limit, 0);     
     });
 
     function finalizeLoading() {
@@ -56,9 +55,12 @@ $(document).ready(function () {
         }
     } 
   
-    function getProducts(page, limit) {
+    function getProducts(page, limit, category) {
+        var search = '';
+        category ? category : 0;
+        
         $.ajax({
-            url: `/getProducts?page=${page}&limit=${limit}`,
+            url: `/getProducts/${page}/${limit}/${category}`,
             success: function (data, xhrStatus, jqXHR) {
                 if (xhrStatus == "success") {
                     RENDER_HBS("product_card_template", "product_card_target", {

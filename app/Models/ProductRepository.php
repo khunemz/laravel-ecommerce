@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\DB;
 
 class ProductRepository extends BaseRepository
 {
-  public function getProducts()
+  public function getProducts($page, $limit, $category)
   {
+    $offset = ($page - 1) * $limit;
     $results = DB::select(@"
     select p.id, p.product_code, p.title, p.description, p.img_path, 
       p.price, p.sku_id, u.id , u.name ,
@@ -19,8 +20,9 @@ class ProductRepository extends BaseRepository
         and p.delflag = 0 and  u.delflag  = 0 
       left join category cat on p.category_id  = cat.id 
         and cat.delflag  = 0
+      WHERE (IFNULL(?, 0) = 0 OR cat.id = ?)
       LIMIT ? OFFSET ?
-    ", array(30, 0));
+    ", array($category, $category, $limit, $offset));
     return $results;
   }
 
