@@ -63,7 +63,7 @@
 <script id="product_card_template" type="text/x-handlebars-template">
   @{{#each products}}
     <div class="col-3">
-      <a href="products/@{{this.id}}" class="card card-product-detail text-decoration-none" id="card-product-detail-@{{this.id}}" data-id=@{{this.id}}>
+      <a href="products/view/@{{this.id}}" class="card card-product-detail text-decoration-none" id="card-product-detail-@{{this.id}}" data-id=@{{this.id}}>
         <img class="card-img-top" src="@{{this.img_path}}" alt="Card image cap">
         <div class="card-body">
           <p class="card-text product-title-home">
@@ -94,4 +94,8 @@
     </div>
   @{{/each}}
 </script>
+@endsection
+
+@section('script') 
+  <script type="text/javascript" src="{{ url('js/index.js') }}"></script>
 @endsection

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>E commerce</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:title" content="">
@@ -14,13 +14,12 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="apple-touch-icon" href="icon.png"> 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link href="css/styles.css" rel="stylesheet" type="text/css"/>
-  <link href="css/app.css" rel="stylesheet" type="text/css"/>
+  <link href="{{ url('css/app.css') }}" rel="stylesheet" type="text/css"/>
+  <link href="{{ url('css/styles.css'); }}" rel="stylesheet" type="text/css"/>
   <meta name="theme-color" content="#fafafa">
 </head>
 
 <body>
-
   <!-- START: navbar -->
   <header class="navbar navbar-expand-md navbar-dark bd-navbar bg-primary">
     <nav class="container-xxl flex-wrap flex-md-nowrap" aria-label="Main navigation">
@@ -74,7 +73,7 @@
   <!-- END: navbar -->
 
   <!-- START: content -->
-  <div class="container loading-skeleton">
+  <div class="container">
     @yield('content')
   </div>
   <!-- END: content -->
@@ -82,6 +81,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
   @yield('hbs_template')
-  <script src="js/app.js"></script>
+  <script src="{{ url('js/app.js') }}"></script>
+  
+  @yield('script')
 </body>
 </html>

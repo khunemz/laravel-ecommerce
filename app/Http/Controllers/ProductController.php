@@ -23,9 +23,9 @@ class ProductController extends Controller
     return $result;
   }
 
-  public function findProduct($id) {
+  public function view($id) {
     $pRepo = new ProductRepository();
     $result = $pRepo->findProduct($id);
-    return $result;
+    return view('products.view', ['products' => $result]);
   }
 }

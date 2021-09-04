@@ -1,4 +1,3 @@
-//require('./bootstrap');
 const Handlebars = require("handlebars");
 require("handlebars/runtime");
 const Mustache = require('mustache');
@@ -34,3 +33,14 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
         "$&" + ts
     );
 });
+
+$(document).ready(function () {
+    finalizeLoading();    
+});
+
+function finalizeLoading() {
+    const el = document.querySelector(".loading-skeleton");
+    if (el.classList.contains("loading-skeleton")) {
+        el.classList.remove("loading-skeleton");
+    }
+}
