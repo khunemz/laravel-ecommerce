@@ -63,7 +63,7 @@
 <script id="product_card_template" type="text/x-handlebars-template">
   @{{#each products}}
     <div class="col-3">
-      <div class="card card-product-detail">
+      <div class="card card-product-detail" data-id=@{{this.id}}>
         <img class="card-img-top" src="@{{this.img_path}}" alt="Card image cap">
         <div class="card-body">
           <p class="card-text product-title-home">
@@ -80,7 +80,7 @@
 
 <script id="category_card_template" type="text/x-handlebars-template">
   @{{#each categories}}
-    <div class="category-item">
+    <div class="category-item" id="category-item-@{{this.id}}" data-id=@{{this.id}}>
       <div class="d-block">
         <img 
         src="@{{this.img}}" 

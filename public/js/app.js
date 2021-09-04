@@ -42,16 +42,20 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
   return (ds ? num.replace(".", ds) : num).replace(new RegExp(re, "g"), "$&" + ts);
 });
 $(document).ready(function () {
+  var that = this;
+  this.PAGE = 1;
+  this.LIMIT = 8;
+  this.CATEGORY = 0;
   getCategory();
-  getProducts(1, 8, 0);
+  getProducts(this.PAGE, this.LIMIT, this.CATEGORY);
   finalizeLoading();
-  $('#button-load-more').on('click', function () {
+  $("#button-load-more").on("click", function () {
     var data = this.dataset;
-    var page = 1;
     var limit = parseInt(data.limit);
     limit += 8;
     data.limit = limit;
-    getProducts(page, limit, 0);
+    console.log(that.CATEGORY);
+    getProducts(that.PAGE, limit, that.CATEGORY);
   });
 
   function finalizeLoading() {
@@ -63,7 +67,7 @@ $(document).ready(function () {
   }
 
   function getProducts(page, limit, category) {
-    var search = '';
+    var search = "";
     category ? category : 0;
     $.ajax({
       url: "/getProducts/".concat(page, "/").concat(limit, "/").concat(category),
@@ -88,6 +92,19 @@ $(document).ready(function () {
           RENDER_HBS("category_card_template", "category_card_target", {
             categories: data
           });
+
+          var _loop = function _loop(i) {
+            var d = data[i];
+            var element = document.getElementById("category-item-".concat(d.id));
+            element.addEventListener("click", function (e) {
+              that.CATEGORY = d.id;
+              getProducts(that.PAGE, that.LIMIT, d.id);
+            });
+          };
+
+          for (var i = 0; i < data.length; i++) {
+            _loop(i);
+          }
         }
       },
       error: function error(data, xhrStatus, jqXHR) {

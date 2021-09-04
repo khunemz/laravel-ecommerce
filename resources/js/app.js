@@ -35,17 +35,22 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
 });
 
 $(document).ready(function () {
+
+    var that = this;
+    this.PAGE = 1;
+    this.LIMIT = 8;
+    this.CATEGORY = 0;
     getCategory();
-    getProducts(1,8, 0);
+    getProducts(this.PAGE, this.LIMIT, this.CATEGORY);
     finalizeLoading();
 
-    $('#button-load-more').on('click',function(){
-      const data = this.dataset;
-      const page = 1;
-      let limit = parseInt(data.limit);
-      limit += 8;
-      data.limit = limit;
-      getProducts(page, limit, 0);     
+    $("#button-load-more").on("click", function () {
+        const data = this.dataset;
+        let limit = parseInt(data.limit);
+        limit += 8;
+        data.limit = limit;
+        console.log(that.CATEGORY)
+        getProducts(that.PAGE, limit, that.CATEGORY);
     });
 
     function finalizeLoading() {
@@ -53,12 +58,12 @@ $(document).ready(function () {
         if (el.classList.contains("loading-skeleton")) {
             el.classList.remove("loading-skeleton");
         }
-    } 
-  
+    }
+
     function getProducts(page, limit, category) {
-        var search = '';
+        var search = "";
         category ? category : 0;
-        
+
         $.ajax({
             url: `/getProducts/${page}/${limit}/${category}`,
             success: function (data, xhrStatus, jqXHR) {
@@ -84,6 +89,16 @@ $(document).ready(function () {
                         "category_card_target",
                         { categories: data }
                     );
+                    for (let i = 0; i < data.length; i++) {
+                        const d = data[i];
+                        const element = document.getElementById(
+                            `category-item-${d.id}`
+                        );
+                        element.addEventListener("click", function (e) {
+                            that.CATEGORY = d.id;
+                            getProducts(that.PAGE, that.LIMIT, d.id);
+                        });
+                    }
                 }
             },
             error: function (data, xhrStatus, jqXHR) {
