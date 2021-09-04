@@ -15,10 +15,6 @@
     <div class="carousel-inner">
       <div class="carousel-item active">
         <img src="{{ asset('img/c_1_1.png') }}" class="d-block w-100 carousel-item-img" alt="...">
-        {{-- <div class="carousel-caption d-none d-md-block">
-          <h5>First slide label</h5>
-          <p>Some representative placeholder content for the first slide.</p>
-        </div> --}}
       </div>
       <div class="carousel-item">
         <img src="{{ asset('img/c_1_2.png') }}" class="d-block w-100 carousel-item-img" alt="...">
@@ -40,6 +36,7 @@
 
   <!-- END: Carousel -->
 
+  <!-- START: Category Card -->
   <div class="card category-card">
     <div class="card-body">
       <div class="row">
@@ -109,6 +106,9 @@
       
     </div>
   </div>
+  <!-- START: Category Card -->
+
+  <!-- START: Product List -->
 
 </section>
 @endsection
