@@ -1,6 +1,7 @@
 //require('./bootstrap');
 const Handlebars = require("handlebars");
 require("handlebars/runtime");
+const Mustache = require('mustache');
 /** by chutipong roobklom */
 
 const BASE_URL = window.location.href;
@@ -51,6 +52,13 @@ $(document).ready(function () {
         data.limit = limit;
         getProducts(that.PAGE, limit, that.CATEGORY);
     });
+
+
+    // const details = document.getElementsByClassName('card-product-detail');
+    // for (let i = 0; i < details.length; i++) {
+    //     const element = details[i];
+    //     debugger;
+    // }
 
     function finalizeLoading() {
         const el = document.querySelector(".loading-skeleton");

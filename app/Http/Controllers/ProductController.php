@@ -22,4 +22,10 @@ class ProductController extends Controller
     $result = $pRepo->getCategory();
     return $result;
   }
+
+  public function findProduct($id) {
+    $pRepo = new ProductRepository();
+    $result = $pRepo->findProduct($id);
+    return $result;
+  }
 }
