@@ -35,7 +35,7 @@ Handlebars.registerHelper('numberFormat', function (value, options) {
 document.addEventListener('DOMContentLoaded', function() {
   // remove all loading skeleton
   getCategory();
-  getProducts();
+  // getProducts();
   finalizeLoading();
 }, false);
 
@@ -48,19 +48,19 @@ function finalizeLoading() {
   }
 }
 
-function getProducts() {
-  $.ajax({
-    url: '/getProducts',
-    success: function(data, xhrStatus, jqXHR) {
-      if(xhrStatus == "success") {
-        RENDER_HBS('product_card_template', 'product_card_target', { products: data});
-      }
-    },
-    error: function(data, xhrStatus, jqXHR) {
-      console.log(xhrStatus);
-    }
-  });
-}
+// function getProducts() {
+//   $.ajax({
+//     url: '/getProducts',
+//     success: function(data, xhrStatus, jqXHR) {
+//       if(xhrStatus == "success") {
+//         RENDER_HBS('product_card_template', 'product_card_target', { products: data});
+//       }
+//     },
+//     error: function(data, xhrStatus, jqXHR) {
+//       console.log(xhrStatus);
+//     }
+//   });
+// }
 
 function getCategory() {
   $.ajax({
@@ -68,6 +68,7 @@ function getCategory() {
     success: function(data, xhrStatus, jqXHR) {
       if(xhrStatus == "success") {
         RENDER_HBS('category_card_template', 'category_card_target', { categories: data});
+        finalizeLoading();
       }
     },
     error: function(data, xhrStatus, jqXHR) {

@@ -37,7 +37,7 @@
   <!-- END: Carousel -->
 
   <!-- START: Category Card -->
-  <div class="card category-card">
+  <div class="card category-card loading-skeleton">
     <div class="card-body">
       <div class="row">
         <div id="category_card_target" class="category-group"></div>
@@ -47,13 +47,29 @@
   <!-- END: Category Card -->
 
   <!-- START: Product List -->
-  <div id="product_card_target" class="row"></div>
+  <div id="product_card_target" class="row">
+    @foreach ($products as $item)
+      <div class="col-3">
+        <div class="card card-product-detail">
+          <img class="card-img-top" src="{{ $item->img_path}}" alt="Card image cap">
+          <div class="card-body">
+            <p class="card-text product-title-home">
+              {{ $item->title}} 
+            </p>
+            <p class="card-text">
+              {{ $item->price }} บาท
+            </p>
+          </div>
+        </div>
+      </div>
+    @endforeach
+  </div>
   <!-- END: Product List -->
 </section>
 @endsection
 
 @section('hbs_template')  
-<script id="product_card_template" type="text/x-handlebars-template">
+{{-- <script id="product_card_template" type="text/x-handlebars-template">
   @{{#each products}}
     <div class="col-3">
       <div class="card card-product-detail loading-skeleton">
@@ -69,11 +85,11 @@
       </div>
     </div>
   @{{/each}}
-</script>
+</script> --}}
 
 <script id="category_card_template" type="text/x-handlebars-template">
   @{{#each categories}}
-    <div class="category-item loading-skeleton">
+    <div class="category-item">
       <div class="d-block">
         <img 
         src="@{{this.img}}" 
