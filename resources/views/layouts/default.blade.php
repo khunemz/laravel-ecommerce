@@ -74,7 +74,7 @@
   <!-- END: navbar -->
 
   <!-- START: content -->
-  <div class="container">
+  <div class="container loading-skeleton">
     @yield('content')
   </div>
   <!-- END: content -->
