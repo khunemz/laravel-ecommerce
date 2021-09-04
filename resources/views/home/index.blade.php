@@ -40,75 +40,51 @@
   <div class="card category-card">
     <div class="card-body">
       <div class="row">
-        <div class="category-group">
-          <div class="category-item">
-            <div class="d-block">
-              <img 
-              src="https://salt.tikicdn.com/cache/w100/ts/upload/31/d1/ad/8f8589ccf8a4ce2761ad51bae11eb4a6.jpg" 
-              class="d-block img-fluid"
-              width="100" height="100"
-              />
-            </div>
-            <div class="category-desc text-center">
-              <a href="#" class="text-decoration-none">Category # 1</a>
-            </div>
-          </div>
-          <div class="category-item">
-            <div class="d-block">
-              <img 
-              src="https://salt.tikicdn.com/cache/w100/ts/upload/73/e0/7d/af993bdbf150763f3352ffa79e6a7117.png" 
-              class="d-block img-fluid"
-              width="100" height="100"
-              />
-            </div>
-            <div class="category-desc text-center">
-              <a href="#" class="text-decoration-none">Category # 2</a>
-            </div>
-          </div>
-          <div class="category-item">
-            <div class="d-block">
-              <img 
-              src="https://salt.tikicdn.com/cache/w100/ts/upload/4a/b2/c5/b388ee0e511889c83fab1217608fe82f.png" 
-              class="d-block img-fluid"
-              width="100" height="100"
-              />
-            </div>
-            <div class="category-desc text-center">
-              <a href="#" class="text-decoration-none">Category # 3</a>
-            </div>
-          </div>
-          <div class="category-item">
-            <div class="d-block">
-              <img 
-              src="https://salt.tikicdn.com/cache/w100/ts/upload/a0/0d/90/bab67b6da67117f40538fc54fb2dcb5e.png" 
-              class="d-block img-fluid"
-              width="100" height="100"
-              />
-            </div>
-            <div class="category-desc text-center">
-              <a href="#" class="text-decoration-none">Category # 4</a>
-            </div>
-          </div>
-          <div class="category-item">
-            <div class="d-block">
-              <img 
-              src="https://salt.tikicdn.com/cache/w100/ts/upload/a9/58/39/872e4acbdb3576be53b57c05a386860b.png" 
-              class="d-block img-fluid"
-              width="100" height="100"
-              />
-            </div>
-            <div class="category-desc text-center">
-              <a href="#" class="text-decoration-none">Category # 1</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      
+        <div id="category_card_target" class="category-group"></div>
+      </div>      
     </div>
   </div>
-  <!-- START: Category Card -->
+  <!-- END: Category Card -->
 
   <!-- START: Product List -->
-
+  <div id="product_card_target"></div>
+  <!-- END: Product List -->
 </section>
+@endsection
+
+@section('hbs_template')  
+<script id="product_card_template" type="text/x-handlebars-template">
+  @{{#each products}}
+    <div class="col-3">
+      <div class="card card-product-detail">
+        <img class="card-img-top" src="@{{this.img_path}}" alt="Card image cap">
+        <div class="card-body">
+          <p class="card-text">
+            @{{this.description}} @
+          </p>
+          <p class="card-text">
+            @{{this.price}} บาท
+          </p>
+        </div>
+      </div>
+    </div>
+  @{{/each}}
+</script>
+
+<script id="category_card_template" type="text/x-handlebars-template">
+  @{{#each categories}}
+    <div class="category-item">
+      <div class="d-block">
+        <img 
+        src="@{{this.img}}" 
+        class="d-block img-fluid"
+        width="100" height="100"
+        />
+      </div>
+      <div class="category-desc text-center">
+        <a href="#" class="text-decoration-none">@{{this.name}}</a>
+      </div>
+    </div>
+  @{{/each}}
+</script>
 @endsection

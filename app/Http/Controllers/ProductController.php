@@ -17,4 +17,9 @@ class ProductController extends Controller
     $result = $pRepo->getProducts();
     return $result;
   }
+  public function getCategory() {
+    $pRepo = new ProductRepository();
+    $result = $pRepo->getCategory();
+    return $result;
+  }
 }
