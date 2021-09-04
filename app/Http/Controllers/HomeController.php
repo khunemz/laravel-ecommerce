@@ -9,8 +9,6 @@ class HomeController extends Controller
 {
   public function index()
   {
-    $repo = new ProductRepository();
-    $products = $repo->getProducts();
-    return view('home.index', ['products' => $products]);
+    return view('home.index', []);
   }
 }

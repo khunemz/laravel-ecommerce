@@ -37,7 +37,7 @@
   <!-- END: Carousel -->
 
   <!-- START: Category Card -->
-  <div class="card category-card loading-skeleton">
+  <div class="card category-card">
     <div class="card-body">
       <div class="row">
         <div id="category_card_target" class="category-group"></div>
@@ -47,45 +47,36 @@
   <!-- END: Category Card -->
 
   <!-- START: Product List -->
-  <div id="product_card_target" class="row">
-    @foreach ($products as $item)
-      <div class="col-3">
-        <div class="card card-product-detail">
-          <img class="card-img-top" src="{{ $item->img_path}}" alt="Card image cap">
-          <div class="card-body">
-            <p class="card-text product-title-home">
-              {{ $item->title}} 
-            </p>
-            <p class="card-text">
-              {{ $item->price }} บาท
-            </p>
-          </div>
-        </div>
-      </div>
-    @endforeach
-  </div>
+  <div id="product_card_target" class="row"></div>
   <!-- END: Product List -->
+
+  <!-- START: INFINITE SCROLL -->
+  <div class="text-center">
+    <button class="btn btn-outline-primary" id="button-load-more" data-page="1">Load more</button>
+  </div>
+  <!-- END: INFINITE SCROLL -->
+
 </section>
 @endsection
 
 @section('hbs_template')  
-{{-- <script id="product_card_template" type="text/x-handlebars-template">
+<script id="product_card_template" type="text/x-handlebars-template">
   @{{#each products}}
     <div class="col-3">
-      <div class="card card-product-detail loading-skeleton">
+      <div class="card card-product-detail">
         <img class="card-img-top" src="@{{this.img_path}}" alt="Card image cap">
         <div class="card-body">
           <p class="card-text product-title-home">
             @{{this.title}} 
           </p>
           <p class="card-text">
-            @{{this.price}} บาท
+            @{{numberFormat this.price}} บาท
           </p>
         </div>
       </div>
     </div>
   @{{/each}}
-</script> --}}
+</script>
 
 <script id="category_card_template" type="text/x-handlebars-template">
   @{{#each categories}}
@@ -98,7 +89,7 @@
         />
       </div>
       <div class="category-desc text-center">
-        <a href="#" class="text-decoration-none">@{{this.name}}</a>
+        <a href="#" class="text-decoration-none">@{{ this.name }}</a>
       </div>
     </div>
   @{{/each}}
