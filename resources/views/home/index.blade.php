@@ -47,7 +47,7 @@
   <!-- END: Category Card -->
 
   <!-- START: Product List -->
-  <div id="product_card_target"></div>
+  <div id="product_card_target" class="row"></div>
   <!-- END: Product List -->
 </section>
 @endsection
@@ -56,11 +56,11 @@
 <script id="product_card_template" type="text/x-handlebars-template">
   @{{#each products}}
     <div class="col-3">
-      <div class="card card-product-detail">
+      <div class="card card-product-detail loading-skeleton">
         <img class="card-img-top" src="@{{this.img_path}}" alt="Card image cap">
         <div class="card-body">
-          <p class="card-text">
-            @{{this.description}} @
+          <p class="card-text product-title-home">
+            @{{this.title}} 
           </p>
           <p class="card-text">
             @{{this.price}} บาท
@@ -73,7 +73,7 @@
 
 <script id="category_card_template" type="text/x-handlebars-template">
   @{{#each categories}}
-    <div class="category-item">
+    <div class="category-item loading-skeleton">
       <div class="d-block">
         <img 
         src="@{{this.img}}" 

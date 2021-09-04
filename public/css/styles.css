@@ -373,8 +373,20 @@ input.error {
 
 .card-product-detail {
     cursor: pointer;
+    margin: 10px 0px;
 }
 
 .card-product-detail:hover {
     box-shadow: 0px 0px 4px rgb(0, 0, 0, 0.2);
 }
+
+.product-title-home {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+ }
+
+
+
