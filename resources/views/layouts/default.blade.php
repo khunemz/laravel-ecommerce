@@ -20,6 +20,11 @@
 </head>
 
 <body>
+
+  <div class="overlay" id="overlay"></div>
+  <div class="spanner" id="spanner">
+    <div class="loader" id="loader"></div>
+  </div>
   <!-- START: navbar -->
   <header class="navbar navbar-expand-md navbar-dark bd-navbar bg-primary">
     <nav class="container-xxl flex-wrap flex-md-nowrap" aria-label="Main navigation">
@@ -128,6 +133,21 @@
           el.classList.remove("loading-skeleton");
       }
     }
+
+    jQuery.ajaxSetup({
+      beforeSend: function() {
+
+        document.getElementById('overlay').classList.add('show');
+        document.getElementById('spanner').classList.add('show');
+        $('#loader').show();
+      },
+      complete: function(){
+        document.getElementById('overlay').classList.remove('show');
+        document.getElementById('spanner').classList.remove('show');
+        $('#loader').hide();
+      },
+      success: function() {}
+    });
     
   </script>
   @yield('hbs_template')
