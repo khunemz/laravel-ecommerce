@@ -1,6 +1,7 @@
 const Handlebars = require("handlebars");
 require("handlebars/runtime");
 const Mustache = require('mustache');
+const ImageZoom = require('js-image-zoom');
 /** by chutipong roobklom */
 
 const BASE_URL = window.location.href;
@@ -36,11 +37,59 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
 
 $(document).ready(function () {
     finalizeLoading();    
-});
+    
+    $('#quantity').val(1);
+    // init class disabled
+    document.getElementById('decrease-button').classList.add('disabled');
+    $('#decrease-button').on('click', function(e) {
+        var qty = $('#quantity').val();
+        qty--;
+        if(qty <= 1) {
+            qty = 1;
+            disabled('decrease-button');
+        } else {
+            enable('decrease-button');
+        }
+        $('#quantity').val(qty)
+    });
 
+    $('#increase-button').on('click', function(e) {
+        var qty = $('#quantity').val();
+        qty++;
+        if(qty >= 1) {
+            enable('decrease-button');
+        }
+        $('#quantity').val(qty)
+    });
+
+    $('#quantity').on('change',function(e) {
+        var qty = e.target.value;
+        if(qty <= 1) {
+            disabled('decrease-button');
+        } else {
+            enable('decrease-button');
+        }
+    })
+
+});
+function disabled(id) {
+    document.getElementById('decrease-button').classList.add('disabled');
+}
+
+function enable(id) {
+    document.getElementById(id).classList.remove('disabled');
+}
 function finalizeLoading() {
     const el = document.querySelector(".loading-skeleton");
     if (el.classList.contains("loading-skeleton")) {
         el.classList.remove("loading-skeleton");
     }
+
+    // zoom
+    // var options = {
+    //     zoomWidth: 200,
+    //     zoomHeight: 200,
+    //     offset: {vertical: 0, horizontal: 10}
+    // };
+    // new ImageZoom(document.getElementById("img-container"), options);
 }

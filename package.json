@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "handlebars": "^4.7.7",
+        "js-image-zoom": "^0.7.0",
         "mustache": "^4.2.0"
     }
 }

@@ -3,7 +3,7 @@
 
 @section('content')
 
-<section class="main-content" style="padding-top: 10px;">
+<section class="main-content loading-skeleton" style="padding-top: 10px;">
 
   <!-- START: Carousel -->
   <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
