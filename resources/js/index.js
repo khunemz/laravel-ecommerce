@@ -62,18 +62,15 @@ $(document).ready(function () {
       var search = "";
       category ? category : 0;
 
-      $.ajax({
-          url: `/getProducts/${page}/${limit}/${category}`,
-          success: function (data, xhrStatus, jqXHR) {
-              if (xhrStatus == "success") {
-                  RENDER_HBS("product_card_template", "product_card_target", {
-                      products: data,
-                  });
-              }
-          },
-          error: function (data, xhrStatus, jqXHR) {
-              console.log(xhrStatus);
-          },
+      $.get(`/getProducts/${page}/${limit}/${category}`,{})
+      .done(function(data, xhrStatus, jqXHR) {
+        if (xhrStatus == "success") {
+            RENDER_HBS("product_card_template", "product_card_target", {
+                products: data,
+            });
+        }
+      }).fail(function(data, xhrStatus, jqXHR) {
+        console.log(xhrStatus);
       });
   }
 

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SaleController;
 
 
 /*
@@ -24,4 +25,5 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/getProducts/{page}/{limit}/{category}', [ProductController::class, 'getProducts']);
 Route::get('/getCategory', [ProductController::class, 'getCategory']);
 Route::get('/products/view/{id}', [ProductController::class, 'view']);
+Route::post('/sale/addCart', [SaleController::class, 'addCart']);
 

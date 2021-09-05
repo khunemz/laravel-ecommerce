@@ -36,17 +36,14 @@
       <div class="collapse navbar-collapse" id="bdNavbar">
         <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav pt-2 py-md-0">
           <li class="nav-item col-6 col-md-auto">
-            <a class="nav-link p-2" href="/" 
-            onclick="ga('send', 'event', 'Navbar', 'Community links', 'Bootstrap');">หน้าหลัก</a>
+            <a class="nav-link p-2" href="{{ url('/') }}">หน้าหลัก</a>
           </li>
           <li class="nav-item col-6 col-md-auto">
             <a class="nav-link p-2 active" aria-current="true" 
-            href="/docs/5.0/getting-started/introduction/" 
-            onclick="ga('send', 'event', 'Navbar', 'Community links', 'Docs');">สินค้าทั้งหมด</a>
+            href="{{ url('/products') }}">สินค้าทั้งหมด</a>
           </li>
           <li class="nav-item col-6 col-md-auto">
-            <a class="nav-link p-2" href="/docs/5.0/examples/" 
-            onclick="ga('send', 'event', 'Navbar', 'Community links', 'Examples');">ติดตามสถานะ</a>
+            <a class="nav-link p-2"  href="{{ url('/tracking') }}">ติดตามสถานะ</a>
           </li>
          
         </ul>  
@@ -80,6 +77,10 @@
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+  <script>
+    const BASE_URL = "{{ url('/')}}";
+    const CSRF_TOKEN = "{{ csrf_token() }}";
+  </script>
   @yield('hbs_template')
   <script src="{{ url('js/app.js') }}"></script>
   

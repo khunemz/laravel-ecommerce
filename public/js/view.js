@@ -6478,8 +6478,6 @@ var ImageZoom = __webpack_require__(/*! js-image-zoom */ "./node_modules/js-imag
 /** by chutipong roobklom */
 
 
-var BASE_URL = window.location.href;
-
 var RENDER_HBS = function RENDER_HBS(templateId, targetId, data) {
   var template = document.getElementById(templateId).innerHTML; // var compiled_template = Handlebars.compile(template);
 
@@ -6541,6 +6539,23 @@ $(document).ready(function () {
     } else {
       enable('decrease-button');
     }
+  });
+  $('#add-to-cart-button').on('click', function () {
+    // ajax add cart
+    var product_id = $('#card-product-view-item').attr('data-id');
+    var quantiy = $('#quantity').val();
+    var data = {
+      _token: CSRF_TOKEN,
+      product_id: product_id,
+      quantity: quantiy
+    };
+    $.post("".concat(BASE_URL, "/sale/addCart"), data).done(function (data, xhrStatus, jqXHR) {
+      if (xhrStatus == "success") {
+        console.log('success');
+      }
+    }).fail(function (data, xhrStatus, jqXHR) {
+      console.log(jqXHR);
+    });
   });
 });
 

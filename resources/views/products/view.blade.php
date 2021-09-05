@@ -4,7 +4,7 @@
 @section('content')
 <div class="card-product-view-detail loading-skeleton">
   @foreach ($products as $product)
-      <div class="card">
+      <div class="card" id="card-product-view-item" data-id={{$product->id}}>
         <div class="card-body">
           <div class="row">
             <div class="col-6" id="img-container">
@@ -31,7 +31,7 @@
                   </button>
                 </section>
                 <section class="add-cart-buttons d-inline-block">
-                  <button class="btn btn-outline-primary">
+                  <button class="btn btn-outline-primary" id="add-to-cart-button">
                     Add to cart
                   </button>
                 </section>

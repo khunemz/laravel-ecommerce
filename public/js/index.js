@@ -6168,18 +6168,14 @@ $(document).ready(function () {
   function getProducts(page, limit, category) {
     var search = "";
     category ? category : 0;
-    $.ajax({
-      url: "/getProducts/".concat(page, "/").concat(limit, "/").concat(category),
-      success: function success(data, xhrStatus, jqXHR) {
-        if (xhrStatus == "success") {
-          RENDER_HBS("product_card_template", "product_card_target", {
-            products: data
-          });
-        }
-      },
-      error: function error(data, xhrStatus, jqXHR) {
-        console.log(xhrStatus);
+    $.get("/getProducts/".concat(page, "/").concat(limit, "/").concat(category), {}).done(function (data, xhrStatus, jqXHR) {
+      if (xhrStatus == "success") {
+        RENDER_HBS("product_card_template", "product_card_target", {
+          products: data
+        });
       }
+    }).fail(function (data, xhrStatus, jqXHR) {
+      console.log(xhrStatus);
     });
   }
 

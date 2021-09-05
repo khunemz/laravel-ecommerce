@@ -4,7 +4,6 @@ const Mustache = require('mustache');
 const ImageZoom = require('js-image-zoom');
 /** by chutipong roobklom */
 
-const BASE_URL = window.location.href;
 
 const RENDER_HBS = function (templateId, targetId, data) {
     var template = document.getElementById(templateId).innerHTML;
@@ -37,7 +36,6 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
 
 $(document).ready(function () {
     finalizeLoading();    
-    
     $('#quantity').val(1);
     // init class disabled
     document.getElementById('decrease-button').classList.add('disabled');
@@ -50,7 +48,7 @@ $(document).ready(function () {
         } else {
             enable('decrease-button');
         }
-        $('#quantity').val(qty)
+        $('#quantity').val(qty);
     });
 
     $('#increase-button').on('click', function(e) {
@@ -59,7 +57,7 @@ $(document).ready(function () {
         if(qty >= 1) {
             enable('decrease-button');
         }
-        $('#quantity').val(qty)
+        $('#quantity').val(qty);
     });
 
     $('#quantity').on('change',function(e) {
@@ -69,9 +67,30 @@ $(document).ready(function () {
         } else {
             enable('decrease-button');
         }
+    });
+
+    $('#add-to-cart-button').on('click', function() {
+        // ajax add cart
+
+        var product_id = $('#card-product-view-item').attr('data-id');
+        var quantiy = $('#quantity').val();
+        
+        const data = {
+            _token: CSRF_TOKEN,
+            product_id: product_id,
+            quantity: quantiy,
+        };
+        $.post(`${BASE_URL}/sale/addCart`, data).done(function(data, xhrStatus, jqXHR) {
+            if (xhrStatus == "success") {
+                console.log('success');
+            }
+        }).fail(function(data, xhrStatus, jqXHR) {
+            console.log(jqXHR);
+        });
     })
 
 });
+
 function disabled(id) {
     document.getElementById('decrease-button').classList.add('disabled');
 }
