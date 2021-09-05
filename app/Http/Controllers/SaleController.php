@@ -27,4 +27,20 @@ class SaleController extends Controller
     ];
     return response()->json($response);
   }
+
+  public function getBasket($id) {  
+    $repo = new SaleRepository();
+    $basket = $repo->getBasket($id);
+    $basket_items = $repo->getBasketItems($id);
+    
+    $response = [
+      'status' => 201,
+      'message' => 'success',
+      'data' => [
+        'basket' => $basket,
+        'basket_items' => $basket_items
+      ]
+    ];
+    return response()->json($response);
+  }
 }

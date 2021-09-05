@@ -85,10 +85,24 @@
   <script>
     const BASE_URL = "{{ url('/')}}";
     const CSRF_TOKEN = "{{ csrf_token() }}";
+
+    const customer_id = 1;
+    $.get(`${BASE_URL}/sale/getBasket/${customer_id}`,{})
+    .done(function(data, xhrStatus, jqXHR) {
+      if (xhrStatus == "success") {
+        let basket_count = 0;
+        if(data.data.basket.length > 0) {
+          basket_count = data.data.basket[0].sum_quantity;
+        }
+        document.getElementById('basket-count').innerHTML = basket_count;
+      }
+    })
+    .fail(function(data, xhrStatus, jqXHR) {
+
+    });
   </script>
   @yield('hbs_template')
   <script src="{{ url('js/app.js') }}"></script>
-  
   @yield('script')
 </body>
 </html>

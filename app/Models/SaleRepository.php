@@ -14,6 +14,47 @@ class SaleRepository extends BaseRepository
     return $results;
   }
 
+  public function getBasketItems($customer_id) {
+    $results = DB::select(@"
+    SELECT 
+      bi.id, 
+      p.product_code , 
+      p.title, p.description ,
+        bi.quantity ,
+        u.name as unit_name,
+        bi.price , 
+        bi.grand_amount , 
+        bi.discount_amount , 
+        bi.tax_amount , 
+        bi.net_amount 
+    from basket_items bi 
+    inner join products p on bi.product_id = p.id 
+    inner join units u on u.id  = bi.unit_Id 
+    where p.delflag = 0 
+      and u.delflag  = 0 
+      and bi.delflag  = 0 
+      and customer_id = ?
+    ", [$customer_id]);
+    return $results;
+  }
+
+  public function getBasket($customer_id) {
+    $results = DB::select(@"
+    select 
+    bi.customer_id , 
+      sum(bi.quantity) as sum_quantity, 
+      sum(bi.grand_amount) as sum_grand_amount, 
+      sum(bi.tax_amount) as sum_tax_amount, 
+      sum(bi.discount_amount) as sum_discount_amount, 
+      sum(bi.net_amount) as sum_net_amount 
+    from basket_items bi 
+    where bi.delflag = 0 and bi.customer_id = ? and bi.status = 0
+    group by bi.customer_id 
+    ", [$customer_id]);
+    return $results;
+  }
+
+
   public function addCart($data)
   {
     $product_repo = new ProductRepository();
