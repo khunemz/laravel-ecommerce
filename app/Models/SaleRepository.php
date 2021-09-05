@@ -77,8 +77,8 @@ class SaleRepository extends BaseRepository
     $customer_id = 1; // todo: make this larter
     $seq_no = 1;
     $taxrate = 0.07;
-    $tax_amount = ( $grand_amount - $discount_amount ) *  $taxrate;
-    $net_amount = $grand_amount - $discount_amount + $tax_amount;    
+    $tax_amount = (( $grand_amount - $discount_amount ) *  7) / 107;
+    $net_amount = $grand_amount - $discount_amount;    
 
     // find before if not exist then insert
     $basket_items = $this->findBasketItemByProductId($product_id, $unit_id, $customer_id);
