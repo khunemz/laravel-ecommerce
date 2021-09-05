@@ -82,7 +82,8 @@ $(document).ready(function () {
         };
         $.post(`${BASE_URL}/sale/addCart`, data).done(function(data, xhrStatus, jqXHR) {
             if (xhrStatus == "success") {
-                console.log('success');
+                console.log('success' , data);
+                // update basket badge
             }
         }).fail(function(data, xhrStatus, jqXHR) {
             console.log(jqXHR);

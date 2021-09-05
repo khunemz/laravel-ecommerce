@@ -18,6 +18,13 @@ class SaleController extends Controller
 
     $repo = new SaleRepository();
     $result = $repo->addCart($data);
-    return $result;
+    $response = [
+      'status' => 201,
+      'message' => 'success',
+      'data' => [
+        'total_quantity' => $result
+      ]
+    ];
+    return response()->json($response);
   }
 }
