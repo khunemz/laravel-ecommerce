@@ -459,3 +459,16 @@ input.error {
 .payment-button {
     margin: 20px 0;
 }
+
+.product-grand-amount {
+    display: grid;
+    grid-template-rows: auto;
+}
+
+.trash-icon {
+    cursor: pointer;
+}
+
+.modal-content {
+    margin: 30% 0%
+}

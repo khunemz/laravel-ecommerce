@@ -53,4 +53,18 @@ class SaleController extends Controller
       'basket_items' => $basket_items
     ]);
   }
+
+  public function delete($id) {  
+    $repo = new SaleRepository();
+    $result = $repo->deleteBasketItem($id);
+    $response = [
+      'status' => 201,
+      'message' => 'success',
+      'data' => [
+        'result' => $result,
+      ]
+    ];
+    return response()->json($response);
+  }
+
 }

@@ -14,6 +14,13 @@ class SaleRepository extends BaseRepository
     return $results;
   }
 
+  public function deleteBasketItem($id)
+  {
+    $result = DB::delete(@"DELETE FROM ecommerce.basket_items WHERE id=?;", [$id]);
+    return $result;
+  }
+
+
   public function getBasketItems($customer_id) {
     $results = DB::select(@"
     SELECT 

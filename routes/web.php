@@ -28,5 +28,7 @@ Route::get('/products/view/{id}', [ProductController::class, 'view']);
 Route::post('/sale/addCart', [SaleController::class, 'addCart']);
 Route::get('/sale/getBasket/{id}', [SaleController::class, 'getBasket']);
 Route::get('/sale/viewbasket/{id}', [SaleController::class, 'viewbasket']);
+Route::get('/sale/delete/{id}', [SaleController::class, 'delete']);
+
 
 

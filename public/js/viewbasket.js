@@ -5358,6 +5358,16 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
 });
 $(document).ready(function () {
   finalizeLoading();
+  var elems = document.getElementsByClassName('delete-button');
+
+  for (var i = 0; i < elems.length; i++) {
+    var element = elems[i];
+    element.addEventListener('click', function (e) {
+      var dataSet = this.dataset;
+      var basket_item_id = dataSet.id;
+      delete_item(basket_item_id);
+    });
+  }
 });
 
 function disabled(id) {
@@ -5366,6 +5376,16 @@ function disabled(id) {
 
 function enable(id) {
   document.getElementById(id).classList.remove("disabled");
+}
+
+function delete_item(id) {
+  $.get("".concat(BASE_URL, "/sale/delete/").concat(id), {}).done(function (data, xhrStatus, jqXHR) {
+    if (xhrStatus == "success") {
+      window.location.reload();
+    }
+  }).fail(function (data, xhrStatus, jqXHR) {
+    console.log(xhrStatus);
+  });
 }
 })();
 

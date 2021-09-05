@@ -33,6 +33,16 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
 
 $(document).ready(function () {
     finalizeLoading();
+
+    const elems = document.getElementsByClassName('delete-button');
+    for (let i = 0; i < elems.length; i++) {
+        const element = elems[i];
+        element.addEventListener('click', function(e) {
+            const dataSet = this.dataset;
+            const basket_item_id = dataSet.id;            
+            delete_item(basket_item_id);
+        });
+    }
 });
 
 function disabled(id) {
@@ -41,4 +51,16 @@ function disabled(id) {
 
 function enable(id) {
     document.getElementById(id).classList.remove("disabled");
+}
+
+function delete_item(id) {
+    $.get(`${BASE_URL}/sale/delete/${id}`, {})
+    .done(function(data, xhrStatus, jqXHR) {
+        if (xhrStatus == "success") {
+            window.location.reload();
+        }
+    })
+    .fail(function(data, xhrStatus, jqXHR) {
+        console.log(xhrStatus)
+    })
 }
