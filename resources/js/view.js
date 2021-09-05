@@ -37,7 +37,6 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
 $(document).ready(function () {
     finalizeLoading();    
     $('#quantity').val(1);
-    // init class disabled
     document.getElementById('decrease-button').classList.add('disabled');
     $('#decrease-button').on('click', function(e) {
         var qty = $('#quantity').val();
@@ -98,18 +97,4 @@ function disabled(id) {
 
 function enable(id) {
     document.getElementById(id).classList.remove('disabled');
-}
-function finalizeLoading() {
-    const el = document.querySelector(".loading-skeleton");
-    if (el.classList.contains("loading-skeleton")) {
-        el.classList.remove("loading-skeleton");
-    }
-
-    // zoom
-    // var options = {
-    //     zoomWidth: 200,
-    //     zoomHeight: 200,
-    //     offset: {vertical: 0, horizontal: 10}
-    // };
-    // new ImageZoom(document.getElementById("img-container"), options);
 }

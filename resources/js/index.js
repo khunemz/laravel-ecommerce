@@ -3,8 +3,6 @@ require("handlebars/runtime");
 const Mustache = require('mustache');
 /** by chutipong roobklom */
 
-const BASE_URL = window.location.href;
-
 const RENDER_HBS = function (templateId, targetId, data) {
     var template = document.getElementById(templateId).innerHTML;
     // var compiled_template = Handlebars.compile(template);
@@ -50,13 +48,6 @@ $(document).ready(function () {
       data.limit = limit;
       getProducts(that.PAGE, limit, that.CATEGORY);
   });
-
-  function finalizeLoading() {
-      const el = document.querySelector(".loading-skeleton");
-      if (el.classList.contains("loading-skeleton")) {
-          el.classList.remove("loading-skeleton");
-      }
-  }
 
   function getProducts(page, limit, category) {
       var search = "";

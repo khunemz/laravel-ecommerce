@@ -6114,8 +6114,6 @@ var Mustache = __webpack_require__(/*! mustache */ "./node_modules/mustache/must
 /** by chutipong roobklom */
 
 
-var BASE_URL = window.location.href;
-
 var RENDER_HBS = function RENDER_HBS(templateId, targetId, data) {
   var template = document.getElementById(templateId).innerHTML; // var compiled_template = Handlebars.compile(template);
 
@@ -6156,14 +6154,6 @@ $(document).ready(function () {
     data.limit = limit;
     getProducts(that.PAGE, limit, that.CATEGORY);
   });
-
-  function finalizeLoading() {
-    var el = document.querySelector(".loading-skeleton");
-
-    if (el.classList.contains("loading-skeleton")) {
-      el.classList.remove("loading-skeleton");
-    }
-  }
 
   function getProducts(page, limit, category) {
     var search = "";

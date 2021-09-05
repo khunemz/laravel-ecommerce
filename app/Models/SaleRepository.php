@@ -17,9 +17,11 @@ class SaleRepository extends BaseRepository
   public function getBasketItems($customer_id) {
     $results = DB::select(@"
     SELECT 
-      bi.id, 
-      p.product_code , 
-      p.title, p.description ,
+        bi.id, 
+        p.product_code , 
+        p.title, 
+        p.img_path,
+        p.description ,
         bi.quantity ,
         u.name as unit_name,
         bi.price , 

@@ -49,7 +49,7 @@
         <hr class="d-md-none text-white-50">           
         <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
           <li class="nav-item">
-            <a class="nav-link p-2"  href="{{ url('sale/viewbasket') }}">
+            <a class="nav-link p-2"  href="{{ url('sale/viewbasket/1') }}">
               <div id="shopping-cart">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
                 <span class='badge badge-warning' id='basket-count'></span>
@@ -76,6 +76,27 @@
 
   <!-- START: content -->
   <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i></a></li>
+      <?php $segments = ''; ?>
+      
+  </ol>
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li>
+        <a href="#"><i class="fa fa-dashboard"></i></a>
+      </li>
+      @foreach(Request::segments() as $segment)
+        <?php $segments .= '/'.$segment; ?>
+        <li class="breadcrumb-item">
+          <a href="javascript:void(0)">{{$segment}}</a>
+        </li>
+      @endforeach
+      
+    </ol>
+  </nav>
+  
     @yield('content')
   </div>
   <!-- END: content -->
@@ -98,8 +119,16 @@
       }
     })
     .fail(function(data, xhrStatus, jqXHR) {
-
+      console.log(xhrStatus);
     });
+
+    const finalizeLoading = function() {
+      const el = document.querySelector(".loading-skeleton");
+      if (el.classList.contains("loading-skeleton")) {
+          el.classList.remove("loading-skeleton");
+      }
+    }
+    
   </script>
   @yield('hbs_template')
   <script src="{{ url('js/app.js') }}"></script>

@@ -28,11 +28,11 @@ class SaleController extends Controller
     return response()->json($response);
   }
 
-  public function getBasket($id) {  
+  public function getBasket($customer_id) {  
     $repo = new SaleRepository();
-    $basket = $repo->getBasket($id);
-    $basket_items = $repo->getBasketItems($id);
-    
+    $basket = $repo->getBasket($customer_id);
+    $basket_items = $repo->getBasketItems($customer_id);
+
     $response = [
       'status' => 201,
       'message' => 'success',
@@ -42,5 +42,15 @@ class SaleController extends Controller
       ]
     ];
     return response()->json($response);
+  }
+
+  public function viewbasket($customer_id) {
+    $repo = new SaleRepository();
+    $basket = $repo->getBasket($customer_id);
+    $basket_items = $repo->getBasketItems($customer_id);
+    return view('sale.viewbasket', [
+      'basket' => $basket,
+      'basket_items' => $basket_items
+    ]);
   }
 }
