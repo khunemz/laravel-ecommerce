@@ -413,6 +413,27 @@ input.error {
 .adjust-quantity {
     display: grid;
     grid-template-columns: 10% 30% 10%;
-    gap: 10px;
-    margin: 10px 0;
+    gap: 15px;
+    margin: 15px 0;
 }
+
+
+.badge {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+  }
+  
+  .label-warning[href],
+  .badge-warning[href] {
+    background-color: #c67605;
+  }
+  #basket-count {
+      font-size: 14px;
+      background: #ff0000;
+      color: #fff;
+      padding: 2px 7px;
+      vertical-align: top;
+      margin-left: -10px; 
+  }
+  

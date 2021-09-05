@@ -6551,7 +6551,10 @@ $(document).ready(function () {
     };
     $.post("".concat(BASE_URL, "/sale/addCart"), data).done(function (data, xhrStatus, jqXHR) {
       if (xhrStatus == "success") {
-        console.log('success', data); // update basket badge
+        console.log('success', data);
+        var basket_count = data.data.total_quantity; // $('#basket-count').val(basket_count);
+
+        document.getElementById('basket-count').innerHTML = basket_count;
       }
     }).fail(function (data, xhrStatus, jqXHR) {
       console.log(jqXHR);
