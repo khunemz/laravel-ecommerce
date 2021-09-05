@@ -224,7 +224,7 @@ root {
 
 /** spinner */
 
-.wrapper {
+/* .wrapper {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -322,16 +322,13 @@ root {
 .spanner,
 .overlay {
     opacity: 0;
-    /* -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s; */
 }
 
 .spanner.show,
 .overlay.show {
     opacity: 0.5;
     height: 100%;
-}
+} */
 
 /** spinner */
 

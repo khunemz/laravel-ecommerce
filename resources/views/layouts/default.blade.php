@@ -136,7 +136,6 @@
 
     jQuery.ajaxSetup({
       beforeSend: function() {
-
         document.getElementById('overlay').classList.add('show');
         document.getElementById('spanner').classList.add('show');
         $('#loader').show();
