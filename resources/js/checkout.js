@@ -34,19 +34,19 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
 $(document).ready(function () {
     finalizeLoading();
 
-    const elems = document.getElementsByClassName('delete-button');
-    for (let i = 0; i < elems.length; i++) {
-        const element = elems[i];
-        element.addEventListener('click', function(e) {
-            const dataSet = this.dataset;
-            const basket_item_id = dataSet.id;            
-            delete_item(basket_item_id);
-        });
-    }
+    // const elems = document.getElementsByClassName('delete-button');
+    // for (let i = 0; i < elems.length; i++) {
+    //     const element = elems[i];
+    //     element.addEventListener('click', function(e) {
+    //         const dataSet = this.dataset;
+    //         const basket_item_id = dataSet.id;            
+    //         delete_item(basket_item_id);
+    //     });
+    // }
 });
 
 function disabled(id) {
-    document.getElementById(id).classList.add("disabled");
+document.getElementById(id).classList.add("disabled");
 }
 
 function enable(id) {

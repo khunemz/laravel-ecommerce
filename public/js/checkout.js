@@ -5322,9 +5322,9 @@ if ( true && (void 0)) {
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!************************************!*\
-  !*** ./resources/js/viewbasket.js ***!
-  \************************************/
+/*!**********************************!*\
+  !*** ./resources/js/checkout.js ***!
+  \**********************************/
 var Handlebars = __webpack_require__(/*! handlebars */ "./node_modules/handlebars/lib/index.js");
 
 __webpack_require__(/*! handlebars/runtime */ "./node_modules/handlebars/dist/cjs/handlebars.runtime.js");
@@ -5357,17 +5357,15 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
   return (ds ? num.replace(".", ds) : num).replace(new RegExp(re, "g"), "$&" + ts);
 });
 $(document).ready(function () {
-  finalizeLoading();
-  var elems = document.getElementsByClassName('delete-button');
-
-  for (var i = 0; i < elems.length; i++) {
-    var element = elems[i];
-    element.addEventListener('click', function (e) {
-      var dataSet = this.dataset;
-      var basket_item_id = dataSet.id;
-      delete_item(basket_item_id);
-    });
-  }
+  finalizeLoading(); // const elems = document.getElementsByClassName('delete-button');
+  // for (let i = 0; i < elems.length; i++) {
+  //     const element = elems[i];
+  //     element.addEventListener('click', function(e) {
+  //         const dataSet = this.dataset;
+  //         const basket_item_id = dataSet.id;            
+  //         delete_item(basket_item_id);
+  //     });
+  // }
 });
 
 function disabled(id) {

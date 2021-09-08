@@ -138,4 +138,31 @@ class SaleRepository extends BaseRepository
     $results = DB::select(@"select sum(bi.quantity) as total_quantity from basket_items bi  where customer_id = ? and status = 0 and delflag = 0;",[$customer_id]);
     return $results;
   } 
+
+
+  public function getCustomerAddress($customer_id) {
+    $results = DB::select(@"
+    SELECT c.id as customer_id, 
+        c.name, 
+        c.email , 
+        c.tel , 
+        ca.`type`, 
+        ca.is_default,
+        a.id  as address_id, 
+        a.name as shipto_name , 
+        a.address_1 , 
+        a.address_2  , 
+        p.name , 
+        d.name , 
+        subd.name ,
+        zipcode 
+      from addresses a inner join customer_address ca on a.id  = ca.address_id 
+      inner join customers c on c.id  = ca.customer_id 
+      inner join province p on p.id  = a.province_id 
+      inner join district d on d.id  = a.district_id 
+      inner join subdistrict subd on subd.id  = a.subdistrict_id 
+    where a.delflag = 0 and c.delflag  = 0 and ca.delflag = 0 and customer_id = ?;
+    ",[$customer_id]);
+    return $results;
+  } 
 }

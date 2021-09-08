@@ -2,6 +2,28 @@
 
 
 @section('content')
+
+<!-- Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="confirmModalLabel">
+          ลบรายการออกจากรถเข็น
+        </h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        คุณต้องการที่จะลบรายการสินค้าชิ้นนี้ใช่หรือไม่?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+        <button type="button" class="btn btn-outline-primary confirm-button">ยืนยัน</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @if (count($basket) > 0)
 <div class="card-view-basket loading-skeleton">
   <div class="card card-total-basket">

@@ -55,6 +55,26 @@ class SaleController extends Controller
     ]);
   }
 
+  public function checkout() {
+    $customer_id = 1;
+    $repo = new SaleRepository();
+    $customer_address = $repo->getCustomerAddress($customer_id);
+    return view('sale.checkout', [
+      'customer_address' => $customer_address
+    ]);
+  }
+
+  public function presubmit() {
+    $customer_id = 1;
+    $repo = new SaleRepository();
+    $basket = $repo->getBasket($customer_id);
+    $basket_items = $repo->getBasketItems($customer_id);    
+    return view('sale.checkout', [
+      'basket' => $basket,
+      'basket_items' => $basket_items
+    ]);
+  }
+
   public function delete($id) {  
     $repo = new SaleRepository();
     $result = $repo->deleteBasketItem($id);
