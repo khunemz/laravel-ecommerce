@@ -33,7 +33,7 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
 
 $(document).ready(function () {
     finalizeLoading(); 
-    getProvinces();
+    // getProvinces();
 });
 
 function disabled(id) {

@@ -59,9 +59,15 @@ class SaleController extends Controller
     $customer_id = 1;
     $repo = new SaleRepository();
     $customer_address = $repo->getCustomerAddress($customer_id);
-
+    $repo = new SaleRepository();
+    $provinces = $repo->getProvince();
+    $districts = $repo->getDistricts();
+    $subdistricts = $repo->getSubDistricts();
     return view('sale.checkout', [
       'customer_address' => $customer_address,
+      'provinces' => $provinces,
+      'districts' => $districts,
+      'subdistricts' => $subdistricts
     ]);
   }
 

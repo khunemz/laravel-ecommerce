@@ -66,8 +66,23 @@
                 </div>
                 <!-- END: tel -->
 
-                <!-- START: province -->
-                <div id="province_target"></div>                
+                <!-- START: province -->                
+                <div class="mb-3">
+                  <label for="province" class="form-label">
+                    Province
+                  </label>
+                  <select class="form-select" 
+                    aria-label="province" 
+                    aria-describedby="province">
+                    <option selected disabled>Choose your province</option>
+                    @foreach ($provinces as $item)
+                      <option value="{{$item->province_id}}">{{$item->province_name}}</option>
+                    @endforeach
+                  </select>
+                  <div id="province" class="form-text">
+                    Choose your province
+                  </div>
+                </div>              
                 <!-- END: province -->
 
               </div>
@@ -119,6 +134,25 @@
                   </div>
                 </div>
                 <!-- END: type -->
+
+                <!-- START: district -->                
+                <div class="mb-3">
+                  <label for="district" class="form-label">
+                    district
+                  </label>
+                  <select class="form-select" 
+                    aria-label="district" 
+                    aria-describedby="district">
+                    <option selected disabled>Choose your district</option>
+                    @foreach ($districts as $item)
+                      <option value="{{$item->district_id}}">{{$item->district_name}}</option>
+                    @endforeach
+                  </select>
+                  <div id="district" class="form-text">
+                    Choose your district
+                  </div>
+                </div>              
+                <!-- END: district -->
                
               </div>
             </div>
@@ -144,23 +178,5 @@
 @endsection
 
 @section('script')
-  <script id="province_template" type="text/x-handlebars-template">
-    <div class="mb-3">
-      <label for="province" class="form-label">
-        Province
-      </label>
-      <select class="form-select" 
-        aria-label="province" 
-        aria-describedby="province">
-        <option selected disabled>Choose your province</option>
-        @{{#each provinces}}
-          <option value="@{{this.province_id}}">@{{this.province_name}}</option>
-        @{{/each}}
-      </select>
-      <div id="province" class="form-text">
-        Choose your province
-      </div>
-    </div>
-  </script>
   <script type="text/javascript" src="{{ url('js/checkout.js') }}"></script>
 @endsection

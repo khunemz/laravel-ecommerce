@@ -176,7 +176,10 @@ class SaleRepository extends BaseRepository
   }
 
   public function getDistricts() {
-    
+    $results = DB::select(@"
+      SELECT  d.id as district_id , d.name as district_name from district d where d.delflag  = 0
+    ",[]);
+    return $results;
   }
 
   public function getSubDistricts() {

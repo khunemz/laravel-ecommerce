@@ -5357,8 +5357,7 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
   return (ds ? num.replace(".", ds) : num).replace(new RegExp(re, "g"), "$&" + ts);
 });
 $(document).ready(function () {
-  finalizeLoading();
-  getProvinces();
+  finalizeLoading(); // getProvinces();
 });
 
 function disabled(id) {
