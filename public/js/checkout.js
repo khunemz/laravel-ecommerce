@@ -5357,15 +5357,8 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
   return (ds ? num.replace(".", ds) : num).replace(new RegExp(re, "g"), "$&" + ts);
 });
 $(document).ready(function () {
-  finalizeLoading(); // const elems = document.getElementsByClassName('delete-button');
-  // for (let i = 0; i < elems.length; i++) {
-  //     const element = elems[i];
-  //     element.addEventListener('click', function(e) {
-  //         const dataSet = this.dataset;
-  //         const basket_item_id = dataSet.id;            
-  //         delete_item(basket_item_id);
-  //     });
-  // }
+  finalizeLoading();
+  getProvinces();
 });
 
 function disabled(id) {
@@ -5383,6 +5376,22 @@ function delete_item(id) {
     }
   }).fail(function (data, xhrStatus, jqXHR) {
     console.log(xhrStatus);
+  });
+}
+
+function getProvinces() {
+  $.ajax({
+    url: "/sale/getProvinces",
+    success: function success(data, xhrStatus, jqXHR) {
+      if (xhrStatus == "success") {
+        RENDER_HBS("province_template", "province_target", {
+          provinces: data
+        });
+      }
+    },
+    error: function error(data, xhrStatus, jqXHR) {
+      console.log(xhrStatus);
+    }
   });
 }
 })();

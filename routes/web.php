@@ -30,6 +30,8 @@ Route::get('/sale/getBasket/{id}', [SaleController::class, 'getBasket']);
 Route::get('/sale/viewbasket', [SaleController::class, 'viewbasket']);
 Route::get('/sale/delete/{id}', [SaleController::class, 'delete']);
 Route::get('/sale/checkout', [SaleController::class, 'checkout']);
+Route::get('/sale/getProvinces', [SaleController::class, 'getProvinces']);
+
 
 
 

@@ -50,6 +50,26 @@
                   </div>
                 </div>
                 <!-- END: Name -->
+
+                <!-- START: tel -->
+                <div class="mb-3">
+                  <label for="tel" class="form-label">
+                    Tel</label>
+                  <input type="text" class="form-control" 
+                    id="tel" 
+                    placeholder="0000000000"
+                    aria-describedby="tel"
+                  >
+                  <div id="tel" class="form-text">
+                    Please add your tel
+                  </div>
+                </div>
+                <!-- END: tel -->
+
+                <!-- START: province -->
+                <div id="province_target"></div>                
+                <!-- END: province -->
+
               </div>
               <div class="col-6">
                 <!-- START: ADDRESS 2 -->
@@ -67,20 +87,39 @@
                 </div>
                 <!-- END: ADDRESS 2 -->
 
-                <!-- START: tel -->
+                <!-- START: email -->
                 <div class="mb-3">
-                  <label for="tel" class="form-label">
-                    Tel</label>
-                  <input type="text" class="form-control" 
-                    id="tel" 
-                    placeholder="0000000000"
-                    aria-describedby="tel"
+                  <label for="email" class="form-label">
+                    Email</label>
+                  <input type="email" class="form-control" 
+                    id="email" 
+                    placeholder="email@example.com"
+                    aria-describedby="email"
                   >
-                  <div id="tel" class="form-text">
-                    Please add your tel
+                  <div id="email" class="form-text">
+                    Please add your email
                   </div>
                 </div>
-                <!-- END: tel -->
+                <!-- END: email -->
+
+                <!-- START: type -->
+                <div class="mb-3">
+                  <label for="type" class="form-label">
+                    Address type
+                  </label>
+                  <select class="form-select" 
+                    aria-label="type" 
+                    aria-describedby="type">
+                    <option selected disabled>Choose your address type</option>
+                    <option value="1">Home</option>
+                    <option value="2">Work</option>
+                  </select>
+                  <div id="type" class="form-text">
+                    Please add your address type
+                  </div>
+                </div>
+                <!-- END: type -->
+               
               </div>
             </div>
           </form>
@@ -105,5 +144,23 @@
 @endsection
 
 @section('script')
+  <script id="province_template" type="text/x-handlebars-template">
+    <div class="mb-3">
+      <label for="province" class="form-label">
+        Province
+      </label>
+      <select class="form-select" 
+        aria-label="province" 
+        aria-describedby="province">
+        <option selected disabled>Choose your province</option>
+        @{{#each provinces}}
+          <option value="@{{this.province_id}}">@{{this.province_name}}</option>
+        @{{/each}}
+      </select>
+      <div id="province" class="form-text">
+        Choose your province
+      </div>
+    </div>
+  </script>
   <script type="text/javascript" src="{{ url('js/checkout.js') }}"></script>
 @endsection

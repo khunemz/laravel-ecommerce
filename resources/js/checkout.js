@@ -32,21 +32,12 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
 });
 
 $(document).ready(function () {
-    finalizeLoading();
-
-    // const elems = document.getElementsByClassName('delete-button');
-    // for (let i = 0; i < elems.length; i++) {
-    //     const element = elems[i];
-    //     element.addEventListener('click', function(e) {
-    //         const dataSet = this.dataset;
-    //         const basket_item_id = dataSet.id;            
-    //         delete_item(basket_item_id);
-    //     });
-    // }
+    finalizeLoading(); 
+    getProvinces();
 });
 
 function disabled(id) {
-document.getElementById(id).classList.add("disabled");
+    document.getElementById(id).classList.add("disabled");
 }
 
 function enable(id) {
@@ -55,12 +46,30 @@ function enable(id) {
 
 function delete_item(id) {
     $.get(`${BASE_URL}/sale/delete/${id}`, {})
-    .done(function(data, xhrStatus, jqXHR) {
-        if (xhrStatus == "success") {
-            window.location.reload();
-        }
-    })
-    .fail(function(data, xhrStatus, jqXHR) {
-        console.log(xhrStatus)
-    })
+        .done(function (data, xhrStatus, jqXHR) {
+            if (xhrStatus == "success") {
+                window.location.reload();
+            }
+        })
+        .fail(function (data, xhrStatus, jqXHR) {
+            console.log(xhrStatus);
+        });
+}
+
+function getProvinces() {
+    $.ajax({
+        url: "/sale/getProvinces",
+        success: function (data, xhrStatus, jqXHR) {
+            if (xhrStatus == "success") {
+                RENDER_HBS(
+                    "province_template",
+                    "province_target",
+                    { provinces: data }
+                );
+            }
+        },
+        error: function (data, xhrStatus, jqXHR) {
+            console.log(xhrStatus);
+        },
+    });
 }
