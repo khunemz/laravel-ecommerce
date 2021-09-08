@@ -44,7 +44,8 @@ class SaleController extends Controller
     return response()->json($response);
   }
 
-  public function viewbasket($customer_id) {
+  public function viewbasket() {
+    $customer_id = 1;
     $repo = new SaleRepository();
     $basket = $repo->getBasket($customer_id);
     $basket_items = $repo->getBasketItems($customer_id);

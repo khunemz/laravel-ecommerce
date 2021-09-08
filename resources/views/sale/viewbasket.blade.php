@@ -103,7 +103,7 @@
 
       <div class="payment-button row float-right">
         <div class="d-grid gap-2 col-6 mx-auto">
-          <button class="btn btn-success">ดำเนินการชำระเงิน</button>
+          <a class="btn btn-success" href="{{url('sale/checkout')}}">ดำเนินการชำระเงิน</a>
         </div>
       </div>
     </div>
