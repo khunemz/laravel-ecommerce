@@ -5387,6 +5387,10 @@ function getProvinces() {
         RENDER_HBS("province_template", "province_target", {
           provinces: data
         });
+        document.getElementById('province_combobox').addEventListener('click', function (e) {
+          var provinceId = e.target.value;
+          getDistricts(provinceId);
+        });
       }
     },
     error: function error(data, xhrStatus, jqXHR) {
@@ -5402,6 +5406,11 @@ function getDistricts(province_id) {
       if (xhrStatus == "success") {
         RENDER_HBS("district_template", "district_target", {
           districts: data
+        });
+        document.getElementById('district_combobox').addEventListener('click', function (e) {
+          var district_id = e.target.value;
+          console.log('district id: ', district_id);
+          getSubDistricts(district_id);
         });
       }
     },

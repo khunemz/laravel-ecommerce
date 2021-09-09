@@ -178,15 +178,15 @@
 
 <script id="district_template" type="text/x-handlebars-template">
   <div class="mb-3">
-    <label for="district" class="form-label"
-    id="district_combobox"
-    
-    >
+    <label for="district" class="form-label">
       district
     </label>
     <select class="form-select" 
       aria-label="district" 
-      aria-describedby="district">
+      aria-describedby="district"
+      id="district_combobox"
+    
+      >
       <option selected disabled>Choose your district</option>
       @{{#each districts}}
         <option value="@{{this.district_id}}">@{{this.district_name}}</option>
@@ -207,7 +207,9 @@
     </label>
     <select class="form-select" 
       aria-label="subdistrict" 
-      aria-describedby="subdistrict">
+      aria-describedby="subdistrict"
+      id="subdistrict_combobox"
+      >
       <option selected disabled>Choose your subdistrict</option>
       @{{#each subdistricts}}
         <option value="@{{this.subdistrict_id}}">@{{this.subdistrict_name}}</option>

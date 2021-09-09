@@ -34,6 +34,7 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
 $(document).ready(function () {
     finalizeLoading(); 
     getProvinces();
+
 });
 
 function disabled(id) {
@@ -68,6 +69,11 @@ function getProvinces() {
                         provinces: data 
                     }
                 );
+
+                document.getElementById('province_combobox').addEventListener('click', function(e){
+                    const provinceId = e.target.value;
+                    getDistricts(provinceId);
+                });
             }
         },
         error: function (data, xhrStatus, jqXHR) {
@@ -88,6 +94,11 @@ function getDistricts(province_id) {
                         districts: data 
                     }
                 );
+                document.getElementById('district_combobox').addEventListener('click', function(e){
+                    const district_id = e.target.value;
+                    console.log('district id: ', district_id)
+                    getSubDistricts(district_id);
+                })
             }
         },
         error: function (data, xhrStatus, jqXHR) {
