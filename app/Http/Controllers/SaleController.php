@@ -60,14 +60,8 @@ class SaleController extends Controller
     $repo = new SaleRepository();
     $customer_address = $repo->getCustomerAddress($customer_id);
     $repo = new SaleRepository();
-    $provinces = $repo->getProvince();
-    $districts = $repo->getDistricts();
-    $subdistricts = $repo->getSubDistricts();
     return view('sale.checkout', [
       'customer_address' => $customer_address,
-      'provinces' => $provinces,
-      'districts' => $districts,
-      'subdistricts' => $subdistricts
     ]);
   }
 
@@ -77,15 +71,15 @@ class SaleController extends Controller
     return response()->json($provinces);
   }
 
-  public function getDistricts() {
+  public function getDistricts($id) {
     $repo = new SaleRepository();
-    $districts = $repo->getDistricts();
+    $districts = $repo->getDistricts($id);
     return response()->json($districts);
   }
 
-  public function getSubDistricts() {
+  public function getSubDistricts($id) {
     $repo = new SaleRepository();
-    $subdistricts = $repo->getSubDistricts();
+    $subdistricts = $repo->getSubDistricts($id);
     return response()->json($subdistricts);
   }
 

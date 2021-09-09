@@ -160,9 +160,9 @@ class SaleRepository extends BaseRepository
       zipcode 
     from addresses a inner join customer_address ca on a.id  = ca.address_id 
     inner join customers c on c.id  = ca.customer_id 
-    inner join province p on p.id  = a.province_id 
-    inner join district d on d.id  = a.district_id 
-    inner join subdistrict subd on subd.id  = a.subdistrict_id 
+    left join province p on p.id  = a.province_id 
+    left join district d on d.id  = a.district_id 
+    left join subdistrict subd on subd.id  = a.subdistrict_id 
     where a.delflag = 0 and c.delflag  = 0 and ca.delflag = 0 and customer_id = ?;
     ",[$customer_id]);
     return $results;
@@ -175,14 +175,17 @@ class SaleRepository extends BaseRepository
     return $results;
   }
 
-  public function getDistricts() {
+  public function getDistricts($province_id) {
     $results = DB::select(@"
-      SELECT  d.id as district_id , d.name as district_name from district d where d.delflag  = 0
-    ",[]);
+      SELECT  d.id as district_id , d.name as district_name from district d where d.delflag  = 0 and d.province_id = ?
+    ",[$province_id]);
     return $results;
   }
 
-  public function getSubDistricts() {
-    
+  public function getSubDistricts($district_id) {
+    $results = DB::select(@"
+    SELECT  d.id as subdistrict_id , d.name as subdistrict_name from subdistrict d where d.delflag  = 0 and d.district_id = ?
+  ",[$district_id]);
+  return $results;
   }
 }

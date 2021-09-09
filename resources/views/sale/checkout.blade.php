@@ -67,23 +67,13 @@
                 <!-- END: tel -->
 
                 <!-- START: province -->                
-                <div class="mb-3">
-                  <label for="province" class="form-label">
-                    Province
-                  </label>
-                  <select class="form-select" 
-                    aria-label="province" 
-                    aria-describedby="province">
-                    <option selected disabled>Choose your province</option>
-                    @foreach ($provinces as $item)
-                      <option value="{{$item->province_id}}">{{$item->province_name}}</option>
-                    @endforeach
-                  </select>
-                  <div id="province" class="form-text">
-                    Choose your province
-                  </div>
-                </div>              
+                <div id="province_target"></div>           
                 <!-- END: province -->
+
+
+                <!-- START: subdistrict -->                
+                <div id="subdistrict_target"></div>    
+                <!-- END: subdistrict -->
 
               </div>
               <div class="col-6">
@@ -136,22 +126,7 @@
                 <!-- END: type -->
 
                 <!-- START: district -->                
-                <div class="mb-3">
-                  <label for="district" class="form-label">
-                    district
-                  </label>
-                  <select class="form-select" 
-                    aria-label="district" 
-                    aria-describedby="district">
-                    <option selected disabled>Choose your district</option>
-                    @foreach ($districts as $item)
-                      <option value="{{$item->district_id}}">{{$item->district_name}}</option>
-                    @endforeach
-                  </select>
-                  <div id="district" class="form-text">
-                    Choose your district
-                  </div>
-                </div>              
+                <div id="district_target"></div>        
                 <!-- END: district -->
                
               </div>
@@ -178,5 +153,72 @@
 @endsection
 
 @section('script')
-  <script type="text/javascript" src="{{ url('js/checkout.js') }}"></script>
+
+<script id="province_template" type="text/x-handlebars-template">
+  <div class="mb-3">
+    <label for="province" class="form-label">
+      Province
+    </label>
+    <select class="form-select" 
+      aria-label="province" 
+      aria-describedby="province"
+      id="province_combobox"
+      >
+      <option selected disabled>Choose your province</option>
+      @{{#each provinces}}
+        <option value="@{{this.province_id}}">@{{this.province_name}}</option>
+      @{{/each}}
+    </select>
+    <div id="province" class="form-text">
+      Choose your province
+    </div>
+  </div>
+</script>
+
+
+<script id="district_template" type="text/x-handlebars-template">
+  <div class="mb-3">
+    <label for="district" class="form-label"
+    id="district_combobox"
+    
+    >
+      district
+    </label>
+    <select class="form-select" 
+      aria-label="district" 
+      aria-describedby="district">
+      <option selected disabled>Choose your district</option>
+      @{{#each districts}}
+        <option value="@{{this.district_id}}">@{{this.district_name}}</option>
+      @{{/each}}
+    </select>
+    <div id="district" class="form-text">
+      Choose your district
+    </div>
+  </div>
+</script>
+
+
+
+<script id="subdistrict_template" type="text/x-handlebars-template">
+  <div class="mb-3">
+    <label for="subdistrict" class="form-label">
+      Sub District
+    </label>
+    <select class="form-select" 
+      aria-label="subdistrict" 
+      aria-describedby="subdistrict">
+      <option selected disabled>Choose your subdistrict</option>
+      @{{#each subdistricts}}
+        <option value="@{{this.subdistrict_id}}">@{{this.subdistrict_name}}</option>
+      @{{/each}}
+    </select>
+    <div id="subdistrict" class="form-text">
+      Choose your Sub District
+    </div>
+  </div>
+</script>
+
+
+<script type="text/javascript" src="{{ url('js/checkout.js') }}"></script>
 @endsection

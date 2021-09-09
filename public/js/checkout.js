@@ -5357,7 +5357,8 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
   return (ds ? num.replace(".", ds) : num).replace(new RegExp(re, "g"), "$&" + ts);
 });
 $(document).ready(function () {
-  finalizeLoading(); // getProvinces();
+  finalizeLoading();
+  getProvinces();
 });
 
 function disabled(id) {
@@ -5380,11 +5381,43 @@ function delete_item(id) {
 
 function getProvinces() {
   $.ajax({
-    url: "/sale/getProvinces",
+    url: "/sale/get_provinces",
     success: function success(data, xhrStatus, jqXHR) {
       if (xhrStatus == "success") {
         RENDER_HBS("province_template", "province_target", {
           provinces: data
+        });
+      }
+    },
+    error: function error(data, xhrStatus, jqXHR) {
+      console.log(xhrStatus);
+    }
+  });
+}
+
+function getDistricts(province_id) {
+  $.ajax({
+    url: "/sale/get_districts/".concat(province_id),
+    success: function success(data, xhrStatus, jqXHR) {
+      if (xhrStatus == "success") {
+        RENDER_HBS("district_template", "district_target", {
+          districts: data
+        });
+      }
+    },
+    error: function error(data, xhrStatus, jqXHR) {
+      console.log(xhrStatus);
+    }
+  });
+}
+
+function getSubDistricts(district_id) {
+  $.ajax({
+    url: "/sale/get_sub_districts/".concat(district_id),
+    success: function success(data, xhrStatus, jqXHR) {
+      if (xhrStatus == "success") {
+        RENDER_HBS("subdistrict_template", "subdistrict_target", {
+          subdistricts: data
         });
       }
     },
