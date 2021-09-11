@@ -212,6 +212,7 @@ class SaleRepository extends BaseRepository
       c.name, 
       c.email , 
       c.tel , 
+      ca.id as customer_address_id,
       ca.`type`, 
       ca.is_default,
       a.id  as address_id, 

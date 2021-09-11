@@ -3,27 +3,6 @@
 
 @section('content')
 
-<!-- Modal -->
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h6 class="modal-title" id="confirmModalLabel">
-          ลบรายการออกจากรถเข็น
-        </h6>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        คุณต้องการที่จะลบรายการสินค้าชิ้นนี้ใช่หรือไม่?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-        <button type="button" class="btn btn-outline-primary confirm-button">ยืนยัน</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 @if (count($basket) > 0)
 <div class="card-view-basket loading-skeleton">
   <div class="card card-total-basket">
@@ -47,9 +26,7 @@
             <span>
               {{ number_format($item->grand_amount) }} บาท
             </span>
-            <span class="trash-icon delete-button" data-id={{ $item->id }}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
-            </span>
+            
           </div>
           <div class="adjust-quantity-input">
             <section class="">
@@ -100,6 +77,7 @@
         <div class="row">
           <div class="col-sm-11">
             <div class="card-text">
+              <input type="hidden" value="{{ $item->customer_address_id }}" id="customer_address_id" />
               <header class="d-block">
                 <h4>{{ $item->name}}</h4>
               </header>
@@ -120,7 +98,7 @@
     <div class="card-body">
       <div class="payment-button row float-right">
         <div class="d-grid gap-2 col-6 mx-auto">
-          <a class="btn btn-success" href="{{url('sale/checkout')}}">ดำเนินการชำระเงิน</a>
+          <button class="btn btn-success" id="make-order-button">ดำเนินการชำระเงิน</button>
         </div>
       </div>
     </div>
@@ -135,5 +113,5 @@
 @endsection
 
 @section('script')
-  <script type="text/javascript" src="{{ url('js/viewbasket.js') }}"></script>
+  <script type="text/javascript" src="{{ url('js/presubmit.js') }}"></script>
 @endsection

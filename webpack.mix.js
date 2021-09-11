@@ -16,6 +16,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/view.js', 'public/js')
     .js('resources/js/viewbasket.js', 'public/js')
     .js('resources/js/checkout.js', 'public/js')
+    .js('resources/js/presubmit.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         //
     ])
