@@ -126,7 +126,7 @@ class SaleController extends Controller
       ];
       return response()->json($response);
     } catch (\Throwable $th) {
-      //throw $th;
+      throw $th;
     }
   }
 

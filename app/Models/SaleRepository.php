@@ -88,6 +88,10 @@ class SaleRepository extends BaseRepository
     return $result;
   }
 
+  public function emptyBasket($customer_id) {
+    $result = DB::delete(@"DELETE FROM ecommerce.basket_items WHERE customer_id=?;", [$customer_id]);
+    return $result;
+  }
   public function getBasketItems($customer_id) {
     $results = DB::select(@"
     SELECT 
@@ -97,7 +101,9 @@ class SaleRepository extends BaseRepository
         p.title, 
         p.img_path,
         p.description ,
+        bi.seq_no,
         bi.quantity ,
+        bi.unit_id,
         u.name as unit_name,
         bi.price , 
         bi.grand_amount , 
@@ -306,14 +312,13 @@ class SaleRepository extends BaseRepository
     // insert sale order by select from basket
     $customer_id = 1;
     
-    $basket = $this->getBasket($customer_id);
-    $quantity = $basket['sum_quantity'];
-    $grand_amount = $basket['sum_grand_amount'];
-    $tax_amount = $basket['sum_tax_amount'];
-    $discount_amount = $basket['sum_discount_amount'];
-
-    $net_amount = $basket['sum_net_amount'];
-    $ondate = date("F j, Y \a\t g:ia");
+    $basket = collect($this->getBasket($customer_id))->firstOrFail();
+    $quantity = $basket->sum_quantity;
+    $grand_amount = $basket->sum_grand_amount;
+    $tax_amount = $basket->sum_tax_amount;
+    $discount_amount = $basket->sum_discount_amount;
+    $net_amount = $basket->sum_net_amount;
+    $ondate = date('Y-m-d H:i:s');
     $status = 0;
     $taxrate = 0.07;
     $docno = $this->getDocNo();
@@ -338,7 +343,7 @@ class SaleRepository extends BaseRepository
 
     /** BASKET ITEM */
     $basket_items = $this->getBasketItems($customer_id);
-
+    $tax_rate = 0.07;
 
     foreach ($basket_items as $key => $item) {
       # code...
@@ -357,13 +362,12 @@ class SaleRepository extends BaseRepository
           created_at, created_by, updated_at, updated_by, delflag)
           VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP, -1, 0);
       ",[$order_id, $item->seq_no,$item->product_id, $item->unit_id, $item->quantity,
-        $item->tax_rate , $item->tax_amount, $item->discount_amount, $item->net_amount    
+        $tax_rate , $item->tax_amount, $item->discount_amount, $item->net_amount    
       ]);
     }
-    
-    // insert payment by select basket
-
     // delete basket
+    $this->emptyBasket($customer_id);
+    return $order_id;
   }
 
   public function getProvince() {
@@ -392,7 +396,7 @@ class SaleRepository extends BaseRepository
     if ($row) {
       // $docno_int = (int)$row;
       // 2021071800001
-      $prev_doc_no = $row->doc_no;
+      $prev_doc_no = $row->docno;
       // check if it is current year and month
       $prev_running = substr($prev_doc_no, 8);
       $prev_day =  substr($prev_doc_no, 6, 2);
