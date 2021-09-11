@@ -8,10 +8,80 @@ use App\Models\ProductRepository;
 
 class SaleRepository extends BaseRepository
 {
-  public function makeOrder($data)
+  public function addAddress($data)
   {
-    $results = DB::insert(@"", []);
-    return $results;
+    $result = false;
+    // insert address
+    $result= DB::insert(@"
+      INSERT INTO ecommerce.addresses
+      (
+        address_1,
+        address_2,
+        name, 
+        email ,
+        tel,
+        `type`, 	
+        taxno, 
+        subdistrict_id, 
+        district_id, 
+        province_id, 
+        zipcode, 
+        created_at, created_by, updated_at, updated_by, delflag)
+      VALUES(?,?,?,?,?,?,?,?,?,?,?, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP, -1, 0);    
+    ", [
+      $data['address_1'], 
+      $data['address_2'],
+      $data['name'],
+      $data['email'],
+      $data['tel'],
+      $data['type'],
+      $data['taxno'],
+      $data['subdistrict_id'],
+      $data['district_id'],
+      $data['province_id'],
+      $data['zipcode'],
+      $data['customer_id'],
+    ]);
+
+    $id = DB::getPdo()->lastInsertId();
+
+    // find exsiting
+
+    $customser_address = DB::table('customer_address')->where([
+      ['address_id', $id], 
+      ['customer_id', $data['customer_id']]
+    ])->first();
+    // insert customer address
+
+    $is_default = 0;
+    $order_rank = 1;
+    if($customser_address == null) {
+      $is_default = 1;
+    } else {
+      $order_rank = $customser_address->order_rank + 1;
+    }
+
+    $result= DB::insert(@"
+    INSERT INTO ecommerce.customer_address
+    (
+      address_id, 
+      customer_id, 
+      `type`, 
+      is_default, 
+      order_rank, 
+      created_at, created_by, updated_at, updated_by, delflag
+    )
+    VALUES(?, ?, ?, ?, ?, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP, -1, 0);
+
+    ", [
+      $id, $data['customer_id'], $data['type'], $is_default, $order_rank
+    ]);
+
+    $id = DB::getPdo()->lastInsertId();
+    $resp = [
+      'customer_address_id' => $id
+    ];
+    return $resp;
   }
 
   public function deleteBasketItem($id)

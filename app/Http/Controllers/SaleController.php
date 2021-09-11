@@ -12,10 +12,7 @@ use Symfony\Component\Console\Input\Input;
 class SaleController extends Controller
 {
   public function addAddress(Request $request)
-  {
-    $address_1 = $request->input('address_1');
-    $address_2 = $request->input('address_2');
-    $address_1 = $request->input('address_1');
+  {    
 
     $validator = Validator::make($request->all(), [
       'address_1' => 'required|max:150',
@@ -31,15 +28,39 @@ class SaleController extends Controller
       'zipcode' => 'required|max:20',
     ]);
 
-
+    
     if ($validator->fails()) {
-      $errors = $validator->errors();
-      $address_1 = $request->old('address_1');
-      
+      $errors = $validator->errors();   
       return redirect('sale/checkout')
         ->withErrors($validator)
         ->withInput();
     } else {
+      $address_1 = $request->input('address_1');
+      $address_2 = $request->input('address_2');
+      $name = $request->input('name');
+      $email = $request->input('email');
+      $tel = $request->input('tel');
+      $type = $request->input('type');
+      $taxno = $request->input('taxno');
+      $subdistrict_id = $request->input('subdistrict_id');
+      $district_id = $request->input('district_id');
+      $province_id = $request->input('province_id');
+      $zipcode = $request->input('zipcode');
+  
+      $data['address_1']    = $address_1;
+      $data['address_2']    = $address_2;
+      $data['name']         = $name;
+      $data['email']        = $email;
+      $data['tel']          = $tel;
+      $data['type']         = $type;
+      $data['taxno']        = $taxno;
+      $data['subdistrict_id'] = $subdistrict_id;
+      $data['district_id']  = $district_id;
+      $data['province_id']  = $province_id;
+      $data['zipcode']      = $zipcode;
+      $data['customer_id']      = 1;
+      $repo = new SaleRepository();
+      $customer_address_id = $repo->addAddress($data);
       return redirect()->action([SaleController::class, 'presubmit']);
     }
   }

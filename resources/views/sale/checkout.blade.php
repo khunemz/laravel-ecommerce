@@ -152,7 +152,7 @@
                   <div class="col-sm-9">
                     <input 
                       type="text" 
-                      name="taxtno"
+                      name="taxno"
                       class="form-control @error('taxno') is-invalid @enderror" 
                       id="taxno" 
                       placeholder="000000000000"
