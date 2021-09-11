@@ -70,6 +70,7 @@ $(document).ready(function () {
         element.addEventListener('click', function(e) {
             const dataSet = this.dataset;
             const basket_item_id = dataSet.id;
+            const product_id = dataSet.productId;
 
             let quantity =  $(`input.basket-item-quantity[data-id=${basket_item_id}]`).val();
             quantity++;
@@ -77,6 +78,7 @@ $(document).ready(function () {
                 $(`input.increase-button[data-id=${basket_item_id}]`).prop('disabled', false);
             }
             $(`input.basket-item-quantity[data-id=${basket_item_id}]`).val(quantity);
+            update_basket(basket_item_id, quantity, product_id);
         });
     }
     const decreaseBtns = document.getElementsByClassName('decrease-button');
@@ -85,6 +87,7 @@ $(document).ready(function () {
         element.addEventListener('click', function(e) {
             const dataSet = this.dataset;
             const basket_item_id = dataSet.id;
+            const product_id = dataSet.productId;
 
             let quantity =  $(`input.basket-item-quantity[data-id=${basket_item_id}]`).val();
             quantity--;
@@ -95,6 +98,8 @@ $(document).ready(function () {
                 $(`input.decrease-button[data-id=${basket_item_id}]`).prop('disabled', false);
             }
             $(`input.basket-item-quantity[data-id=${basket_item_id}]`).val(quantity);
+
+            update_basket(basket_item_id, quantity, product_id);
         });
     }
 
@@ -105,9 +110,8 @@ $(document).ready(function () {
             const quantity = e.target.value;    
             const dataSet = this.dataset;
             const basket_item_id = dataSet.id;
-            console.log('udpate')       
-            
-            update_basket(basket_item_id, quantity);
+            const product_id = dataSet.productId;
+            update_basket(basket_item_id, quantity, product_id);
         });
     }
 
@@ -135,10 +139,12 @@ function delete_item(id) {
     });
 }
 
-function update_basket(id , quantity) {
-    $.get(`${BASE_URL}/sale/update_cart`, {
+function update_basket(id , quantity, product_id) {
+    console.log(product_id);
+    $.post(`${BASE_URL}/sale/update_cart`, {
         _token: CSRF_TOKEN,
         basket_item_id: id,
+        product_id: product_id,
         quantity: quantity,
     })
     .done(function(data, xhrStatus, jqXHR) {

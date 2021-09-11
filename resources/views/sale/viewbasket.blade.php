@@ -31,7 +31,11 @@
           </div>
           <div class="adjust-quantity-input">
             <section class="adjust-quantity">
-              <button class="btn btn-outline-info d-inline-block decrease-button" data-id={{ $item->id }}>-</button>
+              <button 
+                class="btn btn-outline-info d-inline-block decrease-button" 
+                data-id={{ $item->id }}
+                data-product-id={{ $item->product_id }}  
+              >-</button>
               <input
                 type="number" 
                 class="form-control d-inline-block text-center basket-item-quantity" 
@@ -39,8 +43,13 @@
                 min="1" 
                 max="999999999" 
                 data-id={{ $item->id }}
+                data-product-id={{ $item->product_id }}
                 value="{{ $item->quantity }}" />
-              <button class="btn btn-outline-info increase-button" data-id={{ $item->id }}>+</button>
+              <button 
+              class="btn btn-outline-info increase-button" 
+              data-id={{ $item->id }}
+              data-product-id={{ $item->product_id }}
+              >+</button>
             </section>
           </div>
         </div>

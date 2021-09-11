@@ -95,6 +95,7 @@ class SaleController extends Controller
       $quantity = $request->input('quantity');
       $data['product_id'] = $product_id;
       $data['quantity'] = $quantity;
+      $data['basket_item_id'] = $basket_item_id;
       $repo = new SaleRepository();
       $result = $repo->updateCart($data);
       $response = [

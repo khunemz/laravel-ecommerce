@@ -92,6 +92,7 @@ class SaleRepository extends BaseRepository
     $results = DB::select(@"
     SELECT 
         bi.id, 
+        p.id as product_id,
         p.product_code , 
         p.title, 
         p.img_path,
@@ -273,14 +274,13 @@ class SaleRepository extends BaseRepository
     $product_id = $data['product_id'];
     $quantity = $data['quantity'];
     $product =  $product_repo->findProduct($product_id)[0];
-    $unit_id = $product->unit_id;
     $price = $product->price;
     $grand_amount = $quantity * $price;
     $discount_amount = 0;  
     $tax_amount = (( $grand_amount - $discount_amount ) *  7) / 107;
     $net_amount = $grand_amount - $discount_amount;    
 
-    DB::update(@"
+    $result = DB::update(@"
       UPDATE ecommerce.basket_items
       SET 
         quantity=?, 
@@ -292,12 +292,14 @@ class SaleRepository extends BaseRepository
         updated_by=-1 
       WHERE id=?;
       ", [
-          $data['quantity'], 
+          intval($data['quantity']), 
           $grand_amount, 
+          $tax_amount, 
           $discount_amount, 
           $net_amount, 
-          $data['id']
+          intval($data['basket_item_id'])
         ]);
+      return $result;
   }
 
   public function makeOrder($customer_address_id) {

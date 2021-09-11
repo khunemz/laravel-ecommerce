@@ -5393,6 +5393,7 @@ $(document).ready(function () {
     element.addEventListener('click', function (e) {
       var dataSet = this.dataset;
       var basket_item_id = dataSet.id;
+      var product_id = dataSet.productId;
       var quantity = $("input.basket-item-quantity[data-id=".concat(basket_item_id, "]")).val();
       quantity++;
 
@@ -5401,6 +5402,7 @@ $(document).ready(function () {
       }
 
       $("input.basket-item-quantity[data-id=".concat(basket_item_id, "]")).val(quantity);
+      update_basket(basket_item_id, quantity, product_id);
     });
   }
 
@@ -5412,6 +5414,7 @@ $(document).ready(function () {
     _element.addEventListener('click', function (e) {
       var dataSet = this.dataset;
       var basket_item_id = dataSet.id;
+      var product_id = dataSet.productId;
       var quantity = $("input.basket-item-quantity[data-id=".concat(basket_item_id, "]")).val();
       quantity--;
 
@@ -5423,6 +5426,7 @@ $(document).ready(function () {
       }
 
       $("input.basket-item-quantity[data-id=".concat(basket_item_id, "]")).val(quantity);
+      update_basket(basket_item_id, quantity, product_id);
     });
   }
 
@@ -5435,8 +5439,8 @@ $(document).ready(function () {
       var quantity = e.target.value;
       var dataSet = this.dataset;
       var basket_item_id = dataSet.id;
-      console.log('udpate');
-      update_basket(basket_item_id, quantity);
+      var product_id = dataSet.productId;
+      update_basket(basket_item_id, quantity, product_id);
     });
   }
 
@@ -5463,10 +5467,12 @@ function delete_item(id) {
   });
 }
 
-function update_basket(id, quantity) {
-  $.get("".concat(BASE_URL, "/sale/update_cart"), {
+function update_basket(id, quantity, product_id) {
+  console.log(product_id);
+  $.post("".concat(BASE_URL, "/sale/update_cart"), {
     _token: CSRF_TOKEN,
     basket_item_id: id,
+    product_id: product_id,
     quantity: quantity
   }).done(function (data, xhrStatus, jqXHR) {
     if (xhrStatus == "success") {
