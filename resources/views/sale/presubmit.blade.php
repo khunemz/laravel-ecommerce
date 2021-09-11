@@ -52,16 +52,8 @@
             </span>
           </div>
           <div class="adjust-quantity-input">
-            <section class="adjust-quantity">
-              <button class="btn btn-outline-info d-inline-block" id="decrease-button">-</button>
-              <input id="quantity" 
-                type="number" 
-                class="form-control d-inline-block text-center" 
-                placeholder="0.00" 
-                min="1" 
-                max="999999999" 
-                value="{{ $item->quantity }}" />
-              <button class="btn btn-outline-info" id="increase-button">+</button>
+            <section class="">
+              <div class="d-inine-block text-center">{{ $item->quantity }} {{ $item->unit_name }}</div>
             </section>
           </div>
         </div>
@@ -69,7 +61,6 @@
     </div>
   @endforeach  
 
-  <hr />
   <div class="card card-total-basket">
     <div class="card-body">
       <div class="card-basket-summary">
@@ -99,8 +90,34 @@
             {{ number_format($basket[0]->sum_net_amount, 2) }} บาท
           </span>
         </div>
-      </div>
+      </div>      
+    </div>
+  </div>
 
+  @foreach ($customer_address as $item)
+    <div class="card bt-5">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-11">
+            <div class="card-text">
+              <header class="d-block">
+                <h4>{{ $item->name}}</h4>
+              </header>
+                <section class="d-block">
+                  <h5><strong>ที่อยู่ที่จัดส่ง: </strong></h5>{{ $item->address_1 }} {{ $item->address_2 }} {{$item->subdistrict_name}} {{$item->district_name}}
+                  {{$item->province_name}} {{$item->zipcode}} 
+                  <strong>โทรศัพท์</strong> {{ $item->tel}} <strong>อีเมลล์</strong> {{ $item->email}}
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  @endforeach
+ 
+  <div class="card bt-5">
+    <div class="card-body">
       <div class="payment-button row float-right">
         <div class="d-grid gap-2 col-6 mx-auto">
           <a class="btn btn-success" href="{{url('sale/checkout')}}">ดำเนินการชำระเงิน</a>
@@ -108,10 +125,9 @@
       </div>
     </div>
   </div>
-</div>
 @else
   <div class="text-center">
-    <p class="card-text">ไม่พบสินค้าในตะกร้า</p>
+    <p class="card-text">ไม่พบสินค้า</p>
   </div>
 @endif
 

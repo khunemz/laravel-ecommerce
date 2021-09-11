@@ -18,191 +18,193 @@
       <div class="card-body">
         <div class="row">
           <!-- START: FORM -->
-          <form class="form-group" method="post" action="{{ url('sale/add_address'); }}">
-            @csrf()
-            <div class="row">
-              <div class="col-6">
-                <!-- START: ADDRESS 1 -->
-                <div class="row mb-3">
-                  <label for="address_1" class="col-sm-3 col-form-label">
-                    ที่อยู่ <span class="text-danger">*</span>
-                  </label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control @error('address_1') is-invalid @enderror" 
-                      id="address_1" 
-                      name="address_1"
-                      placeholder="123 main street"
-                      aria-describedby="address_1"
-                      value="{{ old('address_1') }}"
-                    >
-                    @error('address_1')
-                      <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                  </div>                 
-                </div>
-                <!-- END: ADDRESS 1 -->
-  
-                <!-- START: Name -->
-                <div class="row mb-3">
-                  <label for="name" class="col-sm-3 col-form-label">
-                    ชื่อผู้รับ <span class="text-danger">*</span>
-                  </label>
-                  <div class="col-sm-9">
-                    <input 
-                      type="text" 
-                      name="name"
-                      class="form-control @error('name') is-invalid @enderror" 
-                      id="name" 
-                      placeholder="John doe"
-                      aria-describedby="name"
-                      value="{{ old('name') }}"
-                    >
-                    @error('name')
-                      <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                  </div>
-                </div>
-                <!-- END: Name -->
-
-                <!-- START: tel -->
-                <div class="row mb-3">
-                  <label for="tel" class="col-sm-3 col-form-label">
-                    โทรศัพท์
-                  </label>
-                  <div class="col-sm-9">
-                    <input 
-                      type="text" 
-                      name="tel"
-                      class="form-control @error('tel') is-invalid @enderror" 
-                      id="tel" 
-                      placeholder="0000000000"
-                      aria-describedby="tel"
-                      value="{{ old('tel') }}"
-                    >
-                    @error('tel')
-                      <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                  </div>
-                </div>
-                <!-- END: tel -->
-
-                <!-- START: province -->                
-                <div id="province_target"></div>           
-                <!-- END: province -->         
-
-                <!-- START: district -->                
-                <div id="district_target"></div>        
-                <!-- END: district -->    
-
-                <!-- START: zipcode -->                
-                <div id="zipcode_target"></div>        
-                <!-- END: zipcode -->  
-
-              </div>
-              <div class="col-6">
-                <!-- START: ADDRESS 2 -->
-                <div class="row mb-3">
-                  <label for="address_2" class="col-sm-3 col-form-label">
-                    หมู่บ้าน,ตึก
-                  </label>
-                  <div class="col-sm-9">
-                    <input 
-                      type="text" 
-                      name="address_2"
-                      class="form-control @error('address_2') is-invalid @enderror" 
-                      id="address_2" 
-                      placeholder="Apartment Khun Pa"
-                      aria-describedby="address_2"
-                      value="{{ old('address_2') }}"
-                    >
-                    @error('address_2')
-                      <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                  </div>
-                </div>
-                <!-- END: ADDRESS 2 -->
-
-                <!-- START: email -->
-                <div class="row mb-3">
-                  <label for="email" class="col-sm-3 col-form-label">
-                    อีเมลล์ <span class="text-danger">*</span>
-                  </label>
-                  <div class="col-sm-9">
-                    <input 
-                      type="email" 
-                      name="email"
-                      class="form-control @error('email') is-invalid @enderror" 
-                      id="email" 
-                      placeholder="email@example.com"
-                      aria-describedby="email"
-                      value="{{ old('email') }}"
-                    >
-                    @error('email')
-                      <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                  </div>
-                </div>
-                <!-- END: email -->
-
-                 <!-- START: taxno -->
-                 <div class="row mb-3">
-                  <label for="taxno" class="col-sm-3 col-form-label">
-                    Tax ID
-                  </label>
-                  <div class="col-sm-9">
-                    <input 
-                      type="text" 
-                      name="taxno"
-                      class="form-control @error('taxno') is-invalid @enderror" 
-                      id="taxno" 
-                      placeholder="000000000000"
-                      aria-describedby="taxno"
-                      value="{{ old('taxno') }}"
-                    >
-                    @error('taxno')
-                      <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                  </div>
-                </div>
-                <!-- END: taxno -->
-
-                <!-- START: type -->
-                <div class="row mb-3">
-                  <label for="type" class="col-sm-3 col-form-label">
-                    ประเภท <span class="text-danger">*</span>
-                  </label>
-                  <div class="col-sm-9">
-                    <select 
-                      name="type"
-                      class="form-select @error('type') is-invalid @enderror" 
-                      aria-label="type" 
-                      aria-describedby="type"
-                      value="{{ old('type') }}"
+          <fieldset>
+            <form class="form-group" method="post" action="{{ url('sale/add_address'); }}">
+              @csrf()
+              <div class="row">
+                <div class="col-6">
+                  <!-- START: ADDRESS 1 -->
+                  <div class="row mb-3">
+                    <label for="address_1" class="col-sm-3 col-form-label">
+                      ที่อยู่ <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control @error('address_1') is-invalid @enderror" 
+                        id="address_1" 
+                        name="address_1"
+                        placeholder="123 main street"
+                        aria-describedby="address_1"
+                        value="{{ old('address_1') }}"
                       >
-                        <option selected disabled>กรุณากรอกประเภทที่อยู่</option>
-                        @foreach ($types as $item)
-                          <option value="{{$item['value']}}">{{ $item['text']}}</option>
-                        @endforeach
-                    </select>
-                    @error('type')
-                      <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                      @error('address_1')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                    </div>                 
                   </div>
+                  <!-- END: ADDRESS 1 -->
+    
+                  <!-- START: Name -->
+                  <div class="row mb-3">
+                    <label for="name" class="col-sm-3 col-form-label">
+                      ชื่อผู้รับ <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-9">
+                      <input 
+                        type="text" 
+                        name="name"
+                        class="form-control @error('name') is-invalid @enderror" 
+                        id="name" 
+                        placeholder="John doe"
+                        aria-describedby="name"
+                        value="{{ old('name') }}"
+                      >
+                      @error('name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                    </div>
+                  </div>
+                  <!-- END: Name -->
+  
+                  <!-- START: tel -->
+                  <div class="row mb-3">
+                    <label for="tel" class="col-sm-3 col-form-label">
+                      โทรศัพท์
+                    </label>
+                    <div class="col-sm-9">
+                      <input 
+                        type="text" 
+                        name="tel"
+                        class="form-control @error('tel') is-invalid @enderror" 
+                        id="tel" 
+                        placeholder="0000000000"
+                        aria-describedby="tel"
+                        value="{{ old('tel') }}"
+                      >
+                      @error('tel')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                    </div>
+                  </div>
+                  <!-- END: tel -->
+  
+                  <!-- START: province -->                
+                  <div id="province_target"></div>           
+                  <!-- END: province -->         
+  
+                  <!-- START: district -->                
+                  <div id="district_target"></div>        
+                  <!-- END: district -->    
+  
+                  <!-- START: zipcode -->                
+                  <div id="zipcode_target"></div>        
+                  <!-- END: zipcode -->  
+  
                 </div>
-                <!-- END: type -->  
-
-                <!-- START: subdistrict -->                
-                <div id="subdistrict_target"></div>    
-                <!-- END: subdistrict -->
+                <div class="col-6">
+                  <!-- START: ADDRESS 2 -->
+                  <div class="row mb-3">
+                    <label for="address_2" class="col-sm-3 col-form-label">
+                      หมู่บ้าน,ตึก
+                    </label>
+                    <div class="col-sm-9">
+                      <input 
+                        type="text" 
+                        name="address_2"
+                        class="form-control @error('address_2') is-invalid @enderror" 
+                        id="address_2" 
+                        placeholder="Apartment Khun Pa"
+                        aria-describedby="address_2"
+                        value="{{ old('address_2') }}"
+                      >
+                      @error('address_2')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                    </div>
+                  </div>
+                  <!-- END: ADDRESS 2 -->
+  
+                  <!-- START: email -->
+                  <div class="row mb-3">
+                    <label for="email" class="col-sm-3 col-form-label">
+                      อีเมลล์ <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-9">
+                      <input 
+                        type="email" 
+                        name="email"
+                        class="form-control @error('email') is-invalid @enderror" 
+                        id="email" 
+                        placeholder="email@example.com"
+                        aria-describedby="email"
+                        value="{{ old('email') }}"
+                      >
+                      @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                    </div>
+                  </div>
+                  <!-- END: email -->
+  
+                   <!-- START: taxno -->
+                   <div class="row mb-3">
+                    <label for="taxno" class="col-sm-3 col-form-label">
+                      Tax ID
+                    </label>
+                    <div class="col-sm-9">
+                      <input 
+                        type="text" 
+                        name="taxno"
+                        class="form-control @error('taxno') is-invalid @enderror" 
+                        id="taxno" 
+                        placeholder="000000000000"
+                        aria-describedby="taxno"
+                        value="{{ old('taxno') }}"
+                      >
+                      @error('taxno')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                    </div>
+                  </div>
+                  <!-- END: taxno -->
+  
+                  <!-- START: type -->
+                  <div class="row mb-3">
+                    <label for="type" class="col-sm-3 col-form-label">
+                      ประเภท <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-9">
+                      <select 
+                        name="type"
+                        class="form-select @error('type') is-invalid @enderror" 
+                        aria-label="type" 
+                        aria-describedby="type"
+                        value="{{ old('type') }}"
+                        >
+                          <option selected disabled>กรุณากรอกประเภทที่อยู่</option>
+                          @foreach ($types as $item)
+                            <option value="{{$item['value']}}">{{ $item['text']}}</option>
+                          @endforeach
+                      </select>
+                      @error('type')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                    </div>
+                  </div>
+                  <!-- END: type -->  
+  
+                  <!-- START: subdistrict -->                
+                  <div id="subdistrict_target"></div>    
+                  <!-- END: subdistrict -->
+                </div>
               </div>
-            </div>
-
-            <div class="payment-button row float-right">
-              <div class="d-grid gap-2 col-6 mx-auto">
-                <input class="btn btn-success" type="submit" value="บันทึกและไปหน้าสรุป">
+  
+              <div class="payment-button row float-right">
+                <div class="d-grid gap-2 col-6 mx-auto">
+                  <input class="btn btn-success" type="submit" value="บันทึกและไปหน้าสรุป">
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </fieldset>
           <!-- END: FORM -->
         </div>
       </div>
@@ -210,13 +212,37 @@
   </div> 
 @else
   <div class="card-view-basket">
-    <div class="card">
-      <div class="card-body">
-        <p class="card-text">
-          123 main street
-        </p>
+    @foreach ($customer_address as $item)
+      <div class="card bt-5">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-1 justify-content-center text-center">
+              <input type="checkbox" class="custom-control-input" value="{{ $item->is_default ? 'on' : 'off'}}">
+            </div>
+            <div class="col-sm-11">
+              <div class="card-text">
+                <header class="d-block">
+                  <h4>{{ $item->name}}</h4>
+                </header>
+
+                <section class="d-block">
+                  <h5>ที่อยู่ที่จัดส่ง: </h5>{{ $item->address_1 }} {{ $item->address_2 }} {{$item->subdistrict_name}} {{$item->district_name}}
+                  {{$item->province_name}} {{$item->zipcode}} 
+                  <strong>โทรศัพท์</strong> {{ $item->tel}} <strong>อีเมลล์</strong> {{ $item->email}}
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+      <div class="payment-button row float-right">
+        <div class="d-grid gap-2 col-6 mx-auto">
+          <a class="btn btn-success" href="{{ url('sale/presubmit/' . $item->customer_address_id )}}">ไปหน้าสรุป</a>
+        </div>
+      </div>
+    @endforeach
+
+    
   </div> 
 @endif
 

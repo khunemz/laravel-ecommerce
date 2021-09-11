@@ -242,6 +242,7 @@ class SaleRepository extends BaseRepository
         c.name, 
         c.email , 
         c.tel , 
+        ca.id as customer_address_id,
         ca.`type`, 
         ca.is_default,
         a.id  as address_id, 
@@ -260,7 +261,7 @@ class SaleRepository extends BaseRepository
         inner join province p on p.id  = a.province_id 
         inner join district d on d.id  = a.district_id 
         inner join subdistrict subd on subd.id  = a.subdistrict_id 
-      where a.delflag = 0 and c.delflag  = 0 and ca.delflag = 0 and c.customer_id  = ?;
+      where a.delflag = 0 and c.delflag  = 0 and ca.delflag = 0 and c.id  = ?;
     ",[$customer_id]);
     return $results;
   } 

@@ -61,7 +61,7 @@ class SaleController extends Controller
       $data['customer_id']      = 1;
       $repo = new SaleRepository();
       $customer_address_id = $repo->addAddress($data);
-      return redirect()->action([SaleController::class, 'presubmit/'. $customer_address_id]);
+      return redirect()->to(['sale/presubmit/'. $customer_address_id]);
     }
   }
   public function addCart(Request $request)
