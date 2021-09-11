@@ -303,7 +303,67 @@ class SaleRepository extends BaseRepository
   }
 
   public function makeOrder($customer_address_id) {
-    $result = DB::insert(@"",[]);
+    // insert sale order by select from basket
+    $customer_id = 1;
+    
+    $basket = $this->getBasket($customer_id);
+    $quantity = $basket['sum_quantity'];
+    $grand_amount = $basket['sum_grand_amount'];
+    $tax_amount = $basket['sum_tax_amount'];
+    $discount_amount = $basket['sum_discount_amount'];
+
+    $net_amount = $basket['sum_net_amount'];
+    $ondate = date("F j, Y \a\t g:ia");
+    $status = 0;
+    $taxrate = 0.07;
+    $docno = $this->getDocNo();
+    /** BASKET */
+    $result_order = DB::insert(@"
+    INSERT INTO ecommerce.orders
+      (
+        ondate,docno,status,customer_id, 
+        quantity,grand_amount,tax_rate,tax_amount, 
+        discount_amount, net_amount, 
+        created_at, created_by, updated_at, updated_by, delflag)
+    VALUES(
+      ?, ?, ?, ?, 
+      ?, ?, ?, ?, 
+      ?, ?, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP, -1, 0);
+    ", [
+      $ondate, $docno, $status, $customer_id, 
+      $quantity,$grand_amount, $taxrate, $tax_amount, 
+      $discount_amount,$net_amount]);
+    $order_id = DB::getPdo()->lastInsertId();
+
+
+    /** BASKET ITEM */
+    $basket_items = $this->getBasketItems($customer_id);
+
+
+    foreach ($basket_items as $key => $item) {
+      # code...
+      $result = DB::insert(@"
+      INSERT INTO ecommerce.order_items
+        (
+          order_id, 
+          seq_no, 
+          product_id, 
+          unit_Id, 
+          quantity, 
+          tax_rate, 
+          tax_amount, 
+          discount_amount, 
+          net_amount, 
+          created_at, created_by, updated_at, updated_by, delflag)
+          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP, -1, 0);
+      ",[$order_id, $item->seq_no,$item->product_id, $item->unit_id, $item->quantity,
+        $item->tax_rate , $item->tax_amount, $item->discount_amount, $item->net_amount    
+      ]);
+    }
+    
+    // insert payment by select basket
+
+    // delete basket
   }
 
   public function getProvince() {
@@ -325,5 +385,56 @@ class SaleRepository extends BaseRepository
     SELECT  d.id as subdistrict_id , d.name as subdistrict_name from subdistrict d where d.delflag  = 0 and d.district_id = ?
   ",[$district_id]);
   return $results;
+  }
+
+  public function getDocNo() {
+    $row = DB::table('orders')->orderBy('docno', 'desc')->first();
+    if ($row) {
+      // $docno_int = (int)$row;
+      // 2021071800001
+      $prev_doc_no = $row->doc_no;
+      // check if it is current year and month
+      $prev_running = substr($prev_doc_no, 8);
+      $prev_day =  substr($prev_doc_no, 6, 2);
+      $prev_month =  substr($prev_doc_no, 4, 2);
+      $prev_year = substr($prev_doc_no, 0, 4);
+
+      $prev_date = date("Y-m-d", strtotime($prev_year . "-" . $prev_month . "-" . $prev_day));
+      $today = date('Y-m-d');
+
+      $year = date('Y');
+      $month = date('m');
+      $day = date('d');
+      if ($today > $prev_date) {
+        $new_running = "000001";
+        $docno = $year . $month . $day . $new_running;
+      } else {
+        $new_running_int = (int)$prev_running + 1;
+        $new_running_str = strval($new_running_int);
+        $new_running = "";
+        if (strlen($new_running_str) == 1) {
+          $new_running = "00000" . $new_running_str;
+        } else if (strlen($new_running_str) == 2) {
+          $new_running = "0000" . $new_running_str;
+        } else if (strlen($new_running_str) == 3) {
+          $new_running = "000" . $new_running_str;
+        } else if (strlen($new_running_str) == 4) {
+          $new_running = "00" . $new_running_str;
+        } else if (strlen($new_running_str) == 5) {
+          $new_running = "0" . $new_running_str;
+        } else {
+          $new_running = $new_running_str;
+        }
+        $docno = $prev_year . $prev_month . $prev_day . $new_running;
+      }
+      return $docno;
+    } else {
+      $year = date('Y');
+      $month = date('m');
+      $day = date('d');
+      $running = '000001';
+      $docno = $year . $month . $day . $running;
+      return $docno;
+    }
   }
 }
