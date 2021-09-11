@@ -36,6 +36,7 @@ Route::get('/sale/get_sub_districts/{id}', [SaleController::class, 'getSubDistri
 Route::post('/sale/add_address', [SaleController::class, 'addAddress']);
 Route::get('/sale/presubmit/{id}', [SaleController::class, 'presubmit']);
 Route::post('/sale/processorder', [SaleController::class, 'processorder']);
+Route::post('/sale/update_cart', [SaleController::class, 'updateCart']);
 
 
 

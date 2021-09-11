@@ -267,6 +267,43 @@ class SaleRepository extends BaseRepository
     return $results;
   } 
 
+  public function updateCart($data) {
+
+    $product_repo = new ProductRepository();
+    $product_id = $data['product_id'];
+    $quantity = $data['quantity'];
+    $product =  $product_repo->findProduct($product_id)[0];
+    $unit_id = $product->unit_id;
+    $price = $product->price;
+    $grand_amount = $quantity * $price;
+    $discount_amount = 0;  
+    $tax_amount = (( $grand_amount - $discount_amount ) *  7) / 107;
+    $net_amount = $grand_amount - $discount_amount;    
+
+    DB::update(@"
+      UPDATE ecommerce.basket_items
+      SET 
+        quantity=?, 
+        grand_amount=?, 
+        tax_amount=?, 
+        discount_amount=?, 
+        net_amount=?, 
+        updated_at=CURRENT_TIMESTAMP, 
+        updated_by=-1 
+      WHERE id=?;
+      ", [
+          $data['quantity'], 
+          $grand_amount, 
+          $discount_amount, 
+          $net_amount, 
+          $data['id']
+        ]);
+  }
+
+  public function makeOrder($customer_address_id) {
+    
+  }
+
   public function getProvince() {
     $results = DB::select(@"
       SELECT  p.id as province_id , p.name as province_name from province p where p.delflag  = 0

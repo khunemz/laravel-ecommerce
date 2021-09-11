@@ -33,25 +33,95 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
 
 $(document).ready(function () {
     finalizeLoading();
+    // $('#decrease-button').on('click', function(e) {
+    //     var qty = $('#quantity').val();
+    //     qty--;
+    //     if(qty <= 1) {
+    //         qty = 1;
+    //         disabled('decrease-button');
+    //     } else {
+    //         enable('decrease-button');
+    //     }
+    //     $('#quantity').val(qty);
+    //     // update basket 
+    // });
+
+    // $('#increase-button').on('click', function(e) {
+    //     var qty = $('#quantity').val();
+    //     qty++;
+    //     if(qty >= 1) {
+    //         enable('decrease-button');
+    //     }
+    //     $('#quantity').val(qty);
+    // });
+
+    // $('#quantity').on('change',function(e) {
+    //     var qty = e.target.value;
+    //     if(qty <= 1) {
+    //         disabled('decrease-button');
+    //     } else {
+    //         enable('decrease-button');
+    //     }
+    // });
+
+    const increaseBtns = document.getElementsByClassName('increase-button');
+    for (let i = 0; i < increaseBtns.length; i++) {
+        const element = increaseBtns[i];
+        element.addEventListener('click', function(e) {
+            const dataSet = this.dataset;
+            const basket_item_id = dataSet.id;
+
+            let quantity =  $(`input.basket-item-quantity[data-id=${basket_item_id}]`).val();
+            quantity++;
+            if(quantity >= 1) {
+                $(`input.increase-button[data-id=${basket_item_id}]`).prop('disabled', false);
+            }
+            $(`input.basket-item-quantity[data-id=${basket_item_id}]`).val(quantity);
+        });
+    }
+    const decreaseBtns = document.getElementsByClassName('decrease-button');
+    for (let i = 0; i < decreaseBtns.length; i++) {
+        const element = decreaseBtns[i];
+        element.addEventListener('click', function(e) {
+            const dataSet = this.dataset;
+            const basket_item_id = dataSet.id;
+
+            let quantity =  $(`input.basket-item-quantity[data-id=${basket_item_id}]`).val();
+            quantity--;
+            if(quantity <= 1) {
+                quantity = 1
+                $(`input.decrease-button[data-id=${basket_item_id}]`).prop('disabled', true);
+            } else {
+                $(`input.decrease-button[data-id=${basket_item_id}]`).prop('disabled', false);
+            }
+            $(`input.basket-item-quantity[data-id=${basket_item_id}]`).val(quantity);
+        });
+    }
+
+    const baskItems = document.getElementsByClassName('basket-item-quantity');
+    for (let i = 0; i < baskItems.length; i++) {
+        const element = baskItems[i];
+        element.addEventListener('change', function(e) {
+            const quantity = e.target.value;    
+            const dataSet = this.dataset;
+            const basket_item_id = dataSet.id;
+            console.log('udpate')       
+            
+            update_basket(basket_item_id, quantity);
+        });
+    }
 
     const elems = document.getElementsByClassName('delete-button');
     for (let i = 0; i < elems.length; i++) {
         const element = elems[i];
         element.addEventListener('click', function(e) {
             const dataSet = this.dataset;
-            const basket_item_id = dataSet.id;            
+            const basket_item_id = dataSet.id;   
             delete_item(basket_item_id);
         });
     }
 });
 
-function disabled(id) {
-    document.getElementById(id).classList.add("disabled");
-}
-
-function enable(id) {
-    document.getElementById(id).classList.remove("disabled");
-}
 
 function delete_item(id) {
     $.get(`${BASE_URL}/sale/delete/${id}`, {})
@@ -62,5 +132,22 @@ function delete_item(id) {
     })
     .fail(function(data, xhrStatus, jqXHR) {
         console.log(xhrStatus)
+    });
+}
+
+function update_basket(id , quantity) {
+    $.get(`${BASE_URL}/sale/update_cart`, {
+        _token: CSRF_TOKEN,
+        basket_item_id: id,
+        quantity: quantity,
     })
+    .done(function(data, xhrStatus, jqXHR) {
+        if (xhrStatus == "success") {
+            // window.location.reload(); 
+            console.log(data);
+        }
+    })
+    .fail(function(data, xhrStatus, jqXHR) {
+        console.log(xhrStatus)
+    });
 }

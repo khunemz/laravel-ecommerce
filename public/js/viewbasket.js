@@ -5357,12 +5357,95 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
   return (ds ? num.replace(".", ds) : num).replace(new RegExp(re, "g"), "$&" + ts);
 });
 $(document).ready(function () {
-  finalizeLoading();
+  finalizeLoading(); // $('#decrease-button').on('click', function(e) {
+  //     var qty = $('#quantity').val();
+  //     qty--;
+  //     if(qty <= 1) {
+  //         qty = 1;
+  //         disabled('decrease-button');
+  //     } else {
+  //         enable('decrease-button');
+  //     }
+  //     $('#quantity').val(qty);
+  //     // update basket 
+  // });
+  // $('#increase-button').on('click', function(e) {
+  //     var qty = $('#quantity').val();
+  //     qty++;
+  //     if(qty >= 1) {
+  //         enable('decrease-button');
+  //     }
+  //     $('#quantity').val(qty);
+  // });
+  // $('#quantity').on('change',function(e) {
+  //     var qty = e.target.value;
+  //     if(qty <= 1) {
+  //         disabled('decrease-button');
+  //     } else {
+  //         enable('decrease-button');
+  //     }
+  // });
+
+  var increaseBtns = document.getElementsByClassName('increase-button');
+
+  for (var i = 0; i < increaseBtns.length; i++) {
+    var element = increaseBtns[i];
+    element.addEventListener('click', function (e) {
+      var dataSet = this.dataset;
+      var basket_item_id = dataSet.id;
+      var quantity = $("input.basket-item-quantity[data-id=".concat(basket_item_id, "]")).val();
+      quantity++;
+
+      if (quantity >= 1) {
+        $("input.increase-button[data-id=".concat(basket_item_id, "]")).prop('disabled', false);
+      }
+
+      $("input.basket-item-quantity[data-id=".concat(basket_item_id, "]")).val(quantity);
+    });
+  }
+
+  var decreaseBtns = document.getElementsByClassName('decrease-button');
+
+  for (var _i = 0; _i < decreaseBtns.length; _i++) {
+    var _element = decreaseBtns[_i];
+
+    _element.addEventListener('click', function (e) {
+      var dataSet = this.dataset;
+      var basket_item_id = dataSet.id;
+      var quantity = $("input.basket-item-quantity[data-id=".concat(basket_item_id, "]")).val();
+      quantity--;
+
+      if (quantity <= 1) {
+        quantity = 1;
+        $("input.decrease-button[data-id=".concat(basket_item_id, "]")).prop('disabled', true);
+      } else {
+        $("input.decrease-button[data-id=".concat(basket_item_id, "]")).prop('disabled', false);
+      }
+
+      $("input.basket-item-quantity[data-id=".concat(basket_item_id, "]")).val(quantity);
+    });
+  }
+
+  var baskItems = document.getElementsByClassName('basket-item-quantity');
+
+  for (var _i2 = 0; _i2 < baskItems.length; _i2++) {
+    var _element2 = baskItems[_i2];
+
+    _element2.addEventListener('change', function (e) {
+      var quantity = e.target.value;
+      var dataSet = this.dataset;
+      var basket_item_id = dataSet.id;
+      console.log('udpate');
+      update_basket(basket_item_id, quantity);
+    });
+  }
+
   var elems = document.getElementsByClassName('delete-button');
 
-  for (var i = 0; i < elems.length; i++) {
-    var element = elems[i];
-    element.addEventListener('click', function (e) {
+  for (var _i3 = 0; _i3 < elems.length; _i3++) {
+    var _element3 = elems[_i3];
+
+    _element3.addEventListener('click', function (e) {
       var dataSet = this.dataset;
       var basket_item_id = dataSet.id;
       delete_item(basket_item_id);
@@ -5370,18 +5453,25 @@ $(document).ready(function () {
   }
 });
 
-function disabled(id) {
-  document.getElementById(id).classList.add("disabled");
-}
-
-function enable(id) {
-  document.getElementById(id).classList.remove("disabled");
-}
-
 function delete_item(id) {
   $.get("".concat(BASE_URL, "/sale/delete/").concat(id), {}).done(function (data, xhrStatus, jqXHR) {
     if (xhrStatus == "success") {
       window.location.reload();
+    }
+  }).fail(function (data, xhrStatus, jqXHR) {
+    console.log(xhrStatus);
+  });
+}
+
+function update_basket(id, quantity) {
+  $.get("".concat(BASE_URL, "/sale/update_cart"), {
+    _token: CSRF_TOKEN,
+    basket_item_id: id,
+    quantity: quantity
+  }).done(function (data, xhrStatus, jqXHR) {
+    if (xhrStatus == "success") {
+      // window.location.reload(); 
+      console.log(data);
     }
   }).fail(function (data, xhrStatus, jqXHR) {
     console.log(xhrStatus);

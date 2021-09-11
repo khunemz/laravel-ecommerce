@@ -87,6 +87,47 @@ class SaleController extends Controller
     }
   }
 
+  public function updateCart(Request $request)
+  {
+    try {
+      $basket_item_id = $request->input('basket_item_id');
+      $product_id = $request->input('product_id');
+      $quantity = $request->input('quantity');
+      $data['product_id'] = $product_id;
+      $data['quantity'] = $quantity;
+      $repo = new SaleRepository();
+      $result = $repo->updateCart($data);
+      $response = [
+        'status' => 201,
+        'message' => 'success',
+        'data' => [
+          'total_quantity' => $result
+        ]
+      ];
+      return response()->json($response);
+    } catch (\Throwable $th) {
+      throw $th;
+    }
+  }
+
+  public function processorder() {
+    try {
+      $customer_address_id = $request->input('customer_address_id');
+      $repo = new SaleRepository();
+      $result =  $repo->makeOrder($customer_address_id);
+      $response = [
+        'status' => 201,
+        'message' => 'success',
+        'data' => [
+          'result' => $result
+        ]
+      ];
+      return response()->json($response);
+    } catch (\Throwable $th) {
+      //throw $th;
+    }
+  }
+
   public function getBasket($customer_id)
   {
     try {
