@@ -52,7 +52,7 @@ $(document).ready(function () {
 function processOrder() {
     const customer_address_id = document.getElementById('customer_address_id');
     $.post(`${BASE_URL}/sale/processorder`, {
-        _token: CSRF_TOKEN,
+        _token: CSRF_TOKEN, 
         customer_address_id: customer_address_id        
         })
         .done(function(data, xhrStatus, jqXHR) {

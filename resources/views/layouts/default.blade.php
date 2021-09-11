@@ -112,20 +112,23 @@
     const BASE_URL = "{{ url('/')}}";
     const CSRF_TOKEN = "{{ csrf_token() }}";
 
-    const customer_id = 1;
-    $.get(`${BASE_URL}/sale/getBasket/${customer_id}`,{})
-    .done(function(data, xhrStatus, jqXHR) {
-      if (xhrStatus == "success") {
-        let basket_count = 0;
-        if(data.data.basket.length > 0) {
-          basket_count = data.data.basket[0].sum_quantity;
+    const getBasket = function() {
+      const customer_id = 1;
+      $.get(`${BASE_URL}/sale/getBasket/${customer_id}`,{})
+      .done(function(data, xhrStatus, jqXHR) {
+        if (xhrStatus == "success") {
+          let basket_count = 0;
+          if(data.data.basket.length > 0) {
+            basket_count = data.data.basket[0].sum_quantity;
+          }
+          document.getElementById('basket-count').innerHTML = basket_count;
         }
-        document.getElementById('basket-count').innerHTML = basket_count;
-      }
-    })
-    .fail(function(data, xhrStatus, jqXHR) {
-      console.log(xhrStatus);
-    });
+      })
+      .fail(function(data, xhrStatus, jqXHR) {
+        console.log(xhrStatus);
+      });
+    }
+    getBasket();
 
     const finalizeLoading = function() {
       const el = document.querySelector(".loading-skeleton");

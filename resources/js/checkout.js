@@ -34,28 +34,8 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
 $(document).ready(function () {
     finalizeLoading(); 
     getProvinces();
-
 });
 
-function disabled(id) {
-    document.getElementById(id).classList.add("disabled");
-}
-
-function enable(id) {
-    document.getElementById(id).classList.remove("disabled");
-}
-
-function delete_item(id) {
-    $.get(`${BASE_URL}/sale/delete/${id}`, {})
-        .done(function (data, xhrStatus, jqXHR) {
-            if (xhrStatus == "success") {
-                window.location.reload();
-            }
-        })
-        .fail(function (data, xhrStatus, jqXHR) {
-            console.log(xhrStatus);
-        });
-}
 
 function getProvinces() {
     $.ajax({

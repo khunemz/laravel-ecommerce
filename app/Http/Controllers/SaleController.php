@@ -91,6 +91,7 @@ class SaleController extends Controller
   {
     try {
       $basket_item_id = $request->input('basket_item_id');
+
       $product_id = $request->input('product_id');
       $quantity = $request->input('quantity');
       $data['product_id'] = $product_id;
@@ -111,7 +112,7 @@ class SaleController extends Controller
     }
   }
 
-  public function processorder() {
+  public function processorder(Request $request) {
     try {
       $customer_address_id = $request->input('customer_address_id');
       $repo = new SaleRepository();

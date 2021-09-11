@@ -33,37 +33,7 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
 
 $(document).ready(function () {
     finalizeLoading();
-    // $('#decrease-button').on('click', function(e) {
-    //     var qty = $('#quantity').val();
-    //     qty--;
-    //     if(qty <= 1) {
-    //         qty = 1;
-    //         disabled('decrease-button');
-    //     } else {
-    //         enable('decrease-button');
-    //     }
-    //     $('#quantity').val(qty);
-    //     // update basket 
-    // });
-
-    // $('#increase-button').on('click', function(e) {
-    //     var qty = $('#quantity').val();
-    //     qty++;
-    //     if(qty >= 1) {
-    //         enable('decrease-button');
-    //     }
-    //     $('#quantity').val(qty);
-    // });
-
-    // $('#quantity').on('change',function(e) {
-    //     var qty = e.target.value;
-    //     if(qty <= 1) {
-    //         disabled('decrease-button');
-    //     } else {
-    //         enable('decrease-button');
-    //     }
-    // });
-
+    
     const increaseBtns = document.getElementsByClassName('increase-button');
     for (let i = 0; i < increaseBtns.length; i++) {
         const element = increaseBtns[i];
@@ -75,7 +45,7 @@ $(document).ready(function () {
             let quantity =  $(`input.basket-item-quantity[data-id=${basket_item_id}]`).val();
             quantity++;
             if(quantity >= 1) {
-                $(`input.increase-button[data-id=${basket_item_id}]`).prop('disabled', false);
+                $(`button.increase-button[data-id=${basket_item_id}]`).prop('disabled', false);
             }
             $(`input.basket-item-quantity[data-id=${basket_item_id}]`).val(quantity);
             update_basket(basket_item_id, quantity, product_id);
@@ -93,7 +63,7 @@ $(document).ready(function () {
             quantity--;
             if(quantity <= 1) {
                 quantity = 1
-                $(`input.decrease-button[data-id=${basket_item_id}]`).prop('disabled', true);
+                $(`button.decrease-button[data-id=${basket_item_id}]`).prop('disabled', true);
             } else {
                 $(`input.decrease-button[data-id=${basket_item_id}]`).prop('disabled', false);
             }
@@ -140,7 +110,6 @@ function delete_item(id) {
 }
 
 function update_basket(id , quantity, product_id) {
-    console.log(product_id);
     $.post(`${BASE_URL}/sale/update_cart`, {
         _token: CSRF_TOKEN,
         basket_item_id: id,
@@ -149,8 +118,8 @@ function update_basket(id , quantity, product_id) {
     })
     .done(function(data, xhrStatus, jqXHR) {
         if (xhrStatus == "success") {
-            // window.location.reload(); 
-            console.log(data);
+            window.location.reload(); 
+            // getBasket();
         }
     })
     .fail(function(data, xhrStatus, jqXHR) {

@@ -5361,24 +5361,6 @@ $(document).ready(function () {
   getProvinces();
 });
 
-function disabled(id) {
-  document.getElementById(id).classList.add("disabled");
-}
-
-function enable(id) {
-  document.getElementById(id).classList.remove("disabled");
-}
-
-function delete_item(id) {
-  $.get("".concat(BASE_URL, "/sale/delete/").concat(id), {}).done(function (data, xhrStatus, jqXHR) {
-    if (xhrStatus == "success") {
-      window.location.reload();
-    }
-  }).fail(function (data, xhrStatus, jqXHR) {
-    console.log(xhrStatus);
-  });
-}
-
 function getProvinces() {
   $.ajax({
     url: "/sale/get_provinces",
