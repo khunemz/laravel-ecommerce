@@ -5428,6 +5428,7 @@ function getSubDistricts(district_id) {
         RENDER_HBS("subdistrict_template", "subdistrict_target", {
           subdistricts: data
         });
+        RENDER_HBS("zipcode_template", "zipcode_target", null);
       }
     },
     error: function error(data, xhrStatus, jqXHR) {

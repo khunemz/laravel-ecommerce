@@ -12,20 +12,35 @@ class ProductController extends Controller
     return view('products.index');
   }
 
-  public function getProducts($page , $limit, $category) {
-    $pRepo = new ProductRepository();
-    $result = $pRepo->getProducts($page, $limit, $category);
-    return $result;
+  public function getProducts($page, $limit, $category)
+  {
+    try {
+      $pRepo = new ProductRepository();
+      $result = $pRepo->getProducts($page, $limit, $category);
+      return $result;
+    } catch (\Throwable $th) {
+      throw $th;
+    }
   }
-  public function getCategory() {
-    $pRepo = new ProductRepository();
-    $result = $pRepo->getCategory();
-    return $result;
+  public function getCategory()
+  {
+    try {
+      $pRepo = new ProductRepository();
+      $result = $pRepo->getCategory();
+      return $result;
+    } catch (\Throwable $th) {
+      throw $th;
+    }
   }
 
-  public function view($id) {
-    $pRepo = new ProductRepository();
-    $result = $pRepo->findProduct($id);
-    return view('products.view', ['products' => $result]);
+  public function view($id)
+  {
+    try {
+      $pRepo = new ProductRepository();
+      $result = $pRepo->findProduct($id);
+      return view('products.view', ['products' => $result]);
+    } catch (\Throwable $th) {
+      throw $th;
+    }
   }
 }

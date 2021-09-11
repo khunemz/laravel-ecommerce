@@ -9,6 +9,10 @@ class HomeController extends Controller
 {
   public function index()
   {
-    return view('home.index', []);
+    try {
+      return view('home.index', []);
+    } catch (\Throwable $th) {
+      throw $th;
+    }
   }
 }

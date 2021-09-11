@@ -120,6 +120,12 @@ function getSubDistricts(district_id) {
                         subdistricts: data 
                     }
                 );
+
+                RENDER_HBS(
+                    "zipcode_template",
+                    "zipcode_target",
+                    null
+                );
             }
         },
         error: function (data, xhrStatus, jqXHR) {

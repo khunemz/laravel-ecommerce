@@ -1,5 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
+    "/js/jquery.mask.js": "/js/jquery.mask.js",
     "/js/index.js": "/js/index.js",
     "/js/view.js": "/js/view.js",
     "/js/viewbasket.js": "/js/viewbasket.js",

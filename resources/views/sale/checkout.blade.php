@@ -18,7 +18,7 @@
       <div class="card-body">
         <div class="row">
           <!-- START: FORM -->
-          <form class="form-gropu">
+          <form class="form-group" method="post" action="{{ url('sale/add_address'); }}">
             <div class="row">
               <div class="col-6">
                 <!-- START: ADDRESS 1 -->
@@ -74,6 +74,7 @@
                 <!-- START: subdistrict -->                
                 <div id="subdistrict_target"></div>    
                 <!-- END: subdistrict -->
+               
 
               </div>
               <div class="col-6">
@@ -127,8 +128,17 @@
 
                 <!-- START: district -->                
                 <div id="district_target"></div>        
-                <!-- END: district -->
-               
+                <!-- END: district -->                     
+                
+                <!-- START: zipcode -->                
+                  <div id="zipcode_target"></div>        
+                <!-- END: zipcode -->  
+              </div>
+            </div>
+
+            <div class="payment-button row float-right">
+              <div class="d-grid gap-2 col-6 mx-auto">
+                <input class="btn btn-success" type="submit">บันทึกและไปหน้าสรุป
               </div>
             </div>
           </form>
@@ -222,5 +232,19 @@
 </script>
 
 
+<script id="zipcode_template" type="text/x-handlebars-template">
+<div class="mb-3">
+ <label for="zipcode" class="form-label">
+   ZipCode</label>
+ <input type="text" class="form-control" 
+   id="zipcode" 
+   placeholder="00000"
+   aria-describedby="zipcode"
+ >
+ <div id="zipcode" class="form-text">
+   Please add your zipcode
+ </div>
+</div>
+</script>
 <script type="text/javascript" src="{{ url('js/checkout.js') }}"></script>
 @endsection
