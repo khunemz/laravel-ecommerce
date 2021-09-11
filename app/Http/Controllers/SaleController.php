@@ -61,7 +61,7 @@ class SaleController extends Controller
       $data['customer_id']      = 1;
       $repo = new SaleRepository();
       $customer_address_id = $repo->addAddress($data);
-      return redirect()->action([SaleController::class, 'presubmit']);
+      return redirect()->action([SaleController::class, 'presubmit/'. $customer_address_id]);
     }
   }
   public function addCart(Request $request)
@@ -176,16 +176,19 @@ class SaleController extends Controller
     }
   }
 
-  public function presubmit()
+  public function presubmit($id)
   {
     try {
       $customer_id = 1;
+      $customer_address_id = $id;
       $repo = new SaleRepository();
       $basket = $repo->getBasket($customer_id);
       $basket_items = $repo->getBasketItems($customer_id);
+      $customer_address = $repo->getAddressByCustomerAddressId($customer_address_id);
       return view('sale.presubmit', [
         'basket' => $basket,
-        'basket_items' => $basket_items
+        'basket_items' => $basket_items,
+        'customer_address' => $customer_address,
       ]);
     } catch (\Throwable $th) {
     }

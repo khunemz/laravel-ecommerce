@@ -78,10 +78,8 @@ class SaleRepository extends BaseRepository
     ]);
 
     $id = DB::getPdo()->lastInsertId();
-    $resp = [
-      'customer_address_id' => $id
-    ];
-    return $resp;
+
+    return $id;
   }
 
   public function deleteBasketItem($id)
@@ -89,7 +87,6 @@ class SaleRepository extends BaseRepository
     $result = DB::delete(@"DELETE FROM ecommerce.basket_items WHERE id=?;", [$id]);
     return $result;
   }
-
 
   public function getBasketItems($customer_id) {
     $results = DB::select(@"
@@ -209,8 +206,7 @@ class SaleRepository extends BaseRepository
     return $results;
   } 
 
-
-  public function getCustomerAddress($customer_id) {
+  public function getAddressByCustomerAddressId($customer_address_id) {
     $results = DB::select(@"
     SELECT c.id as customer_id, 
       c.name, 
@@ -228,12 +224,43 @@ class SaleRepository extends BaseRepository
       subd.id as subdistrict_id ,
       subd.name as subdistrict_name ,
       zipcode 
-    from addresses a inner join customer_address ca on a.id  = ca.address_id 
-    inner join customers c on c.id  = ca.customer_id 
-    left join province p on p.id  = a.province_id 
-    left join district d on d.id  = a.district_id 
-    left join subdistrict subd on subd.id  = a.subdistrict_id 
-    where a.delflag = 0 and c.delflag  = 0 and ca.delflag = 0 and customer_id = ?;
+    from addresses a 
+      inner join customer_address ca on a.id  = ca.address_id 
+      inner join customers c on c.id  = ca.customer_id 
+      inner join province p on p.id  = a.province_id 
+      inner join district d on d.id  = a.district_id 
+      inner join subdistrict subd on subd.id  = a.subdistrict_id 
+    where a.delflag = 0 and c.delflag  = 0 and ca.delflag = 0 and ca.id  = ?;
+    ",[$customer_address_id]);
+    return $results;
+  } 
+
+
+  public function getCustomerAddress($customer_id) {
+    $results = DB::select(@"
+      SELECT c.id as customer_id, 
+        c.name, 
+        c.email , 
+        c.tel , 
+        ca.`type`, 
+        ca.is_default,
+        a.id  as address_id, 
+        a.address_1 , 
+        a.address_2 ,
+        p.id as province_id , 
+        p.name as province_name ,
+        d.id as subdistrict_id ,
+        d.name as district_name , 
+        subd.id as subdistrict_id ,
+        subd.name as subdistrict_name ,
+        zipcode 
+      from addresses a 
+        inner join customer_address ca on a.id  = ca.address_id 
+        inner join customers c on c.id  = ca.customer_id 
+        inner join province p on p.id  = a.province_id 
+        inner join district d on d.id  = a.district_id 
+        inner join subdistrict subd on subd.id  = a.subdistrict_id 
+      where a.delflag = 0 and c.delflag  = 0 and ca.delflag = 0 and c.customer_id  = ?;
     ",[$customer_id]);
     return $results;
   } 

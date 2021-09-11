@@ -34,7 +34,7 @@ Route::get('/sale/get_provinces', [SaleController::class, 'getProvinces']);
 Route::get('/sale/get_districts/{id}', [SaleController::class, 'getDistricts']);
 Route::get('/sale/get_sub_districts/{id}', [SaleController::class, 'getSubDistricts']);
 Route::post('/sale/add_address', [SaleController::class, 'addAddress']);
-Route::get('/sale/presubmit', [SaleController::class, 'presubmit']);
+Route::get('/sale/presubmit/{id}', [SaleController::class, 'presubmit']);
 
 
 
