@@ -303,7 +303,7 @@ class SaleRepository extends BaseRepository
   }
 
   public function makeOrder($customer_address_id) {
-    
+    $result = DB::insert(@"",[]);
   }
 
   public function getProvince() {

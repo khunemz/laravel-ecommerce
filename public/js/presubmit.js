@@ -5375,13 +5375,13 @@ $(document).ready(function () {
 });
 
 function processOrder() {
-  var customer_address_id = document.getElementById('customer_address_id');
+  var customer_address_id = $('#customer_address_id').val();
   $.post("".concat(BASE_URL, "/sale/processorder"), {
     _token: CSRF_TOKEN,
     customer_address_id: customer_address_id
   }).done(function (data, xhrStatus, jqXHR) {
     if (xhrStatus == "success") {
-      window.location.href = '/';
+      console.log(data);
     }
   }).fail(function (data, xhrStatus, jqXHR) {
     console.log(xhrStatus);
