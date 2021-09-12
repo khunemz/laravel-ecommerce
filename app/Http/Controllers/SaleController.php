@@ -40,9 +40,18 @@ class SaleController extends Controller
         // prepare 
         $paid_at = $charge['paid_at'];
         $transaction = $charge['transaction'];
+        $source_of_fund = $charge['source_of_fund'];
+        $amount = $charge['amount'];
         // insert payment transaction
-        // insert payment detail transaction
-        // update sale order transaction to be complete 
+        $payment_data['order_id'] = $order_header->id;
+        $payment_data['paid_at'] = date('Y-m-d H:i:s', strtotime($paid_at));
+        $payment_data['transaction_no'] = $transaction;
+        $payment_data['source_of_fund'] = $source_of_fund;
+        $payment_data['amount'] = $amount;
+        $payment_data['vendor_name'] = 'omise';
+        $repo->insertPayment($payment_data);
+        // update sale order transaction to be complete
+        // todo: redirect to complete 
         return redirect()->route('home.index');
       } else {
         return redirect()->back()->withInput();

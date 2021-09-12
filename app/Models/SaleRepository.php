@@ -22,7 +22,8 @@ class SaleRepository extends BaseRepository
         tax_rate, 
         tax_amount, 
         discount_amount, 
-        net_amount
+        net_amount,
+        customer_address_id
       FROM ecommerce.orders where id = ?;
     ", [$order_id]))->firstOrFail();
     return $orderHeader;
@@ -59,7 +60,6 @@ class SaleRepository extends BaseRepository
   }
   public function addAddress($data)
   {
-    $result = false;
     // insert address
     $result= DB::insert(@"
       INSERT INTO ecommerce.addresses
@@ -199,7 +199,7 @@ class SaleRepository extends BaseRepository
     $discount_amount = 0;
     $customer_id = 1; // todo: make this larter
     $seq_no = 1;
-    $taxrate = 0.07;
+    $taxrate = $this->getTaxRate();
     $tax_amount = (( $grand_amount - $discount_amount ) *  7) / 107;
     $net_amount = $grand_amount - $discount_amount;    
 
@@ -377,22 +377,24 @@ class SaleRepository extends BaseRepository
       (
         ondate,docno,status,customer_id, 
         quantity,grand_amount,tax_rate,tax_amount, 
-        discount_amount, net_amount, 
+        discount_amount, net_amount, customer_address_id,
         created_at, created_by, updated_at, updated_by, delflag)
     VALUES(
       ?, ?, ?, ?, 
       ?, ?, ?, ?, 
-      ?, ?, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP, -1, 0);
+      ?, ?, ?,
+      CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP, -1, 0);
     ", [
       $ondate, $docno, $status, $customer_id, 
       $quantity,$grand_amount, $taxrate, $tax_amount, 
-      $discount_amount,$net_amount]);
+      $discount_amount,$net_amount, $customer_address_id
+    ]);
     $order_id = DB::getPdo()->lastInsertId();
 
 
     /** BASKET ITEM */
     $basket_items = $this->getBasketItems($customer_id);
-    $tax_rate = 0.07;
+    $tax_rate = $this->getTaxRate();
 
     foreach ($basket_items as $key => $item) {
       # code...
@@ -489,6 +491,137 @@ class SaleRepository extends BaseRepository
       $running = '000001';
       $docno = $year . $month . $day . $running;
       return $docno;
+    }
+  }
+
+  public function getReceiptNo() {
+    $row = DB::table('payments')->orderBy('receiptno', 'desc')->first();
+    if ($row) {
+      // $docno_int = (int)$row;
+      // 2021071800001
+      $prev_doc_no = $row->receiptno;
+      // check if it is current year and month
+      $prev_running = substr($prev_doc_no, 8);
+      $prev_day =  substr($prev_doc_no, 6, 2);
+      $prev_month =  substr($prev_doc_no, 4, 2);
+      $prev_year = substr($prev_doc_no, 0, 4);
+
+      $prev_date = date("Y-m-d", strtotime($prev_year . "-" . $prev_month . "-" . $prev_day));
+      $today = date('Y-m-d');
+
+      $year = date('Y');
+      $month = date('m');
+      $day = date('d');
+      if ($today > $prev_date) {
+        $new_running = "000001";
+        $docno = $year . $month . $day . $new_running;
+      } else {
+        $new_running_int = (int)$prev_running + 1;
+        $new_running_str = strval($new_running_int);
+        $new_running = "";
+        if (strlen($new_running_str) == 1) {
+          $new_running = "00000" . $new_running_str;
+        } else if (strlen($new_running_str) == 2) {
+          $new_running = "0000" . $new_running_str;
+        } else if (strlen($new_running_str) == 3) {
+          $new_running = "000" . $new_running_str;
+        } else if (strlen($new_running_str) == 4) {
+          $new_running = "00" . $new_running_str;
+        } else if (strlen($new_running_str) == 5) {
+          $new_running = "0" . $new_running_str;
+        } else {
+          $new_running = $new_running_str;
+        }
+        $docno = $prev_year . $prev_month . $prev_day . $new_running;
+      }
+      return $docno;
+    } else {
+      $year = date('Y');
+      $month = date('m');
+      $day = date('d');
+      $running = '000001';
+      $docno = $year . $month . $day . $running;
+      return $docno;
+    }
+  }
+
+  public function insertPayment($payment_data) {
+
+    $order_id = $payment_data['order_id'];
+    $ondate = $payment_data['paid_at'];
+    $order = $this->getOrder($order_id);
+    $payment_type = $this->getPaymentType($payment_data['source_of_fund']);
+    $taxrate = $this->getTaxRate();
+    $receiptno = $this->getReceiptNo();
+    /**
+     * 0 init 
+     * 1 pending
+     * 2 created
+     * 3 paid
+     * 4 rejected
+     * 5 cancel
+     */
+    $payment_status = 3;
+    DB::insert(@"
+    INSERT INTO ecommerce.payments
+    (
+      receiptno, ondate, order_id, status, payment_type, 
+      quantity, grand_amount, tax_rate, tax_amount, 
+      discount_amount, net_amount, bill_address_id, 
+      created_at, created_by, updated_at, updated_by, delflag)
+    VALUES(
+      ?, ?, ?, ?, ?, 
+      ?, ?, ?, ?, 
+      ?, ?, ?, 
+      CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP, -1, 0);
+    ", [
+      $receiptno, $ondate, $order_id, $payment_status , $payment_type,
+      $order->quantity, $order->grand_amount, $taxrate , $order->tax_amount,
+      $order->discount_amount, $order->net_amount, $order->customer_address_id  
+    ]);
+
+    $payment_id = DB::getPdo()->lastInsertId();
+    $payment_vendor_id = $this->getPaymentVendorId($payment_data['vendor_name']);
+    DB::insert(@"
+    INSERT INTO ecommerce.payments_details
+    (
+      payment_id, payment_amount, slip_img, payment_token, 
+      payment_type_id, payment_vendor_id, 
+      created_at, created_by, updated_at, updated_by, delflag)
+      VALUES(
+        ?, ?, ?, ?, 
+        ?, ?, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP, -1, 0);
+    ", [$payment_id, $payment_data['amount'], '', $payment_data['transaction_no'],
+      $payment_type, $payment_vendor_id, 
+    ]);
+
+    DB::update(@"
+      UPDATE ecommerce.orders
+        SET status = ?, updated_at=CURRENT_TIMESTAMP, updated_by=-1, delflag=0
+      WHERE id=?;
+    ", [$payment_status , $order_id]);
+    return $payment_id;
+  }
+  
+  public function getPaymentType($source_of_found) {
+    if($source_of_found == "card") {
+      return 2;
+    } else {
+      return 1;
+    }
+  }
+
+  public function getTaxRate() {
+    // todo: create table and select from table instead
+    return 0.07;
+  }
+
+  public function getPaymentVendorId($vendor_name) {
+    // todo: create table and select from table instead
+    if($vendor_name == "omise") {
+      return 2;
+    } else {
+      return 1;
     }
   }
 }
