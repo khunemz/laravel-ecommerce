@@ -61,27 +61,29 @@
               </div>
             </a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          @auth       
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)">
+              Logged in as {{ auth()->user()->name }}
             </a>
-            <div class="dropdown-menu account-dropdown-menu" aria-labelledby="navbarDropdown">
-              @auth              
-              <a class="dropdown-item" href="javascript:void(0)">
-                Logged in as {{ auth()->user()->name }}
-              </a>
-              <a class="dropdown-item">
-                <form action="{{ url('logout') }}" method="POST">
-                  @csrf()
-                  <input type="submit" value="Logout" />
-                </form>
-              </a>
-              @endauth
-              @guest
-                <a class="dropdown-item" href="{{ url('login') }}">Login</a>
-                <a class="dropdown-item" href="{{ url('register') }}">register</a>
-              @endguest
-              
+          </li>
+          
+          <li class="nav-item">
+            <form class="nav-link" action="{{ url('logout') }}" method="POST">
+              @csrf()
+              <button type="submit" value="">Logout</button>
+            </form>
+          </li>
+          @endauth
+          @guest
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('login') }}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('register') }}">register</a>
+          </li>
+          @endguest
+
             </div>
           </li>
         </ul>
