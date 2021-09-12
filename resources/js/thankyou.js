@@ -33,5 +33,5 @@ Handlebars.registerHelper("numberFormat", function (value, options) {
 
 $(document).ready(function () {
     finalizeLoading();   
-    
+    console.log('finalizeing')
 });

@@ -6,9 +6,23 @@
 <div class="card-view-basket loading-skeleton row">
   <div class="col-sm-6 col-6">
     <div class="card">
+      
       <div class="card-body">
-        <p class="cart-text">คำสั่งซื้อหมายเลข #{{ $payment->docno }}</p>
-        <p class="cart-text"><h4>Thank you @auth auth()->user()->name @endauth </h4></p>
+        <h2>Thank you @auth {{ auth()->user()->name }} @endauth</h2>
+
+        <h3>Order confirmed !!</h3>
+        <header><strong>คำสั่งซื้อหมายเลข</strong> #{{ $payment->docno }}</header>
+      </div> <!-- card body -->
+    </div><!-- // card -->
+
+    <div class="card">
+      <div class="card-body">
+        <h2>Customer Information</h2>
+        
+        <h3>Contact information</h3>
+        <p class="card-text">
+          {{ $payment->customer_email}}
+        </p>
       </div> <!-- card body -->
     </div><!-- // card -->
   </div>
@@ -38,13 +52,11 @@
         </div>
       </div>
     </div>
-  @endforeach 
+    @endforeach
   </div> <!-- end col-6 -->
 </div>
 @endsection
 
 @section('script')
-<script>
-
-</script>
+<script type="text/javascript" src="{{ url('js/thankyou.js') }}"></script>
 @endsection

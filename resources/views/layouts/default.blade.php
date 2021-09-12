@@ -12,7 +12,7 @@
   <meta property="og:image" content="">
 
   <link rel="manifest" href="site.webmanifest">
-  <link rel="apple-touch-icon" href="icon.png"> 
+  <link rel="apple-touch-icon" href="{{ url('icon.png')}}"> 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link href="{{ url('css/app.css') }}" rel="stylesheet" type="text/css"/>
   <link href="{{ url('css/styles.css'); }}" rel="stylesheet" type="text/css"/>

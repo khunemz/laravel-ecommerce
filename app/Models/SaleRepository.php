@@ -613,7 +613,7 @@ class SaleRepository extends BaseRepository
       ca.id as customer_address_id, adss.id as assress_id, adss.address_1, adss.address_2,
       pv.id as province_id, pv.name as province_name, dt.id as district_id, dt.name as district_name,
       subd.id as subdistrict_id , subd.name as subdistrict_name,
-      adss.zipcode	
+      adss.zipcode ,cus.email as customer_email
     FROM ecommerce.payments p inner join payments_details pd on pd.payment_id = p.id 
     inner join orders o on o.id = p.order_id
     inner join customers cus on cus.id = o.customer_id 

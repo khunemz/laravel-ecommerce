@@ -44,7 +44,7 @@ Route::prefix('sale')->group(function () {
     Route::get('/getorder/{id}', [SaleController::class, 'getorder'])->middleware(['auth']);
     Route::get('/makepayment/{id}', [SaleController::class, 'makepayment'])->middleware(['auth']);
     Route::post('/complete_payment', [SaleController::class, 'complete_payment'])->middleware(['auth']);
-    Route::get('/thankyou/{id}', [SaleController::class, 'thankyou'])->middleware(['auth']);
+    Route::get('/thankyou/{id}', [SaleController::class, 'thankyou'])->middleware(['auth'])->name('sale.thankyou');
 
 });
 
