@@ -89,16 +89,14 @@
         </div>
       </div>
 
-      <div class="payment-button row float-right">
-        <div class="d-grid gap-2 col-6 mx-auto">
-          <a class="btn btn-success" href="{{url('sale/checkout')}}">ดำเนินการชำระเงิน</a>
-        </div>
+      <div class="text-center mt-10">
+        <a class="btn btn-success" href="{{url('sale/checkout')}}">ดำเนินการชำระเงิน</a>
       </div>
     </div>
   </div>
 </div>
 @else
-  <div class="text-center">
+  <div class="text-center loading-skeleton">
     <p class="card-text">ไม่พบสินค้าในตะกร้า</p>
   </div>
 @endif

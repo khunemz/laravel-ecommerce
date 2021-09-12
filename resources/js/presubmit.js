@@ -58,6 +58,11 @@ function processOrder() {
         .done(function(data, xhrStatus, jqXHR) {
             if (xhrStatus == "success") {
                 console.log(data)
+
+                const order_id = data.data.result;
+                // redirect to get order
+                window.location.href = `${BASE_URL}/order/getOrder/${order_id}`;
+
             }
         })
         .fail(function(data, xhrStatus, jqXHR) {

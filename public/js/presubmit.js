@@ -5382,6 +5382,9 @@ function processOrder() {
   }).done(function (data, xhrStatus, jqXHR) {
     if (xhrStatus == "success") {
       console.log(data);
+      var order_id = data.data.result; // redirect to get order
+
+      window.location.href = "".concat(BASE_URL, "/order/getOrder/").concat(order_id);
     }
   }).fail(function (data, xhrStatus, jqXHR) {
     console.log(xhrStatus);

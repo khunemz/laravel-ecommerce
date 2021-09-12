@@ -94,19 +94,18 @@
     </div>
   @endforeach
  
-  <div class="card bt-5">
-    <div class="card-body">
-      <div class="payment-button row float-right">
-        <div class="d-grid gap-2 col-6 mx-auto">
-          <button class="btn btn-success" id="make-order-button">ดำเนินการชำระเงิน</button>
-        </div>
-      </div>
-    </div>
+  <div class="text-center mt-10">
+    <button class="btn btn-success" id="make-order-button">ดำเนินการชำระเงิน</button>
   </div>
 @else
-  <div class="text-center">
+  <div class="text-center loading-skeleton">
     <p class="card-text">ไม่พบสินค้า</p>
+
+    <div class="mt-10 hidden">
+      <button class="btn btn-success" id="make-order-button">ดำเนินการชำระเงิน</button>
+    </div>
   </div>
+
 @endif
 
 

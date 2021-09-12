@@ -217,7 +217,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col-sm-1 justify-content-center text-center">
-              <input type="checkbox" class="custom-control-input" value="{{ $item->is_default ? 'on' : 'off'}}">
+              <!-- should be icon here -->
             </div>
             <div class="col-sm-11">
               <div class="card-text">
@@ -235,10 +235,8 @@
           </div>
         </div>
       </div>
-      <div class="payment-button row float-right">
-        <div class="d-grid gap-2 col-6 mx-auto">
-          <a class="btn btn-success" href="{{ url('sale/presubmit/' . $item->customer_address_id )}}">ไปหน้าสรุป</a>
-        </div>
+      <div class="text-center mt-10">
+        <a class="btn btn-success" href="{{ url('sale/presubmit/' . $item->customer_address_id )}}">ไปหน้าสรุป</a>
       </div>
     @endforeach
 

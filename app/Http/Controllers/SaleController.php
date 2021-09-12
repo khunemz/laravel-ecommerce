@@ -61,7 +61,7 @@ class SaleController extends Controller
       $data['customer_id']      = 1;
       $repo = new SaleRepository();
       $customer_address_id = $repo->addAddress($data);
-      return redirect()->to(['sale/presubmit/'. $customer_address_id]);
+      return redirect()->route('sale.presubmit', [ 'id' => $customer_address_id]);
     }
   }
   public function addCart(Request $request)
@@ -228,12 +228,19 @@ class SaleController extends Controller
       $basket = $repo->getBasket($customer_id);
       $basket_items = $repo->getBasketItems($customer_id);
       $customer_address = $repo->getAddressByCustomerAddressId($customer_address_id);
-      return view('sale.presubmit', [
-        'basket' => $basket,
-        'basket_items' => $basket_items,
-        'customer_address' => $customer_address,
-      ]);
+
+      if(count($basket_items) > 0) {
+        return view('sale.presubmit', [
+          'basket' => $basket,
+          'basket_items' => $basket_items,
+          'customer_address' => $customer_address,
+        ]);
+      } else {
+        return redirect()->route('home.index');
+      }
+      
     } catch (\Throwable $th) {
+      throw $th;
     }
   }
 

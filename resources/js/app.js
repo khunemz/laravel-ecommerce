@@ -1,4 +1,8 @@
-//require('./bootstrap');
+require('./bootstrap');
+
+require('alpinejs');
+
+
 const Handlebars = require("handlebars");
 require("handlebars/runtime");
 const Mustache = require('mustache');

@@ -6554,6 +6554,10 @@ $(document).ready(function () {
         document.getElementById('basket-count').innerHTML = basket_count;
       }
     }).fail(function (data, xhrStatus, jqXHR) {
+      if (data.status == 401) {
+        window.location.href = "".concat(BASE_URL, "/login");
+      }
+
       console.log(jqXHR);
     });
   });
