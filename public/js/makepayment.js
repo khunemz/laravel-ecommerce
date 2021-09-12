@@ -5367,11 +5367,8 @@ $(document).ready(function () {
       var basket_item_id = dataSet.id;
       delete_item(basket_item_id);
     });
-  }
+  } // window.onbeforeunload = function() { return "กรุณาทำรายการให้เสร็จสิ่้นก่อน"; };
 
-  window.onbeforeunload = function () {
-    return "กรุณาทำรายการให้เสร็จสิ่้นก่อน";
-  };
 });
 })();
 

@@ -22,20 +22,31 @@ class SaleController extends Controller
       $order_header = $repo->getOrder($order_id);
 
       
-      define('OMISE_API_VERSION', '2015-11-17');
+    define('OMISE_API_VERSION', '2015-11-17');
       // define('OMISE_PUBLIC_KEY', 'PUBLIC_KEY');
       // define('OMISE_SECRET_KEY', 'SECRET_KEY');
       define('OMISE_PUBLIC_KEY', 'pkey_test_5p5i37wkk2py0pojoeo');
       define('OMISE_SECRET_KEY', 'skey_test_55ggja8oc7g7t0fb9dw');
-      
+
       $charge = OmiseCharge::create(array(
-        'amount'      => $order_header->net_amount,
+        'amount'      => ($order_header->net_amount) * 100,
         'currency'    => 'thb',
         'card'        => $omise_token,
         'description' => $order_header->docno,
       ));
 
-      return redirect()->route('home.index');
+      if($charge['status'] == "successful") {
+
+        // prepare 
+        $paid_at = $charge['paid_at'];
+        $transaction = $charge['transaction'];
+        // insert payment transaction
+        // insert payment detail transaction
+        // update sale order transaction to be complete 
+        return redirect()->route('home.index');
+      } else {
+        return redirect()->back()->withInput();
+      }
     } catch (\Throwable $th) {
         throw $th;
     }

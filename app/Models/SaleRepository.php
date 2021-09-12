@@ -23,7 +23,7 @@ class SaleRepository extends BaseRepository
         tax_amount, 
         discount_amount, 
         net_amount
-      FROM ecommerce.orders;
+      FROM ecommerce.orders where id = ?;
     ", [$order_id]))->firstOrFail();
     return $orderHeader;
   }

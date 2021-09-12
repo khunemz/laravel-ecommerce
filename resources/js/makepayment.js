@@ -44,5 +44,5 @@ $(document).ready(function () {
         });
     }
 
-    window.onbeforeunload = function() { return "กรุณาทำรายการให้เสร็จสิ่้นก่อน"; };
+    // window.onbeforeunload = function() { return "กรุณาทำรายการให้เสร็จสิ่้นก่อน"; };
 });
