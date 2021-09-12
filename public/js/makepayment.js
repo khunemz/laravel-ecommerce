@@ -5322,9 +5322,9 @@ if ( true && (void 0)) {
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!***********************************!*\
-  !*** ./resources/js/presubmit.js ***!
-  \***********************************/
+/*!*************************************!*\
+  !*** ./resources/js/makepayment.js ***!
+  \*************************************/
 var Handlebars = __webpack_require__(/*! handlebars */ "./node_modules/handlebars/lib/index.js");
 
 __webpack_require__(/*! handlebars/runtime */ "./node_modules/handlebars/dist/cjs/handlebars.runtime.js");
@@ -5375,34 +5375,22 @@ $(document).ready(function () {
 });
 
 function processOrder() {
-  var customer_address_id = $('#customer_address_id').val();
-  $.post("".concat(BASE_URL, "/sale/processorder"), {
-    _token: CSRF_TOKEN,
-    customer_address_id: customer_address_id
-  }).done(function (data, xhrStatus, jqXHR) {
-    if (xhrStatus == "success") {
-      if (data.status == 200 || data.status == 201) {
-        console.log(data);
-        var order_id = data.data.result; // redirect to get order
-
-        window.location.href = "".concat(BASE_URL, "/sale/makepayment/").concat(order_id);
-      } else if (data.status == 301) {
-        window.location.href = "".concat(BASE_URL);
-      }
-    }
-  }).fail(function (data, xhrStatus, jqXHR) {
-    console.log(xhrStatus);
-  });
-}
-
-function delete_item(id) {
-  $.get("".concat(BASE_URL, "/sale/delete/").concat(id), {}).done(function (data, xhrStatus, jqXHR) {
-    if (xhrStatus == "success") {
-      window.location.reload();
-    }
-  }).fail(function (data, xhrStatus, jqXHR) {
-    console.log(xhrStatus);
-  });
+  console.log('processing order'); // const customer_address_id = $('#customer_address_id').val();
+  // $.post(`${BASE_URL}/sale/processorder`, {
+  //     _token: CSRF_TOKEN, 
+  //     customer_address_id: customer_address_id        
+  //     })
+  //     .done(function(data, xhrStatus, jqXHR) {
+  //         if (xhrStatus == "success") {
+  //             console.log(data)
+  //             const order_id = data.data.result;
+  //             // redirect to get order
+  //             window.location.href = `${BASE_URL}/order/getOrder/${order_id}`;
+  //         }
+  //     })
+  //     .fail(function(data, xhrStatus, jqXHR) {
+  //         console.log(xhrStatus)
+  //     })
 }
 })();
 

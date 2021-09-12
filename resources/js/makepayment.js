@@ -50,37 +50,23 @@ $(document).ready(function () {
 });
 
 function processOrder() {
-    const customer_address_id = $('#customer_address_id').val();
-    $.post(`${BASE_URL}/sale/processorder`, {
-        _token: CSRF_TOKEN, 
-        customer_address_id: customer_address_id        
-        })
-        .done(function(data, xhrStatus, jqXHR) {
-            if (xhrStatus == "success") {
-                if(data.status == 200 || data.status == 201) {
-                    console.log(data)
-                    const order_id = data.data.result;
-                    // redirect to get order
-                    window.location.href = `${BASE_URL}/sale/makepayment/${order_id}`;
-                } else if (data.status == 301) {
-                    window.location.href = `${BASE_URL}`;
-                }
-            }
-        })
-        .fail(function(data, xhrStatus, jqXHR) {
-            console.log(xhrStatus)
-        })
-}
+    console.log('processing order')
+    // const customer_address_id = $('#customer_address_id').val();
+    // $.post(`${BASE_URL}/sale/processorder`, {
+    //     _token: CSRF_TOKEN, 
+    //     customer_address_id: customer_address_id        
+    //     })
+    //     .done(function(data, xhrStatus, jqXHR) {
+    //         if (xhrStatus == "success") {
+    //             console.log(data)
 
+    //             const order_id = data.data.result;
+    //             // redirect to get order
+    //             window.location.href = `${BASE_URL}/order/getOrder/${order_id}`;
 
-function delete_item(id) {
-    $.get(`${BASE_URL}/sale/delete/${id}`, {})
-    .done(function(data, xhrStatus, jqXHR) {
-        if (xhrStatus == "success") {
-            window.location.reload();
-        }
-    })
-    .fail(function(data, xhrStatus, jqXHR) {
-        console.log(xhrStatus)
-    })
+    //         }
+    //     })
+    //     .fail(function(data, xhrStatus, jqXHR) {
+    //         console.log(xhrStatus)
+    //     })
 }

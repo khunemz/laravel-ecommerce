@@ -5,6 +5,7 @@
     "/js/viewbasket.js": "/js/viewbasket.js",
     "/js/checkout.js": "/js/checkout.js",
     "/js/presubmit.js": "/js/presubmit.js",
+    "/js/makepayment.js": "/js/makepayment.js",
     "/css/styles.css": "/css/styles.css",
     "/css/vendor.css": "/css/vendor.css",
     "/css/app.css": "/css/app.css"

@@ -41,6 +41,8 @@ Route::prefix('sale')->group(function () {
     Route::get('/presubmit/{id}', [SaleController::class, 'presubmit'])->middleware(['auth'])->name('sale.presubmit');
     Route::post('/processorder', [SaleController::class, 'processorder'])->middleware(['auth']);
     Route::post('/update_cart', [SaleController::class, 'updateCart'])->middleware(['auth']);
+    Route::get('/getorder/{id}', [SaleController::class, 'getorder'])->middleware(['auth']);
+    Route::get('/makepayment/{id}', [SaleController::class, 'makepayment'])->middleware(['auth']);
 });
 
 // Route::get('/', function () {

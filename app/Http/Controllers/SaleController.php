@@ -116,6 +116,18 @@ class SaleController extends Controller
     try {
       $customer_address_id = $request->input('customer_address_id');
       $repo = new SaleRepository();
+      $customer_id = 1;
+      $basket_items = $repo->getBasketItems($customer_id);
+      if(count($basket_items) == 0) {
+        $response = [
+          'status' => 301,
+          'message' => 'redirect',
+          'data' => [
+            'result' => ""
+          ]
+        ];
+        return redirect()->route('home.index');
+      }
       $result =  $repo->makeOrder($customer_address_id);
       $response = [
         'status' => 201,
@@ -242,6 +254,16 @@ class SaleController extends Controller
     } catch (\Throwable $th) {
       throw $th;
     }
+  }
+
+  public function vieworder($id) {
+    $order = [];
+    return view('order.vieworder', ['order' => $order]);
+  }
+
+  public function makepayment($id) {
+    // id is order id 
+    return view('sale.makepayment');
   }
 
   public function delete($id)
