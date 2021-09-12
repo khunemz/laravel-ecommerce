@@ -8,6 +8,14 @@ use App\Models\ProductRepository;
 
 class SaleRepository extends BaseRepository
 {
+
+  public function getOrder($order_id) {
+    return null;
+  }
+
+  public function getOrderItem($order_id) {
+    return null;
+  }
   public function addAddress($data)
   {
     $result = false;

@@ -44,29 +44,5 @@ $(document).ready(function () {
         });
     }
 
-    document.getElementById('make-order-button').addEventListener('click', function() {
-        processOrder();
-    });
+    window.onbeforeunload = function() { return "กรุณาทำรายการให้เสร็จสิ่้นก่อน"; };
 });
-
-function processOrder() {
-    console.log('processing order')
-    // const customer_address_id = $('#customer_address_id').val();
-    // $.post(`${BASE_URL}/sale/processorder`, {
-    //     _token: CSRF_TOKEN, 
-    //     customer_address_id: customer_address_id        
-    //     })
-    //     .done(function(data, xhrStatus, jqXHR) {
-    //         if (xhrStatus == "success") {
-    //             console.log(data)
-
-    //             const order_id = data.data.result;
-    //             // redirect to get order
-    //             window.location.href = `${BASE_URL}/order/getOrder/${order_id}`;
-
-    //         }
-    //     })
-    //     .fail(function(data, xhrStatus, jqXHR) {
-    //         console.log(xhrStatus)
-    //     })
-}

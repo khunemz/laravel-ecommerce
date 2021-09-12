@@ -43,6 +43,8 @@ Route::prefix('sale')->group(function () {
     Route::post('/update_cart', [SaleController::class, 'updateCart'])->middleware(['auth']);
     Route::get('/getorder/{id}', [SaleController::class, 'getorder'])->middleware(['auth']);
     Route::get('/makepayment/{id}', [SaleController::class, 'makepayment'])->middleware(['auth']);
+    Route::post('/complete_payment', [SaleController::class, 'complete_payment'])->middleware(['auth']);
+
 });
 
 // Route::get('/', function () {

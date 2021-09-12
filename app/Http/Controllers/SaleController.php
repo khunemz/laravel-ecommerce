@@ -7,12 +7,27 @@ use App\Models\ProductRepository;
 use App\Models\SaleRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use OmiseCharge;
 use Symfony\Component\Console\Input\Input;
 
 class SaleController extends Controller
 {
+
+  public function complete_payment(Request $request)
+  {
+
+    $omise_token = $request->input('omise_token');
+    $charge = OmiseCharge::create(array(
+      'amount'      => '100000',
+      'currency'    => 'thb',
+      'card'        => $omise_token,
+      'description' => 'Got it from try-omise-php repository in Github'
+    ));
+    return redirect()->route('home.index');
+  }
+
   public function addAddress(Request $request)
-  {    
+  {
 
     $validator = Validator::make($request->all(), [
       'address_1' => 'required|max:150',
@@ -28,9 +43,9 @@ class SaleController extends Controller
       'zipcode' => 'required|max:20',
     ]);
 
-    
+
     if ($validator->fails()) {
-      $errors = $validator->errors();   
+      $errors = $validator->errors();
       return redirect('sale/checkout')
         ->withErrors($validator)
         ->withInput();
@@ -46,7 +61,7 @@ class SaleController extends Controller
       $district_id = $request->input('district_id');
       $province_id = $request->input('province_id');
       $zipcode = $request->input('zipcode');
-  
+
       $data['address_1']    = $address_1;
       $data['address_2']    = $address_2;
       $data['name']         = $name;
@@ -61,7 +76,7 @@ class SaleController extends Controller
       $data['customer_id']      = 1;
       $repo = new SaleRepository();
       $customer_address_id = $repo->addAddress($data);
-      return redirect()->route('sale.presubmit', [ 'id' => $customer_address_id]);
+      return redirect()->route('sale.presubmit', ['id' => $customer_address_id]);
     }
   }
   public function addCart(Request $request)
@@ -112,13 +127,14 @@ class SaleController extends Controller
     }
   }
 
-  public function processorder(Request $request) {
+  public function processorder(Request $request)
+  {
     try {
       $customer_address_id = $request->input('customer_address_id');
       $repo = new SaleRepository();
       $customer_id = 1;
       $basket_items = $repo->getBasketItems($customer_id);
-      if(count($basket_items) == 0) {
+      if (count($basket_items) == 0) {
         $response = [
           'status' => 301,
           'message' => 'redirect',
@@ -186,9 +202,9 @@ class SaleController extends Controller
       $repo = new SaleRepository();
       $customer_address = $repo->getCustomerAddress($customer_id);
       $types = [
-        ["value" => 1, "text" => "บ้าน"], 
+        ["value" => 1, "text" => "บ้าน"],
         ["value" => 2, "text" => "ที่ทำงาน"]
-      ];  
+      ];
       return view('sale.checkout', [
         'customer_address' => $customer_address,
         'types' => $types
@@ -241,7 +257,7 @@ class SaleController extends Controller
       $basket_items = $repo->getBasketItems($customer_id);
       $customer_address = $repo->getAddressByCustomerAddressId($customer_address_id);
 
-      if(count($basket_items) > 0) {
+      if (count($basket_items) > 0) {
         return view('sale.presubmit', [
           'basket' => $basket,
           'basket_items' => $basket_items,
@@ -250,19 +266,25 @@ class SaleController extends Controller
       } else {
         return redirect()->route('home.index');
       }
-      
     } catch (\Throwable $th) {
       throw $th;
     }
   }
 
-  public function vieworder($id) {
+  public function vieworder($id)
+  {
     $order = [];
     return view('order.vieworder', ['order' => $order]);
   }
 
-  public function makepayment($id) {
+  public function makepayment($id)
+  {
     // id is order id 
+    $order_id = $id;  
+    $repo = new SaleRepository();
+    $orderHeader = $repo->getOrder($order_id);
+    $orderDetail = $repo->getOrderItem($order_id);
+    
     return view('sale.makepayment');
   }
 
