@@ -50,9 +50,7 @@ class SaleController extends Controller
         $payment_data['amount'] = $amount;
         $payment_data['vendor_name'] = 'omise';
         $repo->insertPayment($payment_data);
-        // update sale order transaction to be complete
-        // todo: redirect to complete 
-        return redirect()->route('home.index');
+        return redirect()->route('order.thankyou');
       } else {
         return redirect()->back()->withInput();
       }

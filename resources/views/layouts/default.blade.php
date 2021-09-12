@@ -66,10 +66,23 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </a>
             <div class="dropdown-menu account-dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Setting</a>
-              <a class="dropdown-item" href="#">Profile</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Logout</a>
+
+              @auth              
+              <a class="dropdown-item" href="javascript:void(0)">
+                {{ auth()->user()->name }}
+              </a>
+              <a class="dropdown-item">
+                <form action="{{ url('logout') }}" method="POST">
+                  @csrf()
+                  <input type="submit" value="Logout" />
+                </form>
+              </a>
+              @endauth
+              @guest
+                <a class="dropdown-item" href="{{ url('login') }}">Login</a>
+                <a class="dropdown-item" href="{{ url('register') }}">register</a>
+              @endguest
+              
             </div>
           </li>
         </ul>
