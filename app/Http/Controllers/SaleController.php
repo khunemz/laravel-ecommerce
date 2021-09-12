@@ -15,7 +15,6 @@ class SaleController extends Controller
 
   public function complete_payment(Request $request)
   {
-
     $omise_token = $request->input('omise_token');
     $charge = OmiseCharge::create(array(
       'amount'      => '100000',
@@ -145,6 +144,7 @@ class SaleController extends Controller
         return redirect()->route('home.index');
       }
       $result =  $repo->makeOrder($customer_address_id);
+      
       $response = [
         'status' => 201,
         'message' => 'success',
@@ -285,7 +285,10 @@ class SaleController extends Controller
     $orderHeader = $repo->getOrder($order_id);
     $orderDetail = $repo->getOrderItem($order_id);
     
-    return view('sale.makepayment');
+    return view('sale.makepayment', [
+      'orderHeader' => $orderHeader,
+      'orderDetail' => $orderDetail,
+    ]);
   }
 
   public function delete($id)
