@@ -15,14 +15,30 @@ class SaleController extends Controller
 
   public function complete_payment(Request $request)
   {
-    $omise_token = $request->input('omise_token');
-    $charge = OmiseCharge::create(array(
-      'amount'      => '100000',
-      'currency'    => 'thb',
-      'card'        => $omise_token,
-      'description' => 'Got it from try-omise-php repository in Github'
-    ));
-    return redirect()->route('home.index');
+    try {
+      $omise_token = $request->input('omise_token');
+      $order_id = $request->input('order_id');
+      $repo = new SaleRepository();
+      $order_header = $repo->getOrder($order_id);
+
+      
+      define('OMISE_API_VERSION', '2015-11-17');
+      // define('OMISE_PUBLIC_KEY', 'PUBLIC_KEY');
+      // define('OMISE_SECRET_KEY', 'SECRET_KEY');
+      define('OMISE_PUBLIC_KEY', 'pkey_test_5p5i37wkk2py0pojoeo');
+      define('OMISE_SECRET_KEY', 'skey_test_55ggja8oc7g7t0fb9dw');
+      
+      $charge = OmiseCharge::create(array(
+        'amount'      => $order_header->net_amount,
+        'currency'    => 'thb',
+        'card'        => $omise_token,
+        'description' => $order_header->docno,
+      ));
+
+      return redirect()->route('home.index');
+    } catch (\Throwable $th) {
+        throw $th;
+    }
   }
 
   public function addAddress(Request $request)
@@ -283,11 +299,11 @@ class SaleController extends Controller
     $order_id = $id;  
     $repo = new SaleRepository();
     $orderHeader = $repo->getOrder($order_id);
-    $orderDetail = $repo->getOrderItem($order_id);
+    $orderItem = $repo->getOrderItem($order_id);
     
     return view('sale.makepayment', [
-      'orderHeader' => $orderHeader,
-      'orderDetail' => $orderDetail,
+      'order_header' => $orderHeader,
+      'order_item' => $orderItem,
     ]);
   }
 

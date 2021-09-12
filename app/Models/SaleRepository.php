@@ -10,11 +10,52 @@ class SaleRepository extends BaseRepository
 {
 
   public function getOrder($order_id) {
-    return null;
+    $orderHeader = collect(DB::select(@"
+    SELECT 
+        id, 
+        docno, 
+        ondate, 
+        status, 
+        customer_id, 
+        quantity, 
+        grand_amount, 
+        tax_rate, 
+        tax_amount, 
+        discount_amount, 
+        net_amount
+      FROM ecommerce.orders;
+    ", [$order_id]))->firstOrFail();
+    return $orderHeader;
   }
 
   public function getOrderItem($order_id) {
-    return null;
+
+    $order_items =  DB::select(@"
+    SELECT 
+        oi.id, 
+        p.id as product_id,
+        p.product_code , 
+        p.title, 
+        p.img_path,
+        p.description ,
+        oi.seq_no,
+        oi.quantity ,
+        oi.unit_id,
+        u.name as unit_name,
+        p.price , 
+        oi.grand_amount , 
+        oi.discount_amount , 
+        oi.tax_amount , 
+        oi.net_amount 
+    from order_items oi inner join orders o on oi.order_id  = o.id 
+    inner join products p on oi.product_id = p.id 
+    inner join units u on u.id  = oi.unit_Id 
+    where p.delflag = 0 
+      and u.delflag  = 0 
+      and oi.delflag  = 0 
+      and o.id  = ?
+    ", [$order_id]);
+    return $order_items;
   }
   public function addAddress($data)
   {
@@ -367,10 +408,11 @@ class SaleRepository extends BaseRepository
           tax_amount, 
           discount_amount, 
           net_amount, 
+          grand_amount,
           created_at, created_by, updated_at, updated_by, delflag)
-          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP, -1, 0);
+          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP, -1, 0);
       ",[$order_id, $item->seq_no,$item->product_id, $item->unit_id, $item->quantity,
-        $tax_rate , $item->tax_amount, $item->discount_amount, $item->net_amount    
+        $tax_rate , $item->tax_amount, $item->discount_amount, $item->net_amount , $item->grand_amount   
       ]);
     }
     // delete basket

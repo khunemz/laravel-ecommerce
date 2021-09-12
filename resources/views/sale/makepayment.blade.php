@@ -8,6 +8,7 @@
     <div class="card-body">
       <form action="{{ url('sale/complete_payment')}}" method="post" id="checkout">
         @csrf()
+        <input type="hidden" name="order_id" value="{{ $order_header->id }}" />
         <!-- Error will append here if it has -->
         <div id="token_errors" class="alert alert-danger">กรุณากรอกข้อมูล</div>
         <!-- Keep token from tokenize step here and resend the form again (see more below in javascript section) -->
@@ -91,6 +92,75 @@
           <input type="submit"  class="btn btn-success" id="create_token" value="ดำเนินการชำระเงิน">
         </div>
     </form>
+    </div> <!-- card body -->
+  </div><!-- // card -->
+
+  <div class="card card-total-basket">
+    <div class="card-body">
+      <p class="card-text">สินค้าทั้งหมด {{ $order_header->quantity }} รายการ</p>
+      <p class="card-text">
+        <header><strong>คำสั่งซื้อหมายเลข</strong> {{ $order_header->docno }}</header>
+      </p>
+    </div>
+  </div>
+
+  @foreach ($order_item as $item)
+    <div class="card card-basket-item">
+      <div class="card-body">
+        <div class="basket-item-group">
+          <div class="product-thumbnail">
+            <img src="{{ $item->img_path }}" 
+            class="img-fluid img-thumbnail" alt="{{ $item->title }}" style="max-width: 150px">
+          </div>
+          <div class="product-title">
+            <p class="card-text text-wrap-ellipsis">{{ $item->title }}</p>
+          </div>
+          <div class="product-grand-amount text-center">
+            <span>
+              {{ number_format($item->grand_amount) }} บาท
+            </span>
+            
+          </div>
+          <div class="adjust-quantity-input">
+            <section class="">
+              <div class="d-inine-block text-center">{{ $item->quantity }} {{ $item->unit_name }}</div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  @endforeach  
+
+  <div class="card card-total-basket">
+    <div class="card-body">
+      <div class="card-basket-summary">
+        <div class="basket-summary">
+          <span class="">
+            <strong>ยอดรวม</strong>
+          </span>
+          <span class="">
+            {{ number_format($order_header->grand_amount, 2) }} บาท
+          </span>
+        </div>
+        
+        <div class="basket-summary">
+          <span class="">
+            <strong>ส่วนลด</strong>
+          </span>
+          <span class="">
+            {{ number_format($order_header->discount_amount, 2) }} บาท
+          </span>
+        </div>
+
+        <div class="basket-summary">
+          <span class="">
+            <strong>ยอดรวมทั้งสิ้น</strong>
+          </span>
+          <span class="">
+            {{ number_format($order_header->net_amount, 2) }} บาท
+          </span>
+        </div>
+      </div>      
     </div>
   </div>
 </div>
