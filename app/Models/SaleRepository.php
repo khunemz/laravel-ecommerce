@@ -30,7 +30,6 @@ class SaleRepository extends BaseRepository
   }
 
   public function getOrderItem($order_id) {
-
     $order_items =  DB::select(@"
     SELECT 
         oi.id, 
@@ -601,6 +600,36 @@ class SaleRepository extends BaseRepository
       WHERE id=?;
     ", [$payment_status , $order_id]);
     return $payment_id;
+  }
+
+  public function getPaymentById($payment_id) {
+    
+    $payment = collect(DB::select(@"
+    SELECT p.id as payment_id, p.receiptno, p.ondate as payment_ondate, o.docno,
+      o.id as order_id, o.ondate as order_ondate, o.status as order_status, p.status as payment_status,
+      p.status, p.payment_type, p.quantity, p.grand_amount, 
+      p.tax_rate, p.tax_amount, p.discount_amount, p.net_amount, 
+      p.bill_address_id, pd.payment_token, cus.id as customer_id , cus.name as customer_name, 
+      ca.id as customer_address_id, adss.id as assress_id, adss.address_1, adss.address_2,
+      pv.id as province_id, pv.name as province_name, dt.id as district_id, dt.name as district_name,
+      subd.id as subdistrict_id , subd.name as subdistrict_name,
+      adss.zipcode	
+    FROM ecommerce.payments p inner join payments_details pd on pd.payment_id = p.id 
+    inner join orders o on o.id = p.order_id
+    inner join customers cus on cus.id = o.customer_id 
+    inner join customer_address ca on ca.customer_id  = cus.id 
+    inner join addresses adss on adss.id = ca.address_id 
+    inner join province pv on adss.province_id  = pv.id
+    inner join district dt on dt.id = adss.district_id 
+    inner join subdistrict subd on subd.id = adss.subdistrict_id 
+    where p.delflag  = 0 and pd.delflag  = 0 and o.delflag  = 0 
+      and cus.delflag  = 0 and ca.delflag  = 0 and adss.delflag  = 0
+      and subd.delflag  = 0
+      and p.id  = ?
+    ", [
+      $payment_id
+    ]))->firstOrFail();
+    return $payment;
   }
   
   public function getPaymentType($source_of_found) {

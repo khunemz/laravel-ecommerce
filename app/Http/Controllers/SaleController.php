@@ -49,8 +49,8 @@ class SaleController extends Controller
         $payment_data['source_of_fund'] = $source_of_fund;
         $payment_data['amount'] = $amount;
         $payment_data['vendor_name'] = 'omise';
-        $repo->insertPayment($payment_data);
-        return redirect()->route('order.thankyou');
+        $payment_id = $repo->insertPayment($payment_data);
+        return redirect()->route('sale.thankyou', [ 'id' => $payment_id]);
       } else {
         return redirect()->back()->withInput();
       }
@@ -338,6 +338,21 @@ class SaleController extends Controller
         ]
       ];
       return response()->json($response);
+    } catch (\Throwable $th) {
+      throw $th;
+    }
+  }
+
+  public function thankyou($payment_id ) {
+    try {
+      $repo = new SaleRepository();
+      $payment = $repo->getPaymentById($payment_id);
+      $order_id = $payment->order_id;
+      $order_items = $repo->getOrderItem($order_id);
+      return view('sale.thankyou', [
+        'payment' => $payment, 
+        'order_items' => $order_items
+      ]);
     } catch (\Throwable $th) {
       throw $th;
     }
