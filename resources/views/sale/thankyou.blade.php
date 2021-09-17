@@ -21,11 +21,42 @@
         
         <h3>Contact information</h3>
         <p class="card-text">
-          {{ $payment->customer_email ? $payment->customer_email : '-' }}
+          <span class="d-block">
+            Payment Date: {{ $payment->payment_ondate ? $payment->payment_ondate : '-' }}
+          </span>
         </p>
         <p class="card-text">
-          {{ $payment->tel ? $payment->tel : '-' }}
+          <span class="d-block">
+            Email:  {{ $payment->customer_email ? $payment->customer_email : '-' }}
+          </span>
         </p>
+        <p class="card-text">
+          <span class="d-block">
+            Tel: {{ $payment->tel ? $payment->tel : '-' }}
+          </span>
+        </p>
+
+        <p class="card-text">
+          <span class="d-block">
+            Address: {{ $payment->address_1 ? $payment->address_1 : '-' }} , 
+            {{ $payment->address_2 ? $payment->address_2 : '-' }}
+            {{ $payment->subdistrict_name ? 'ตำบล ' .$payment->subdistrict_name : '-' }}
+            {{ $payment->district_name ? 'อำเภอ ' .$payment->district_name : '-' }}
+            {{ $payment->province_name ? 'จังหวัด ' .$payment->province_name : '-' }}
+            {{ $payment->zipcode ? 'รหัสไปรษณีย์ ' .$payment->zipcode : '-' }}
+          </span>
+        </p>
+
+        <p class="card-text">
+          <span class="d-block">
+            Payment method: {{ $payment->payment_method_desc ? $payment->payment_method_desc : '-' }} <br />      
+            Card no: (Last four digits): {{ $payment->last_4_digits ? '***' .  $payment->last_4_digits : '-' }} , 
+          </span>
+        </p>
+        
+        <div class="text-center mt-10">
+          <a class="btn btn-success" href="{{ url('/')}}">กลับหน้าหลัก</a>
+        </div>
       </div> <!-- card body -->
     </div><!-- // card -->
   </div>

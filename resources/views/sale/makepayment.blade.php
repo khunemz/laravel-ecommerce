@@ -207,7 +207,7 @@
                 // Then fill the omise_token.
                 form.find("[name=omise_token]").val(response.id);
                 
-                $("#token_errors").addClass('success').html('Tokenize succeed... It will redirect to checkout page in 3 second.');
+                $("#token_errors").addClass('success').html('กรุณาสักครู่ กรุณาอย่าออกจากหน้านี้ หรือกด refresh');
                 setTimeout(function(){
                     form.get(0).submit();
                 }, 3000);

@@ -585,13 +585,17 @@ class SaleRepository extends BaseRepository
     INSERT INTO ecommerce.payments_details
     (
       payment_id, payment_amount, slip_img, payment_token, 
-      payment_type_id, payment_vendor_id, 
+      payment_type_id, payment_vendor_id, payment_method_desc,
+      last_4_digits,payment_vendor_desc,
       created_at, created_by, updated_at, updated_by, delflag)
       VALUES(
         ?, ?, ?, ?, 
-        ?, ?, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP, -1, 0);
+        ?, ?, ? ,
+        ?, ? ,
+        CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP, -1, 0);
     ", [$payment_id, $payment_data['amount'], '', $payment_data['transaction_no'],
-      $payment_type, $payment_vendor_id, 
+      $payment_type, $payment_vendor_id, $payment_data['payment_method_desc'],
+      $payment_data['last_4_digits'],$payment_data['payment_vendor_desc']
     ]);
 
     DB::update(@"
@@ -605,7 +609,8 @@ class SaleRepository extends BaseRepository
   public function getPaymentById($payment_id) {
     
     $payment = collect(DB::select(@"
-    SELECT p.id as payment_id, p.receiptno, p.ondate as payment_ondate, o.docno,
+    SELECT p.id as payment_id, p.receiptno, p.ondate as payment_ondate, o.docno,cus.tel, pd.payment_method_desc,
+      pd.last_4_digits,
       o.id as order_id, o.ondate as order_ondate, o.status as order_status, p.status as payment_status,
       p.status, p.payment_type, p.quantity, p.grand_amount, 
       p.tax_rate, p.tax_amount, p.discount_amount, p.net_amount, 

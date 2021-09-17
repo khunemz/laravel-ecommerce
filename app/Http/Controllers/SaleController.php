@@ -49,6 +49,10 @@ class SaleController extends Controller
         $payment_data['source_of_fund'] = $source_of_fund;
         $payment_data['amount'] = $amount;
         $payment_data['vendor_name'] = 'omise';
+        $payment_data['payment_method_desc'] =  $charge['card'] ? $charge['card']['object'] : '';
+        $payment_data['last_4_digits'] =  $charge['card'] ? $charge['card']['last_digits'] : '';
+        $payment_data['payment_vendor_desc'] =  'omise';
+
         $payment_id = $repo->insertPayment($payment_data);
         return redirect()->route('sale.thankyou', [ 'id' => $payment_id]);
       } else {
