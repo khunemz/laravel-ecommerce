@@ -197,7 +197,6 @@
         };
 
         Omise.createToken("card", card, function (statusCode, response) {
-            console.log(response)
             if (response.object == "error") {
                 // Display an error message.
                 $("#token_errors").html(response.message);

@@ -26,8 +26,11 @@ class SaleController extends Controller
     define('OMISE_API_VERSION', '2015-11-17');
       // define('OMISE_PUBLIC_KEY', 'PUBLIC_KEY');
       // define('OMISE_SECRET_KEY', 'SECRET_KEY');
-      define('OMISE_PUBLIC_KEY', 'pkey_test_5p5i37wkk2py0pojoeo');
-      define('OMISE_SECRET_KEY', 'skey_test_55ggja8oc7g7t0fb9dw');
+      $public_key = config('app.omise_public_key');
+      $private_key = config('app.omise_secret_key');
+
+      define('OMISE_PUBLIC_KEY', $public_key);
+      define('OMISE_SECRET_KEY', $private_key);
 
       $charge = OmiseCharge::create(array(
         'amount'      => ($order_header->net_amount) * 100,
