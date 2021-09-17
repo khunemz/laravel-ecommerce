@@ -52,10 +52,10 @@ class SaleController extends Controller
         $payment_id = $repo->insertPayment($payment_data);
         return redirect()->route('sale.thankyou', [ 'id' => $payment_id]);
       } else {
-        return redirect()->back()->withInput();
+        return redirect()->back()->withInput()->with(['error' => $charge['failure_message']]);
       }
     } catch (\Throwable $th) {
-        throw $th;
+      return redirect()->back()->withInput()->with(['error' => $th->getMessage()]);
     }
   }
 

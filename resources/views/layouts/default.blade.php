@@ -43,10 +43,10 @@
           <li class="nav-item col-6 col-md-auto">
             <a class="nav-link p-2" href="{{ url('/') }}">หน้าหลัก</a>
           </li>
-          <li class="nav-item col-6 col-md-auto">
+          {{-- <li class="nav-item col-6 col-md-auto">
             <a class="nav-link p-2 active" aria-current="true" 
             href="{{ url('/products') }}">สินค้าทั้งหมด</a>
-          </li>
+          </li> --}}
           <li class="nav-item col-6 col-md-auto">
             <a class="nav-link p-2"  href="{{ url('/tracking') }}">ติดตามสถานะ</a>
           </li>         

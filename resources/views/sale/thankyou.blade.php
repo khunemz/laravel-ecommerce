@@ -21,7 +21,10 @@
         
         <h3>Contact information</h3>
         <p class="card-text">
-          {{ $payment->customer_email}}
+          {{ $payment->customer_email ? $payment->customer_email : '-' }}
+        </p>
+        <p class="card-text">
+          {{ $payment->tel ? $payment->tel : '-' }}
         </p>
       </div> <!-- card body -->
     </div><!-- // card -->

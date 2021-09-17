@@ -10,7 +10,17 @@
         @csrf()
         <input type="hidden" name="order_id" value="{{ $order_header->id }}" />
         <!-- Error will append here if it has -->
-        <div id="token_errors" class="alert alert-danger">กรุณากรอกข้อมูล</div>
+
+          @if (\Session::has('error'))          
+          <div id="" class="alert alert-danger">
+            {{Session::get('error')}}
+          </div>
+          @else
+          <div id="token_errors" class="alert alert-danger">
+            กรุณากรอกข้อมูล
+          </div>
+          @endif
+     
         <!-- Keep token from tokenize step here and resend the form again (see more below in javascript section) -->
         <input type="hidden" name="omise_token">
         <div class="row mb-3">
