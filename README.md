@@ -1,4 +1,3 @@
-![omise_dashboard](https://user-images.githubusercontent.com/10510210/133806178-5f6ec7e7-7dcc-47b5-9d0b-d813bb83a7ea.png)
 ![login_1](https://user-images.githubusercontent.com/10510210/133806188-57731c15-4494-40d9-b069-6676a86a1415.png)
 ![register_1](https://user-images.githubusercontent.com/10510210/133806193-37dcd291-39dd-4829-9819-bbfb5b133b13.png)
 ![thankyou_1](https://user-images.githubusercontent.com/10510210/133806195-a3e4e722-d992-44ed-9e6a-86e483912826.png)
