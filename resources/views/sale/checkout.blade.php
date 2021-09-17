@@ -198,10 +198,8 @@
                 </div>
               </div>
   
-              <div class="payment-button row float-right">
-                <div class="d-grid gap-2 col-6 mx-auto">
-                  <input class="btn btn-success" type="submit" value="บันทึกและไปหน้าสรุป">
-                </div>
+              <div class="text-center mt-10">
+                <input class="btn btn-success" type="submit" value="บันทึกและไปหน้าสรุป">
               </div>
             </form>
           </fieldset>
