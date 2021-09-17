@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\CustomerRepository;
 use App\Models\ProductRepository;
 use App\Models\SaleRepository;
 use Illuminate\Http\Request;
@@ -98,6 +99,10 @@ class SaleController extends Controller
       $district_id = $request->input('district_id');
       $province_id = $request->input('province_id');
       $zipcode = $request->input('zipcode');
+      $customer_repo = new CustomerRepository();
+      $user_id = auth()->id();
+      $customer = $customer_repo->findCustomerByUserId($user_id);
+      $customer_id = $customer->customer_id;
 
       $data['address_1']    = $address_1;
       $data['address_2']    = $address_2;
@@ -110,7 +115,7 @@ class SaleController extends Controller
       $data['district_id']  = $district_id;
       $data['province_id']  = $province_id;
       $data['zipcode']      = $zipcode;
-      $data['customer_id']      = 1;
+      $data['customer_id']      = $customer_id;
       $repo = new SaleRepository();
       $customer_address_id = $repo->addAddress($data);
       return redirect()->route('sale.presubmit', ['id' => $customer_address_id]);
@@ -169,7 +174,10 @@ class SaleController extends Controller
     try {
       $customer_address_id = $request->input('customer_address_id');
       $repo = new SaleRepository();
-      $customer_id = 1;
+      $customer_repo = new CustomerRepository();
+      $user_id = auth()->id();
+      $customer = $customer_repo->findCustomerByUserId($user_id);
+      $customer_id = $customer->customer_id;
       $basket_items = $repo->getBasketItems($customer_id);
       if (count($basket_items) == 0) {
         $response = [
@@ -220,7 +228,10 @@ class SaleController extends Controller
   public function viewbasket()
   {
     try {
-      $customer_id = 1;
+      $customer_repo = new CustomerRepository();
+      $user_id = auth()->id();
+      $customer = $customer_repo->findCustomerByUserId($user_id);
+      $customer_id = $customer->customer_id;
       $repo = new SaleRepository();
       $basket = $repo->getBasket($customer_id);
       $basket_items = $repo->getBasketItems($customer_id);
@@ -236,7 +247,10 @@ class SaleController extends Controller
   public function checkout()
   {
     try {
-      $customer_id = 1;
+      $customer_repo = new CustomerRepository();
+      $user_id = auth()->id();
+      $customer = $customer_repo->findCustomerByUserId($user_id);
+      $customer_id = $customer->customer_id;
       $repo = new SaleRepository();
       $customer_address = $repo->getCustomerAddress($customer_id);
       $types = [
@@ -288,7 +302,10 @@ class SaleController extends Controller
   public function presubmit($id)
   {
     try {
-      $customer_id = 1;
+      $customer_repo = new CustomerRepository();
+      $user_id = auth()->id();
+      $customer = $customer_repo->findCustomerByUserId($user_id);
+      $customer_id = $customer->customer_id;
       $customer_address_id = $id;
       $repo = new SaleRepository();
       $basket = $repo->getBasket($customer_id);

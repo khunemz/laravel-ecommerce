@@ -188,6 +188,10 @@ class SaleRepository extends BaseRepository
 
   public function addCart($data)
   {
+    $customer_repo = new CustomerRepository();
+    $user_id = auth()->id();
+    $customer = $customer_repo->findCustomerByUserId($user_id);
+    $customer_id = $customer->customer_id;
     $product_repo = new ProductRepository();
     $product_id = $data['product_id'];
     $quantity = $data['quantity'];
@@ -196,7 +200,6 @@ class SaleRepository extends BaseRepository
     $price = $product->price;
     $grand_amount = $quantity * $price;
     $discount_amount = 0;
-    $customer_id = 1; // todo: make this larter
     $seq_no = 1;
     $taxrate = $this->getTaxRate();
     $tax_amount = (( $grand_amount - $discount_amount ) *  7) / 107;

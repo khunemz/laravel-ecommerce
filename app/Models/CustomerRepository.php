@@ -15,8 +15,8 @@ class CustomerRepository extends BaseRepository
     $email = $user->email;
     $result = DB::insert(@"
     INSERT INTO ecommerce.customers
-    (code, name, email, tel, `type`, order_rank, created_at, created_by, updated_at, updated_by, delflag)
-    VALUES(?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP, -1, 0);
+    (code, name, email, tel, `type`, created_at, created_by, updated_at, updated_by, delflag)
+    VALUES(?, ?, ?, ?, ?, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP, -1, 0);
     ", [strval($user_id), $username, $email, '', 1, $user_id]);
     return $result;
   }
@@ -31,4 +31,5 @@ class CustomerRepository extends BaseRepository
     ", [$user_id]))->first();
     return $customer_user;
   }
+
 }
